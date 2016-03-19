@@ -1,1 +1,11 @@
+# Site Setting
+title: TimoTokki
+description:
+  This is a demo
+owner: TimoTokki
 baseurl: /timotokki.github.io
+social:
+  github: https://github.com/TimoTokki
+
+# Build settings
+markdown: kramdown
