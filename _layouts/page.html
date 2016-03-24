@@ -1,12 +1,14 @@
 ---
 layout: default
 ---
-<h1>{{ page.title }}</h1>
-<p>{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
+<div class="post">
+	<h1>{{ page.title }}</h1>
+	<p>{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
 
-<article>
-	{{ content }}
-</article>
-
-<p> 字数统计：{{ page.content | number_of_words }} </p>
+	<article>
+		{{ content }}
+	</article>
+	<hr />
+	<p> 字数统计：{{ page.content | number_of_words }} </p>
+</div>
 
