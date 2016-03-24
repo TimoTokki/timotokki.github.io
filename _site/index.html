@@ -1,17 +1,63 @@
+<!-- default模板：开始 -->
 <!DOCTYPE html>
 <html>
+<!-- default模板：head块是由include head.html命令添加的 -->
   <head>
     <meta http-equiv="content-type" content="text/html;
     charset=utf-8" />
     <title>My Blogs</title>
-  </head>
+    <link rel="stylesheet" type="text/css" href="/timotokki.github.io/static/css/basic.css">
+</head>
+<!-- default模板：head块结束 -->
+<!-- default模板：<body data-spy="scroll" data-target="#myAffix"> -->
 
   <body>
-  
-  	<div id="main" class="container main">
-  		<h1> My Blogs </h1>
-<p> 最新文章 </p>
+
+<!-- default模板：header块是由include header.html命令添加的 -->
+      <header>
+    <!-- navbar -->
+    <nav>
+    	<div class="navbar-header">
+      	<a href="/timotokki.github.io/index.html">TimoTokki的博客</a>
+      </div>
+      
+	    <ul class="nav navbar-nav navbar-right">
+		    
+		      
+		        
+		          <li>
+		        
+		        <a href="/timotokki.github.io/projects/"><span class="glyphicon "></span> 项目</a></li>
+		      
+		    
+		      
+		        
+		          <li>
+		        
+		        <a href="/timotokki.github.io/about/"><span class="glyphicon "></span> 关于</a></li>
+		      
+		    
+		      
+		        
+		          <li class="active">
+		          
+		        <a href="/timotokki.github.io/index.html"><span class="glyphicon "></span> My Blogs</a></li>
+		      
+		    
+	    </ul>
+    </nav>
+  </header>
+<!-- default模板：header块结束 -->
+
+<!-- default模板：content块是由content命令添加的 -->
+    <div id="main" class="container main">
+      <h1> 最新文章 </h1>
 <ul>
+    
+	    <li> 
+	    	20 Mar 2016 
+	    	<a href="/timotokki.github.io/2016/03/20/second-post%20.html"> Second Post  </a> 
+	    </li>
     
 	    <li> 
 	    	20 Mar 2016 
@@ -20,11 +66,27 @@
     
 	    <li> 
 	    	03 Mar 2016 
-	    	<a href="/timotokki.github.io/2016/03/03/hello-world%20.html"> Hello,world </a> 
+	    	<a href="/timotokki.github.io/2016/03/03/A-New-World.html"> A New World </a> 
 	    </li>
     
 </ul>
-  	</div>
+    </div>
+<!-- default模板：content块结束 -->
 
-	</body>
+<!-- default模板：footer块是由include footer.html命令添加的 -->
+    <footer class="hh">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <span>&copy; 2016 TimoTokki</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- default模板：footer块结束 -->
+
+  </body>
+<!-- default模板：结束 -->
 </html>

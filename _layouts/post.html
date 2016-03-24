@@ -1,0 +1,22 @@
+---
+layout: default
+---
+<h1>{{ page.title }}</h1>
+<p>{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
+
+<article>
+	{{ content }}
+</article>
+
+<p> 字数统计：{{ page.content | number_of_words }} </p>
+{% if page.previous %}
+<p> 上一篇：<a href="{{ page.previous.url | prepend: site.baseurl }}"> {{ page.previous.title }} </a></p>
+{% else %}
+<p> 上一篇：无 </p>
+{% endif %}
+{% if page.next %}
+<p> 下一篇：<a href="{{ page.next.url | prepend: site.baseurl }}"> {{ page.next.title }} </a></p>
+{% else %}
+<p> 下一篇：无 </p>
+{% endif %}
+
