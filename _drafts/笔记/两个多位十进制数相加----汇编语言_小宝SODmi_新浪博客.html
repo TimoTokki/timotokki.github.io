@@ -1,0 +1,127 @@
+<html>
+<head>
+  <title>两个多位十进制数相加----汇编语言_小宝SODmi_新浪博客</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/275193; Windows/6.3.9600;"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="14070"/>
+<h1>两个多位十进制数相加----汇编语言_小宝SODmi_新浪博客</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2015/11/17 10:13</i></td></tr>
+<tr><td><b>更新时间：</b></td><td><i>2015/11/17 10:33</i></td></tr>
+<tr><td><b>标签：</b></td><td><i>减藏</i></td></tr>
+<tr><td><b>来源：</b></td><td><a href="http://blog.sina.com.cn/s/blog_4b47ffa4010005s2.html"><i>http://blog.sina.com.cn/s/blog_4b47ffa4010005s2.html</i></a></td></tr>
+</table>
+</div>
+<br/>
+
+<div>
+<span><div>
+ <div>
+  <div>
+   <h1>两个多位十进制数相加----汇编语言</h1>
+   <div>
+    <div></div>
+   </div>
+  </div> (2006-12-12 12:48:40) 
+  <div>
+    DATA     SEGMENT
+   <br clear="none"/> DATA1    DB  31H,32H,33H,34H,35H    ; 第一个数据(作为被加数)     
+   <br clear="none"/> DATA2    DB  35H,36H,37H,38H,33H    ; 第二个数据(作为加数)   
+   <br clear="none"/> DATA     ENDS  
+   <br clear="none"/> STACK    SEGMENT                    ; 堆栈段    
+   <br clear="none"/> 
+   <span style="-evernote-highlighted:true; background-color:#f6ee96">STA</span>      DB     64 DUP(0)  
+   <br clear="none"/> 
+   <span style="-evernote-highlighted:true; background-color:#f6ee96">SP_TOP</span>   DB     0                        
+   <br clear="none"/> STACK    ENDS    
+   <br clear="none"/> CODE     SEGMENT        
+   <br clear="none"/>          ASSUME    CS:CODE, DS:DATA, ES:DATA, SS:STACK     
+   <br clear="none"/> START:   MOV    AX,DATA        
+   <br clear="none"/>          MOV    DS,AX     
+   <br clear="none"/>          MOV    AX,STACK       
+   <br clear="none"/>          MOV    SS,AX      
+   <br clear="none"/>          
+   <span style="-evernote-highlighted:true; background-color:#f6ee96">LEA    SP,SP_TOP  </span> 
+   <br clear="none"/>          MOV    SI,OFFSET DATA2           
+   <br clear="none"/>          MOV    BX,05     
+   <br clear="none"/>          CALL   DISPL               ; 显示被加数   
+   <br clear="none"/>          CALL   CRLF                ; 回车、换行      
+   <br clear="none"/>          MOV    SI,OFFSET DATA1                
+   <br clear="none"/>          MOV    BX,05                  
+   <br clear="none"/>          CALL   DISPL               ; 显示加数
+   <br clear="none"/>          CALL   CRLF                ; 回车、换行          
+   <br clear="none"/>          MOV    DI,OFFSET DATA2    
+   <br clear="none"/>          CALL   ADDA                ; 加法运算    
+   <br clear="none"/>          MOV    SI,OFFSET DATA1             
+   <br clear="none"/>          MOV    BX,05               ; 显示结果       
+   <br clear="none"/>          CALL   DISPL                  
+   <br clear="none"/>          CALL   CRLF                    
+   <br clear="none"/>          MOV    AX,4C00H            ; 正常结束      
+   <br clear="none"/>          INT    21H       
+  </div> 
+  <div>
+    CRLF     PROC   NEAR                ; 回车、换行功能      
+   <br clear="none"/>          MOV    AH,02H                             
+   <br clear="none"/>          MOV    DL,0DH              ; 回车
+   <br clear="none"/>          INT    21H                
+   <br clear="none"/>          MOV    AH,02H              ; 换行         
+   <br clear="none"/>          MOV    DL,0AH    
+   <br clear="none"/>          INT    21H    
+   <br clear="none"/>          RET            
+   <br clear="none"/> CRLF     ENDP  
+  </div> 
+  <div>
+   DISPL    PROC   NEAR                ; 显示功能         
+   <br clear="none"/> DSL:     MOV    AH,02                
+   <br clear="none"/>          MOV    DL,[SI+BX-1]        ; 显示字符串   
+   <br clear="none"/>          INT    21H        
+   <br clear="none"/>          DEC    BX                  ; 修改偏移量       
+   <br clear="none"/>          JNZ    DSL          
+   <br clear="none"/>          RET     
+   <br clear="none"/> DISPL    ENDP  
+  </div> 
+  <div>
+    ADDA     PROC                 
+   <br clear="none"/>          MOV    DX,SI               ; 保存段首址到寄存器中
+   <br clear="none"/>          MOV    BP,DI        
+   <br clear="none"/>          MOV    BX,05           
+   <br clear="none"/> ADDI:    SUB    BYTE PTR[SI+BX-1],30H         
+   <br clear="none"/>          SUB    BYTE PTR[DI+BX-1],30H               
+   <br clear="none"/>          DEC    BX              
+   <br clear="none"/>          JNZ    ADDI                      
+   <br clear="none"/>          MOV    CX,05         
+   <br clear="none"/>          CLC                        ; 清进位         
+   <br clear="none"/> ADD2:    MOV    AL,[SI]                   
+   <br clear="none"/>          MOV    BL,[DI]                
+   <br clear="none"/>          ADC    AL,BL               ; 带进位相加             
+   <br clear="none"/>          AAA                        ; 非组合BCD码的加法调整        
+   <br clear="none"/>          MOV    [SI],AL             ; 结果送被加数区             
+   <br clear="none"/>          INC    SI             
+   <br clear="none"/>          INC    DI                  ; 指向下一位      
+   <br clear="none"/>          LOOP   ADD2                ; 
+   <span style="-evernote-highlighted:true; background-color:#f6ee96">CX!=0则循环</span>                            
+   <br clear="none"/>          MOV    SI,DX               ; 恢复SI和DI                 
+   <br clear="none"/>          MOV    DI,BP                                 
+   <br clear="none"/>          MOV    BX,05H            
+   <br clear="none"/> ADD3:    ADD    BYTE PTR [SI+BX-1],30H  ; 十六进制的数字串
+   <br clear="none"/>          ADD    BYTE PTR [DI+BX-1],30H  ; 转化为ASCII码表示的数字串 
+   <br clear="none"/>          DEC    BX                    
+   <br clear="none"/>          JNZ    ADD3          
+   <br clear="none"/>          RET                         
+   <br clear="none"/>          ADDA   ENDP                                                            
+   <br clear="none"/> CODE       ENDS                                                       
+   <br clear="none"/>            END    START   　
+  </div> 
+ </div>
+</div></span>
+</div></body></html> 

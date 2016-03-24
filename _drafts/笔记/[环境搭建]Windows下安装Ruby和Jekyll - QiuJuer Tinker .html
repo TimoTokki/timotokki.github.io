@@ -1,0 +1,159 @@
+<html>
+<head>
+  <title>[环境搭建]Windows下安装Ruby和Jekyll - QiuJuer Tinker - 博客频道 - CSDN.NET</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/275193; Windows/6.3.9600;"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="14709"/>
+<h1>[环境搭建]Windows下安装Ruby和Jekyll - QiuJuer Tinker - 博客频道 - CSDN.NET</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2016/3/3 12:16</i></td></tr>
+<tr><td><b>标签：</b></td><td><i>减藏</i></td></tr>
+<tr><td><b>来源：</b></td><td><a href="http://blog.csdn.net/qiujuer/article/details/44620019"><i>http://blog.csdn.net/qiujuer/article/details/44620019</i></a></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span><br/><div style="font-size: 16px"><div><div style="font-family:'microsoft yahei';background:url(&quot;http://static.blog.csdn.net/skin/skin-yellow/css/../images/bg-yellow.png&quot;) repeat;"><div><div style="font-size:12px;"><div><div><div style="background:rgb(255, 255, 255);"><div style="font-size:15px;color:rgb(85, 85, 85);line-height:35px;"><div style="font-family:'microsoft yahei';font-size:14px;"><p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">======================================================== <br style="box-sizing:border-box;"/>
+作者：qiujuer <br style="box-sizing:border-box;"/>
+博客：<a href="http://blog.csdn.net/qiujuer" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">blog.csdn.net/qiujuer</a> <br style="box-sizing:border-box;"/>
+网站：<a href="http://www.qiujuer.net/" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">www.qiujuer.net</a> <br style="box-sizing:border-box;"/>
+开源库：<a href="https://github.com/qiujuer/Genius-Android" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">github.com/qiujuer/Genius-<a href="http://lib.csdn.net/base/15" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);" target="_blank"></a><a href="http://lib.csdn.net/base/11" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);" target="_blank"></a><a href="http://lib.csdn.net/base/15" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);" target="_blank">Android</a></a> <br style="box-sizing:border-box;"/>
+转载请注明出处：<a href="http://blog.csdn.net/qiujuer/article/details/44620019" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">http://blog.csdn.net/qiujuer/article/details/44620019</a> <br style="box-sizing:border-box;"/>
+——学之开源，用于开源；初学者的心态，与君共勉！</p>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">========================================================</p>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">Jekyll是一款静态网站生成工具，允许用户使用HTML、Markdown或Textile通过模块的方式建立所需网站，然后通过模板引擎Liquid（Liquid Templating Engine）来运行或者生成对应的静态网站文件. <br style="box-sizing:border-box;"/>
+在GitHub上使用较多，通过GitHub搭建自己的博客一般来说就是使用Jekyll；因为GitHub的渲染引擎默认为Jekyll。</p>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">网上很多类似的安装教程，但是一般来说都是需要安装<a href="http://lib.csdn.net/base/15" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);" target="_blank"></a><a href="http://lib.csdn.net/base/15" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);" target="_blank">Python</a>，在本篇文章中我们不使用“Pygments”代码高亮引擎，所以不需要安装Python。</p>
+
+
+
+<h2 style="padding:0px;box-sizing:border-box;margin:0.8em 0px;font-weight:100;"><a name="t0" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);"></a>安装 Ruby</h2>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">Jekyll是一款基于Ruby的插件，安装Ruby是必须的. <br style="box-sizing:border-box;"/>
+1. 下载，传送阵：<a href="http://rubyinstaller.org/downloads/" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">http://rubyinstaller.org/downloads/</a> <br style="box-sizing:border-box;"/>
+2. 点击版本并下载，这里我下载的是：“Ruby 2.2.1 (x64)” <br style="box-sizing:border-box;"/>
+3. 点击进行安装，此时需要注意两点： <br style="box-sizing:border-box;"/>
+        *安装目录不允许包含空格 <br style="box-sizing:border-box;"/>
+        *选中“Add Ruby executables to your PATH”这样将自动完成环境变量的配置。 <br style="box-sizing:border-box;"/>
+<img src="[环境搭建]Windows下安装Ruby和Jekyll - QiuJuer Tinker _files/20150325120514276.png" type="image/png" alt="这里写图片描述" height="389" style="border:none;box-sizing:border-box;max-width:602px;height:auto;" title="" width="503"/></p>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">4.完成后进入“CMD”输入“<strong style="box-sizing:border-box;">ruby -v</strong>”如显示版本则代表安装成功。</p>
+
+
+
+<h2 style="padding:0px;box-sizing:border-box;margin:0.8em 0px;font-weight:100;"><a name="t1" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);"></a>安装 DevKit</h2>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">DevKit 是一个在 Windows 上帮助简化安装及使用 Ruby C/C++ 扩展如 RDiscount 和 RedCloth 的工具箱。  <br style="box-sizing:border-box;"/>
+更多详细的安装指南请查看Ruby的 <a href="https://github.com/oneclick/rubyinstaller/wiki/Development-Kit#installation-instructions" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">wiki</a> 页面 阅读。</p>
+
+<ol style="box-sizing:border-box;">
+<li style="box-sizing:border-box;"><p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">前往 <a href="http://rubyinstaller.org/downloads/" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">http://rubyinstaller.org/downloads/</a></p></li>
+<li style="box-sizing:border-box;"><p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">下载与 Ruby 版本相对应的 DevKit 安装包。 例如：“DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe” <br style="box-sizing:border-box;"/>
+版本对应关系：</p>
+
+<blockquote style="box-sizing:border-box;margin:0px 0px 1.1em;padding:15px 20px;border-left-width:10px;border-left-style:solid;border-left-color:rgba(128, 128, 128, 0.0745098);border-radius:0px 5px 5px 0px;background-color:rgba(128, 128, 128, 0.0470588);"><span style=""></span>
+  <p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;line-height:1.25;">Ruby 1.8.7 and 1.9.3: <br style="box-sizing:border-box;"/>
+  DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</p>
+  
+  <p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;line-height:1.25;">2.0 and 2.1 (32bits version only): <br style="box-sizing:border-box;"/>
+  DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe</p>
+  
+  <p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;line-height:1.25;margin-bottom:0px;">2.0 and 2.1 (x64 - 64bits only) <br style="box-sizing:border-box;"/>
+  DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe</p>
+<span style=""></span></blockquote></li>
+<li style="box-sizing:border-box;"><p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">运行文件选择解压目录，如“D:\ToolKits\Ruby\DevKit”</p></li>
+<li style="box-sizing:border-box;"><p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">解压完成后，通过初始化来创建 config.yml 文件。在命令行窗口内，输入下列命令：</p>
+
+<pre style="line-height:1.45;white-space:nowrap;box-sizing:border-box;overflow-y:hidden;font-family:'Source Code Pro', monospace;display:block;padding:5px 5px 5px 60px;font-size:14px;word-wrap:break-word;word-break:break-all;color:rgb(51, 51, 51);border:1px solid rgba(128, 128, 128, 0.0745098);border-radius:0px;background-color:rgba(128, 128, 128, 0.0470588);position:relative;overflow-x:auto;margin:0px 0px 1.1em;"><code style="font-family:'Source Code Pro', monospace;display:block;box-sizing:border-box;background:rgb(255, 255, 255);color:inherit;padding:0px;font-size:inherit;white-space:pre;border-radius:0px;background-color:transparent;word-wrap:normal;">cd &quot;D:<span style="box-sizing:border-box;color:rgb(0, 0, 136);">\ToolKits</span><span style="box-sizing:border-box;color:rgb(0, 0, 136);">\Ruby</span><span style="box-sizing:border-box;color:rgb(0, 0, 136);">\DevKit</span>&quot;
+ruby dk.rb init
+notepad config.yml</code><ul style="padding:6px 0px 40px;box-sizing:border-box;border-right-width:1px;width:50px;left:0px;margin:0px;position:absolute;top:0px;border-right-style:solid;border-right-color:rgb(221, 221, 221);list-style:none;text-align:right;background-color:rgb(238, 238, 238);"><li style="box-sizing:border-box;padding:0px 5px;">1</li><li style="box-sizing:border-box;padding:0px 5px;">2</li><li style="box-sizing:border-box;padding:0px 5px;">3</li></ul></pre></li>
+<li style="box-sizing:border-box;"><p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">此时已经使用记事本打开所创建的”config.yml”文件，于末尾添加新的一行: “<strong style="box-sizing:border-box;">- D:/ToolKits/Ruby/Ruby21-x64</strong>“，这里的目录为你的Ruby的安装目录，保存文件并退出。</p></li>
+<li style="box-sizing:border-box;"><p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">回到命令行窗口内进行安装。</p>
+
+<pre style="line-height:1.45;white-space:nowrap;box-sizing:border-box;overflow-y:hidden;font-family:'Source Code Pro', monospace;display:block;padding:5px 5px 5px 60px;font-size:14px;word-wrap:break-word;word-break:break-all;color:rgb(51, 51, 51);border:1px solid rgba(128, 128, 128, 0.0745098);border-radius:0px;background-color:rgba(128, 128, 128, 0.0470588);position:relative;overflow-x:auto;margin:0px 0px 1.1em;"><code style="font-family:'Source Code Pro', monospace;display:block;box-sizing:border-box;background:rgb(255, 255, 255);color:inherit;padding:0px;font-size:inherit;white-space:pre;border-radius:0px;background-color:transparent;word-wrap:normal;">ruby dk.rb <span style="color:rgb(0, 0, 136);box-sizing:border-box;">install</span></code><ul style="padding:6px 0px 40px;box-sizing:border-box;border-right-width:1px;width:50px;left:0px;margin:0px;position:absolute;top:0px;border-right-style:solid;border-right-color:rgb(221, 221, 221);list-style:none;text-align:right;background-color:rgb(238, 238, 238);"><li style="box-sizing:border-box;padding:0px 5px;">1</li></ul></pre></li>
+</ol>
+
+
+
+<h2 style="padding:0px;box-sizing:border-box;margin:0.8em 0px;font-weight:100;"><a name="t2" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);"></a>安装 Jekyll</h2>
+
+<ol style="box-sizing:border-box;">
+<li style="box-sizing:border-box;"><p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">首先确保 gem 已经正确安装</p>
+
+<pre style="line-height:1.45;white-space:nowrap;box-sizing:border-box;overflow-y:hidden;font-family:'Source Code Pro', monospace;display:block;padding:5px 5px 5px 60px;font-size:14px;word-wrap:break-word;word-break:break-all;color:rgb(51, 51, 51);border:1px solid rgba(128, 128, 128, 0.0745098);border-radius:0px;background-color:rgba(128, 128, 128, 0.0470588);position:relative;overflow-x:auto;margin:0px 0px 1.1em;"><code style="font-family:'Source Code Pro', monospace;display:block;box-sizing:border-box;background:rgb(255, 255, 255);color:inherit;padding:0px;font-size:inherit;white-space:pre;border-radius:0px;background-color:transparent;word-wrap:normal;"><span style="color:rgb(136, 0, 0);box-sizing:border-box;">//命令输入</span>
+gem <span style="box-sizing:border-box;">-v</span>
+<span style="color:rgb(136, 0, 0);box-sizing:border-box;">//输出</span>
+<span style="color:rgb(0, 102, 102);box-sizing:border-box;">2.2</span><span style="color:rgb(0, 102, 102);box-sizing:border-box;">.2</span></code><ul style="padding:6px 0px 40px;box-sizing:border-box;border-right-width:1px;width:50px;left:0px;margin:0px;position:absolute;top:0px;border-right-style:solid;border-right-color:rgb(221, 221, 221);list-style:none;text-align:right;background-color:rgb(238, 238, 238);"><li style="box-sizing:border-box;padding:0px 5px;">1</li><li style="box-sizing:border-box;padding:0px 5px;">2</li><li style="box-sizing:border-box;padding:0px 5px;">3</li><li style="box-sizing:border-box;padding:0px 5px;">4</li></ul></pre></li>
+<li style="box-sizing:border-box;"><p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">安装 Jekyll </p>
+
+<pre style="line-height:1.45;white-space:nowrap;box-sizing:border-box;overflow-y:hidden;font-family:'Source Code Pro', monospace;display:block;padding:5px 5px 5px 60px;font-size:14px;word-wrap:break-word;word-break:break-all;color:rgb(51, 51, 51);border:1px solid rgba(128, 128, 128, 0.0745098);border-radius:0px;background-color:rgba(128, 128, 128, 0.0470588);position:relative;overflow-x:auto;margin:0px 0px 1.1em;"><code style="font-family:'Source Code Pro', monospace;display:block;box-sizing:border-box;background:rgb(255, 255, 255);color:inherit;padding:0px;font-size:inherit;white-space:pre;border-radius:0px;background-color:transparent;word-wrap:normal;"><span style="color:rgb(136, 0, 0);box-sizing:border-box;">//命令行执行</span>
+gem install jekyll</code><ul style="padding:6px 0px 40px;box-sizing:border-box;border-right-width:1px;width:50px;left:0px;margin:0px;position:absolute;top:0px;border-right-style:solid;border-right-color:rgb(221, 221, 221);list-style:none;text-align:right;background-color:rgb(238, 238, 238);"><li style="box-sizing:border-box;padding:0px 5px;">1</li><li style="box-sizing:border-box;padding:0px 5px;">2</li></ul></pre></li>
+<li style="box-sizing:border-box;">错误 <br style="box-sizing:border-box;"/>
+在这里或许你将遇到一定的问题，比如：</li>
+</ol>
+
+<blockquote style="box-sizing:border-box;margin:0px 0px 1.1em;padding:15px 20px;border-left-width:10px;border-left-style:solid;border-left-color:rgba(128, 128, 128, 0.0745098);border-radius:0px 5px 5px 0px;background-color:rgba(128, 128, 128, 0.0470588);"><span style=""></span>
+  <p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;line-height:1.25;margin-bottom:0px;">ERROR:  Could not find a valid gem ‘jekyll’ (&gt;= 0), here is why: <br style="box-sizing:border-box;"/>
+                Unable to download data from <a href="https://rubygems.org/" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">https://rubygems.org/</a> - SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed (<a href="https://api.rubygems.org/latest_spece.4.8.gz" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">https://api.rubygems.org/latest_spece.4.8.gz</a>)</p>
+<span style=""></span></blockquote>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">这个错误的原因是因为证书问题，简单的解决办法为：下载最新的证书，放到指定文件夹，并配置环境变量。</p>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">下载：<a href="http://curl.haxx.se/ca/cacert.pem" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">http://curl.haxx.se/ca/cacert.pem</a> <br style="box-sizing:border-box;"/>
+拷贝到：Ruby安装目录下的“bin”文件夹下 <br style="box-sizing:border-box;"/>
+环境变量： <br style="box-sizing:border-box;"/>
+<img src="[环境搭建]Windows下安装Ruby和Jekyll - QiuJuer Tinker _files/20150325183352856.png" type="image/png" alt="这里写图片描述" height="190" style="border:none;box-sizing:border-box;max-width:602px;height:auto;" title="" width="413"/></p>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">至于其他错误，比如443错误，这个多访问几次，或者挂上VPN进行，多尝试几次就OK。</p>
+
+
+
+<h2 style="padding:0px;box-sizing:border-box;margin:0.8em 0px;font-weight:100;"><a name="t3" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);"></a>安装 Rouge</h2>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">一般来说静态生成中经常会使用高亮代码等功能，而高亮代码的生成一般需要插件帮助完成才行；在常规中一般都是使用：“Pygments”；因为”Pygments“是python下面的插件，所以需要先安装Python之后才能安装该插件，我嫌麻烦在实际使用中采用的是”Rouge“高亮插件。 <br style="box-sizing:border-box;"/>
+之所以使用：”Rouge”，是因为在 Jekyll 官网中也曾提到以后将会使用该插件。 <br style="box-sizing:border-box;"/>
+安装步骤非常简单，同样使用命令行安装就OK：</p>
+
+
+
+<pre style="line-height:1.45;white-space:nowrap;box-sizing:border-box;overflow-y:hidden;font-family:'Source Code Pro', monospace;display:block;padding:5px 5px 5px 60px;font-size:14px;word-wrap:break-word;word-break:break-all;color:rgb(51, 51, 51);border:1px solid rgba(128, 128, 128, 0.0745098);border-radius:0px;background-color:rgba(128, 128, 128, 0.0470588);position:relative;overflow-x:auto;margin:0px 0px 1.1em;"><code style="font-family:'Source Code Pro', monospace;display:block;box-sizing:border-box;background:rgb(255, 255, 255);color:inherit;padding:0px;font-size:inherit;white-space:pre;border-radius:0px;background-color:transparent;word-wrap:normal;"><span style="color:rgb(136, 0, 0);box-sizing:border-box;">//命令行 Gem 安装</span>
+gem install rouge</code><ul style="padding:6px 0px 40px;box-sizing:border-box;border-right-width:1px;width:50px;left:0px;margin:0px;position:absolute;top:0px;border-right-style:solid;border-right-color:rgb(221, 221, 221);list-style:none;text-align:right;background-color:rgb(238, 238, 238);"><li style="box-sizing:border-box;padding:0px 5px;">1</li><li style="box-sizing:border-box;padding:0px 5px;">2</li></ul></pre>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">一般来说有一定可能会遇到服务器没有响应或者 443 等错误，这些都无需担心，多尝试几次就OK。</p>
+
+
+
+<h2 style="padding:0px;box-sizing:border-box;margin:0.8em 0px;font-weight:100;"><a name="t4" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);"></a>安装步骤演示</h2>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;"><img src="[环境搭建]Windows下安装Ruby和Jekyll - QiuJuer Tinker _files/20150325234352799.png" type="image/png" alt="这里写图片描述" height="374" style="border:none;box-sizing:border-box;max-width:602px;height:auto;" title="" width="602"/> <br style="box-sizing:border-box;"/>
+<img src="[环境搭建]Windows下安装Ruby和Jekyll - QiuJuer Tinker _files/20150325234403812.png" type="image/png" alt="这里写图片描述" height="319" style="border:none;box-sizing:border-box;max-width:602px;height:auto;" title="" width="602"/> <br style="box-sizing:border-box;"/>
+<img src="[环境搭建]Windows下安装Ruby和Jekyll - QiuJuer Tinker _files/20150325234449098.png" type="image/png" alt="这里写图片描述" height="310" style="border:none;box-sizing:border-box;max-width:602px;height:auto;" title="" width="602"/> <br style="box-sizing:border-box;"/>
+<img src="[环境搭建]Windows下安装Ruby和Jekyll - QiuJuer Tinker _files/20150325234458473.png" type="image/png" alt="这里写图片描述" height="541" style="border:none;box-sizing:border-box;max-width:602px;height:auto;" title="" width="602"/> <br style="box-sizing:border-box;"/>
+<img src="[环境搭建]Windows下安装Ruby和Jekyll - QiuJuer Tinker _files/20150325234508879.png" type="image/png" alt="这里写图片描述" height="554" style="border:none;box-sizing:border-box;max-width:602px;height:auto;" title="" width="602"/> <br style="box-sizing:border-box;"/>
+<img src="[环境搭建]Windows下安装Ruby和Jekyll - QiuJuer Tinker _files/20150325234516179.png" type="image/png" alt="这里写图片描述" height="553" style="border:none;box-sizing:border-box;max-width:602px;height:auto;" title="" width="602"/> <br style="box-sizing:border-box;"/>
+<img src="[环境搭建]Windows下安装Ruby和Jekyll - QiuJuer Tinker _files/20150325234449879.png" type="image/png" alt="这里写图片描述" height="324" style="border:none;box-sizing:border-box;max-width:602px;height:auto;" title="" width="602"/> <br style="box-sizing:border-box;"/>
+<img src="[环境搭建]Windows下安装Ruby和Jekyll - QiuJuer Tinker _files/20150325234456681.png" type="image/png" alt="这里写图片描述" height="262" style="border:none;box-sizing:border-box;max-width:602px;height:auto;" title="" width="602"/></p>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">======================================================== <br style="box-sizing:border-box;"/>
+作者：qiujuer <br style="box-sizing:border-box;"/>
+博客：<a href="http://blog.csdn.net/qiujuer" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">blog.csdn.net/qiujuer</a> <br style="box-sizing:border-box;"/>
+网站：<a href="http://www.qiujuer.net/" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">www.qiujuer.net</a> <br style="box-sizing:border-box;"/>
+开源库：<a href="https://github.com/qiujuer/Genius-Android" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">github.com/qiujuer/Genius-Android</a> <br style="box-sizing:border-box;"/>
+转载请注明出处：<a href="http://blog.csdn.net/qiujuer/article/details/44620019" style="text-decoration:none;box-sizing:border-box;color:rgb(12, 137, 207);">http://blog.csdn.net/qiujuer/article/details/44620019</a> <br style="box-sizing:border-box;"/>
+——学之开源，用于开源；初学者的心态，与君共勉！</p>
+
+<p style="padding:0px;box-sizing:border-box;margin:0px 0px 1.1em;">========================================================</p></div></div></div></div></div></div></div></div></div></div><br/></span>
+</div></body></html> 

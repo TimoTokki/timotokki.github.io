@@ -1,0 +1,778 @@
+<html>
+<head>
+  <title>JS的大坑——this的指向</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/275193; Windows/6.3.9600;"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="14920"/>
+<h1>JS的大坑——this的指向</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2016/3/12 23:22</i></td></tr>
+<tr><td><b>标签：</b></td><td><i>减藏</i></td></tr>
+<tr><td><b>来源：</b></td><td><a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/0014345005399057070809cfaa347dfb7207900cfd116fb000"><i>http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/0014345005399057070809cfaa347dfb7207900cfd116fb000</i></a></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span><br/><div style="font-size: 16px"><div style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:20px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:rgb(68, 68, 68);background:rgb(255, 255, 255);"><div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="flex-wrap:wrap;list-style:none;"><div style="flex:0 0 auto;box-sizing:border-box;"><div><div style="width:100%;">
+                            
+    <h4 style="margin:0px 0px 15px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">方法</h4>
+    <div><span>阅读: 19111</span></div>
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+    <div>
+        <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">在一个对象中绑定函数，称为这个对象的方法。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">在JavaScript中，对象的定义是这样的：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code><span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> xiaoming = {
+    name: <span style="color:rgb(221, 17, 68);">'小明'</span>,
+    birth: <span style="color:rgb(0, 153, 153);">1990</span>
+};
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">但是，如果我们给<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">xiaoming</code>绑定一个函数，就可以做更多的事情。比如，写个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">age()</code>方法，返回<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">xiaoming</code>的年龄：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code><span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> xiaoming = {
+    name: <span style="color:rgb(221, 17, 68);">'小明'</span>,
+    birth: <span style="color:rgb(0, 153, 153);">1990</span>,
+    age: <span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span>()</span> {</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> y = <span style="color:rgb(51, 51, 51);font-weight:bold;">new</span> Date().getFullYear();
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> y - <span style="color:rgb(51, 51, 51);font-weight:bold;">this</span>.birth;
+    }
+};
+
+xiaoming.age; <span style="color:rgb(153, 153, 136);font-style:italic;">// function xiaoming.age()</span>
+xiaoming.age(); <span style="color:rgb(153, 153, 136);font-style:italic;">// 今年调用是25,明年调用就变成26了</span>
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">绑定到对象上的函数称为方法，和普通函数也没啥区别，但是它在内部使用了一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>关键字，这个东东是什么？</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">在一个方法内部，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>是一个特殊变量，它始终指向当前对象，也就是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">xiaoming</code>这个变量。所以，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this.birth</code>可以拿到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">xiaoming</code>的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">birth</code>属性。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">让我们拆开写：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code><span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span style="color:rgb(51, 51, 51);font-weight:normal;">getAge</span><span>()</span> {</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> y = <span style="color:rgb(51, 51, 51);font-weight:bold;">new</span> Date().getFullYear();
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> y - <span style="color:rgb(51, 51, 51);font-weight:bold;">this</span>.birth;
+}
+
+<span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> xiaoming = {
+    name: <span style="color:rgb(221, 17, 68);">'小明'</span>,
+    birth: <span style="color:rgb(0, 153, 153);">1990</span>,
+    age: getAge
+};
+
+xiaoming.age(); <span style="color:rgb(153, 153, 136);font-style:italic;">// 25, 正常结果</span>
+getAge(); <span style="color:rgb(153, 153, 136);font-style:italic;">// NaN</span>
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">单独调用函数<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">getAge()</code>怎么返回了<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">NaN</code>？<em style="color:rgb(221, 0, 85);">请注意</em>，我们已经进入到了JavaScript的一个大坑里。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">JavaScript的函数内部如果调用了<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>，那么这个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>到底指向谁？</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">答案是，视情况而定！</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">如果以对象的方法形式调用，比如<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">xiaoming.age()</code>，该函数的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>指向被调用的对象，也就是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">xiaoming</code>，这是符合我们预期的。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">如果单独调用函数，比如<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">getAge()</code>，此时，该函数的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>指向全局对象，也就是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">window</code>。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">坑爹啊！</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">更坑爹的是，如果这么写：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code><span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> fn = xiaoming.age; <span style="color:rgb(153, 153, 136);font-style:italic;">// 先拿到xiaoming的age函数</span>
+fn(); <span style="color:rgb(153, 153, 136);font-style:italic;">// NaN</span>
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">也是不行的！要保证<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>指向正确，必须用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">obj.xxx()</code>的形式调用！</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">由于这是一个巨大的设计错误，要想纠正可没那么简单。ECMA决定，在strict模式下让函数的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>指向<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">undefined</code>，因此，在strict模式下，你会得到一个错误：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code><span style="color:rgb(221, 17, 68);">'use strict'</span>;
+
+<span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> xiaoming = {
+    name: <span style="color:rgb(221, 17, 68);">'小明'</span>,
+    birth: <span style="color:rgb(0, 153, 153);">1990</span>,
+    age: <span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span>()</span> {</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> y = <span style="color:rgb(51, 51, 51);font-weight:bold;">new</span> Date().getFullYear();
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> y - <span style="color:rgb(51, 51, 51);font-weight:bold;">this</span>.birth;
+    }
+};
+
+<span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> fn = xiaoming.age;
+fn(); <span style="color:rgb(153, 153, 136);font-style:italic;">// Uncaught TypeError: Cannot read property 'birth' of undefined</span>
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">这个决定只是让错误及时暴露出来，并没有解决<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>应该指向的正确位置。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">有些时候，喜欢重构的你把方法重构了一下：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code><span style="color:rgb(221, 17, 68);">'use strict'</span>;
+
+<span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> xiaoming = {
+    name: <span style="color:rgb(221, 17, 68);">'小明'</span>,
+    birth: <span style="color:rgb(0, 153, 153);">1990</span>,
+    age: <span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span>()</span> {</span>
+        <span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span style="color:rgb(51, 51, 51);font-weight:normal;">getAgeFromBirth</span><span>()</span> {</span>
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> y = <span style="color:rgb(51, 51, 51);font-weight:bold;">new</span> Date().getFullYear();
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> y - <span style="color:rgb(51, 51, 51);font-weight:bold;">this</span>.birth;
+        }
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> getAgeFromBirth();
+    }
+};
+
+xiaoming.age(); <span style="color:rgb(153, 153, 136);font-style:italic;">// Uncaught TypeError: Cannot read property 'birth' of undefined</span>
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">结果又报错了！原因是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>指针只在<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">age</code>方法的函数内指向<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">xiaoming</code>，在函数内部定义的函数，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>又指向<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">undefined</code>了！（在非strict模式下，它重新指向全局对象<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">window</code>！）</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">修复的办法也不是没有，我们用一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">that</code>变量首先捕获<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code><span style="color:rgb(221, 17, 68);">'use strict'</span>;
+
+<span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> xiaoming = {
+    name: <span style="color:rgb(221, 17, 68);">'小明'</span>,
+    birth: <span style="color:rgb(0, 153, 153);">1990</span>,
+    age: <span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span>()</span> {</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> that = <span style="color:rgb(51, 51, 51);font-weight:bold;">this</span>; <span style="color:rgb(153, 153, 136);font-style:italic;">// 在方法内部一开始就捕获this</span>
+        <span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span style="color:rgb(51, 51, 51);font-weight:normal;">getAgeFromBirth</span><span>()</span> {</span>
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> y = <span style="color:rgb(51, 51, 51);font-weight:bold;">new</span> Date().getFullYear();
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> y - that.birth; <span style="color:rgb(153, 153, 136);font-style:italic;">// 用that而不是this</span>
+        }
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> getAgeFromBirth();
+    }
+};
+
+xiaoming.age(); <span style="color:rgb(153, 153, 136);font-style:italic;">// 25</span>
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">var that = this;</code>，你就可以放心地在方法内部定义其他函数，而不是把所有语句都堆到一个方法中。</p>
+<h3 style="margin:0px 0px 15px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">apply</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">虽然在一个独立的函数调用中，根据是否是strict模式，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>指向<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">undefined</code>或<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">window</code>，不过，我们还是可以控制<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>的指向的！</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">要指定函数的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>指向哪个对象，可以用函数本身的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">apply</code>方法，它接收两个参数，第一个参数就是需要绑定的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>变量，第二个参数是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">Array</code>，表示函数本身的参数。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">apply</code>修复<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">getAge()</code>调用：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code><span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span style="color:rgb(51, 51, 51);font-weight:normal;">getAge</span><span>()</span> {</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> y = <span style="color:rgb(51, 51, 51);font-weight:bold;">new</span> Date().getFullYear();
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> y - <span style="color:rgb(51, 51, 51);font-weight:bold;">this</span>.birth;
+}
+
+<span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> xiaoming = {
+    name: <span style="color:rgb(221, 17, 68);">'小明'</span>,
+    birth: <span style="color:rgb(0, 153, 153);">1990</span>,
+    age: getAge
+};
+
+xiaoming.age(); <span style="color:rgb(153, 153, 136);font-style:italic;">// 25</span>
+getAge.apply(xiaoming, []); <span style="color:rgb(153, 153, 136);font-style:italic;">// 25, this指向xiaoming, 参数为空</span>
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">另一个与<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">apply()</code>类似的方法是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">call()</code>，唯一区别是：</p>
+<ul style="margin:0px 0px 15px;margin-top:15px;padding-left:30px;">
+<li><p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">apply()</code>把参数打包成<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">Array</code>再传入；</p>
+</li>
+<li><p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">call()</code>把参数按顺序传入。</p>
+</li>
+</ul>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">比如调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">Math.max(3, 5, 4)</code>，分别用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">apply()</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">call()</code>实现如下：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code>Math.max.apply(<span>null</span>, [<span style="color:rgb(0, 153, 153);">3</span>, <span style="color:rgb(0, 153, 153);">5</span>, <span style="color:rgb(0, 153, 153);">4</span>]); <span style="color:rgb(153, 153, 136);font-style:italic;">// 5</span>
+Math.max.call(<span>null</span>, <span style="color:rgb(0, 153, 153);">3</span>, <span style="color:rgb(0, 153, 153);">5</span>, <span style="color:rgb(0, 153, 153);">4</span>); <span style="color:rgb(153, 153, 136);font-style:italic;">// 5</span>
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">对普通函数调用，我们通常把<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">this</code>绑定为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">null</code>。</p>
+<h3 style="margin:0px 0px 15px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">装饰器</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">利用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">apply()</code>，我们还可以动态改变函数的行为。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">JavaScript的所有对象都是动态的，即使内置的函数，我们也可以重新指向新的函数。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">现在假定我们想统计一下代码一共调用了多少次<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">parseInt()</code>，可以把所有的调用都找出来，然后手动加上<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">count += 1</code>，不过这样做太傻了。最佳方案是用我们自己的函数替换掉默认的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">parseInt()</code>：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code><span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> count = <span style="color:rgb(0, 153, 153);">0</span>;
+<span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> oldParseInt = parseInt; <span style="color:rgb(153, 153, 136);font-style:italic;">// 保存原函数</span>
+
+window.parseInt = <span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span>()</span> {</span>
+    count += <span style="color:rgb(0, 153, 153);">1</span>;
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> oldParseInt.apply(<span>null</span>, arguments); <span style="color:rgb(153, 153, 136);font-style:italic;">// 调用原函数</span>
+};
+
+<span style="color:rgb(153, 153, 136);font-style:italic;">// 测试:</span>
+parseInt(<span style="color:rgb(221, 17, 68);">'10'</span>);
+parseInt(<span style="color:rgb(221, 17, 68);">'20'</span>);
+parseInt(<span style="color:rgb(221, 17, 68);">'30'</span>);
+count; <span style="color:rgb(153, 153, 136);font-style:italic;">// 3</span>
+</code></pre>
+    </div><div style="clear:both;"></div>
+    <h3 style="margin:0px 0px 15px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">分享给朋友</h3><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;"><span><div style="border:0px;width:312px;height:62px;position:relative;"><div style="font-size: 16px"><div>
+<div style="margin:0;">
+    <div style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:1.125;font-family:Arial, Helvetica, sans-serif;text-align:left;">
+         	<div style="zoom:1;">
+            <a href="http://service.weibo.com/share/share_social.php?url=http%3A%2F%2Fwww.liaoxuefeng.com%2Fwiki%2F001434446689867b27157e896e74d51a89c25cc8b43bdb3000%2F0014345005399057070809cfaa347dfb7207900cfd116fb000&amp;type=button&amp;ralateUid=1658384301&amp;language=zh_cn&amp;appkey=1391944217&amp;pic=http://www.liaoxuefeng.com/files/attachments/0014355670304100cdaa4e7e651474d9672ed73797378bd000/l&amp;searchPic=false&amp;style=full#0" style="float:left;background:0px 0px;color:rgb(0, 120, 182);text-decoration:none;font-size:12px;" title="分享">
+                <cite style="background:url(http://img.t.sinajs.cn/t4/appstyle/widget/images/shareButton/share_btn.png?id=1375775002754) no-repeat;display:inline-block;width:62px;height:22px;font-style:normal;font-size:12px;"><u style="float:left;width:16px;height:16px;margin:3px 0px 0px 3px;background:url(http://img.t.sinajs.cn/t4/appstyle/widget/images/shareButton/share_icon.png?id=1375775002754) 0px 0px no-repeat;text-decoration:none;"></u><cite style="float:left;width:40px;height:16px;padding:4px 0px 3px 3px;color:rgb(255, 255, 255);text-align:center;cursor:pointer;font-style:normal;font-size:12px;">分享</cite></cite>
+            </a>
+                     
+        <cite style="display:block;padding-top:3px;margin:0px 0px 0px 69px;font-style:normal;font-size:12px;">
+                                                <cite style="font-style:normal;font-size:12px;">
+                        <a href="http://weibo.com/iridium" style="margin:0px 2px 0px 0px;background:0px 0px;color:rgb(0, 120, 182);text-decoration:none;font-size:12px;" target="_blank" title="iridiumcao">iridiumcao</a>
+                                                <cite style="margin:0px 3px 0px 2px;font-style:normal;font-size:12px;">,</cite>
+                                            </cite>
+                                    <cite style="font-style:normal;font-size:12px;">
+                        <a href="http://weibo.com/3887488475" style="margin:0px 2px 0px 0px;background:0px 0px;color:rgb(0, 120, 182);text-decoration:none;font-size:12px;" target="_blank" title="JeremyKeith">JeremyKe...</a>
+                                            </cite>
+                                <cite style="color:rgb(102, 102, 102);font-style:normal;font-size:12px;">等<em style="font-style:normal;">20</em>人分享过</cite>
+                   </cite>
+           <span style="display:table;clear:both;"> </span></div>
+                    
+        <div style="clear:both;width:198px;overflow:hidden;">
+                                <ul style="margin:0px;width:1000px;overflow:hidden;background:0px 0px;list-style-type:none;padding:6px 0px 0px;">
+                                                    <li style="float:left;width:30px;padding-right:3px;background:0px 0px;list-style-type:none;font-size:12px;">
+                                <a href="http://weibo.com/iridium" style="background:0px 0px;color:rgb(0, 120, 182);text-decoration:none;font-size:12px;" target="_blank" title="iridiumcao">
+                                    <img src="JS的大坑——this的指向_files/1.jpg" type="image/jpeg" alt="iridiumcao" height="30" style="border:0px none;" width="30"/>
+                                </a>
+                            </li>
+                                                    <li style="float:left;width:30px;padding-right:3px;background:0px 0px;list-style-type:none;font-size:12px;">
+                                <a href="http://weibo.com/3887488475" style="background:0px 0px;color:rgb(0, 120, 182);text-decoration:none;font-size:12px;" target="_blank" title="JeremyKeith">
+                                    <img src="JS的大坑——this的指向_files/1 [1].jpg" type="image/jpeg" alt="JeremyKeith" height="30" style="border:0px none;" width="30"/>
+                                </a>
+                            </li>
+                                                    <li style="float:left;width:30px;padding-right:3px;background:0px 0px;list-style-type:none;font-size:12px;">
+                                <a href="http://weibo.com/2787456831" style="background:0px 0px;color:rgb(0, 120, 182);text-decoration:none;font-size:12px;" target="_blank" title="Timing2015">
+                                    <img src="JS的大坑——this的指向_files/1.gif" type="image/gif" alt="Timing2015" height="30" style="border:0px none;" width="30"/>
+                                </a>
+                            </li>
+                                                    <li style="float:left;width:30px;padding-right:3px;background:0px 0px;list-style-type:none;font-size:12px;">
+                                <a href="http://weibo.com/qinchong1988" style="background:0px 0px;color:rgb(0, 120, 182);text-decoration:none;font-size:12px;" target="_blank" title="浅尝男主角">
+                                    <img src="JS的大坑——this的指向_files/1 [2].jpg" type="image/jpeg" alt="浅尝男主角" height="30" style="border:0px none;" width="30"/>
+                                </a>
+                            </li>
+                                                    <li style="float:left;width:30px;padding-right:3px;background:0px 0px;list-style-type:none;font-size:12px;">
+                                <a href="http://weibo.com/3687401170" style="background:0px 0px;color:rgb(0, 120, 182);text-decoration:none;font-size:12px;" target="_blank" title="好多泡泡丶">
+                                    <img src="JS的大坑——this的指向_files/1 [3].jpg" type="image/jpeg" alt="好多泡泡丶" height="30" style="border:0px none;" width="30"/>
+                                </a>
+                            </li>
+                                                    <li style="float:left;width:30px;padding-right:3px;background:0px 0px;list-style-type:none;font-size:12px;">
+                                <a href="http://weibo.com/2129960911" style="background:0px 0px;color:rgb(0, 120, 182);text-decoration:none;font-size:12px;" target="_blank" title="全自动鸡蛋酱油拌饭制造机">
+                                    <img src="JS的大坑——this的指向_files/1 [4].jpg" type="image/jpeg" alt="全自动鸡蛋酱油拌饭制造机" height="30" style="border:0px none;" width="30"/>
+                                </a>
+                            </li>
+                                            </ul>
+                   </div>
+        </div>
+
+
+</div></div></div></div></span></p><h3 style="margin:0px 0px 15px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">您的鼓励是作者写作最大的动力</h3><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">如果您认为本网站的教程质量不错，读后觉得收获很大，预期工资涨幅能超过30%，不妨小额赞助我一下，让我有动力继续写出高质量的教程：</p><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;"><a href="http://www.liaoxuefeng.com/webpage/donate" style="display:inline-block;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(0, 168, 230);-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;color:rgb(255, 255, 255);box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:1rem;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);border-radius:4px;text-shadow:rgba(0, 0, 0, 0.0980392) 0px -1px 0px;box-shadow:rgba(0, 0, 0, 0.0470588) 0px 0px 5px inset;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 我要小额赞助</a></p><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+    <div style="margin-left:15px;margin-right:15px;"><span style="display:table-cell;"></span><div style="margin-left:15px;margin-right:15px;"><span style="display:table-cell;"></span><span style="float:left;max-width:100%;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> <a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/0014344993159773a464f34e1724700a6d5dd9e235ceb7c000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;">变量作用域</a></span><span style="float:right;max-width:100%;"><a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/001434499355829ead974e550644e2ebd9fd8bb1b0dd721000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;">高阶函数</a> <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></span><span style="display:table;clear:both;"></span></div><span style="display:table;clear:both;"></span></div>
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+
+    <h3 style="margin:0px 0px 15px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">评论</h3>
+
+    <ul style="margin:0px 0px 15px;margin-top:15px;padding:0px;list-style:none;"><li>
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001457428597585713c89dbf777433ba74619f7eb1322a0000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [5].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <h4 style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/0014574290668028fdf805e7a52404fa6f2896b1ce0fdd3000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">最后一个例子，恕我愚钝，没懂什么意思</a></h4>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001457428597585713c89dbf777433ba74619f7eb1322a0000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">鸡排饭加个蛋哈</a> created at 4天前, Last updated at 3天前</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">廖老师说要统计函数调用多少次，不直接在函数里加上count += 1就行了吗</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code>var count = 0;
+window.parseInt = function () {
+    count += 1;
+
+};
+parseInt('10');
+parseInt('20');
+parseInt('30');
+count; 
+3
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">return，apply啥的都不用额，结果也是3啊=，=
+求解释最后个例子是啥意思</p>
+
+            </div>
+        </div>
+    <ul style="margin:25px 0px 0px;padding-left:75px;list-style:none;"><li>
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001457468133735b3129a63d0a94f7d9cb0e4e106aa61f6000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [6].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001457468133735b3129a63d0a94f7d9cb0e4e106aa61f6000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">王小非啊非</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 3天前, Last updated at 3天前</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">你的代码等于改写了原函数 parseInt, 它唯一个作用就只有叠加(count += 1)了，而转整型的功能已经完全不存在了。
+所以一个方案就是用一个变量把原函数parseInt先保留下来，之后再调用. 这样新的函数不仅可以转整型，还可以叠加计数了.</p>
+
+            </div>
+        </div>
+    </li>
+        <li style="margin-top:25px;">
+            <div>
+                <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/0014574290668028fdf805e7a52404fa6f2896b1ce0fdd3000" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> View Full Discuss</a>
+                 
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/0014574290668028fdf805e7a52404fa6f2896b1ce0fdd3000#reply" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001417537751655869e9929a3c14b238b481818df52c659000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [7].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <h4 style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001450767860402b3b7e823ea8d4e269a3c714338cb76ef000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">额, 这段代码应该是返回not a number吧</a></h4>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001417537751655869e9929a3c14b238b481818df52c659000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">甲烷艾特</a> created at 2015-12-22 15:04, Last updated at 2-8 19:27</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <pre style="color:rgb(68, 68, 68);margin:0px 0px 15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;font-family:Consolas, monospace, serif;padding:10px;tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code>'use strict';
+var jiavan= {
+    name: '小明',
+    birth: 1990,
+    age: function () {
+        var y = new Date().getFullYear();
+        return y - this.birth;
+    }
+};
+
+var fo = jiavan.age;
+fo();//NaN
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">这里在chrome下返回的是NaN, 没有错误提示</p>
+
+            </div>
+        </div>
+    <ul style="margin:25px 0px 0px;padding-left:75px;list-style:none;"><li>
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/00144962327149323673b21d86e4e3a86305273bd9f7780000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [8].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/00144962327149323673b21d86e4e3a86305273bd9f7780000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">LetItGo_宋</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 1-21 14:32, Last updated at 1-21 14:32</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">这个fo已经是一个NUM了吧，试试去掉括号</p>
+
+            </div>
+        </div>
+    </li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/0014399962861930f037e4431164a1293abb3ad0f36147b000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [9].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/0014399962861930f037e4431164a1293abb3ad0f36147b000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">lmtooT_T</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2-8 19:27, Last updated at 2-8 19:27</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">fo是这个函数本身</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code>function () {
+        var y = new Date().getFullYear();
+        return y - this.birth;
+    }
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">之所以返回NaN是因为这句，</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code>return y - this.birth;
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">这句的this指向了一个windows或者undefined，而windows或者undefined的birth还是一个undefined，所以一个数字和一个undefined求差，就成了一个NaN</p>
+
+            </div>
+        </div>
+    </li>
+        <li style="margin-top:25px;">
+            <div>
+                <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001450767860402b3b7e823ea8d4e269a3c714338cb76ef000" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> View Full Discuss</a>
+                 
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001450767860402b3b7e823ea8d4e269a3c714338cb76ef000#reply" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001452159892128677abc7afd7f4bc091130390ecf8db9b000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [10].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <h4 style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001452413116886a6aa70dcab894ec0a607846d7fb6c650000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">apply( ) 的主要应用就是用来接收数量不定的参数</a></h4>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001452159892128677abc7afd7f4bc091130390ecf8db9b000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">小云云揍斯额</a> created at 1-10 16:05, Last updated at 1-16 17:50</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <pre style="color:rgb(68, 68, 68);margin:0px 0px 15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;font-family:Consolas, monospace, serif;padding:10px;tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;"><code>var a = [3, 5, 4];
+alert(Math.max(a)); // NaN
+alert(Math.max.apply(null, a)); // 5
+</code></pre>
+            </div>
+        </div>
+    <ul style="margin:25px 0px 0px;padding-left:75px;list-style:none;"><li>
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001452937392731730c89aa47f24cd4a456682a6f1d9e24000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [11].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001452937392731730c89aa47f24cd4a456682a6f1d9e24000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">路上的逗逼孩</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 1-16 17:50, Last updated at 1-16 17:50</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">Math.max接收的参数，应该是一组参数，然后给出一组参数中的最大值，而不是给出指定数组的最大值，所以：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code>Math.max(3, 4, 5); // 返回5
+Math.max.call(null, 3, 4, 5); // 返回5
+Math.max.apply(null, [3, 4, 5]); // 返回5
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">而</p>
+<pre style="color:rgb(68, 68, 68);margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;font-family:Consolas, monospace, serif;margin-top:15px;tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;"><code>Math.max([3, 4, 5]); // 返回NaN
+</code></pre>
+            </div>
+        </div>
+    </li>
+        <li style="margin-top:25px;">
+            <div>
+                <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001452413116886a6aa70dcab894ec0a607846d7fb6c650000" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> View Full Discuss</a>
+                 
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001452413116886a6aa70dcab894ec0a607846d7fb6c650000#reply" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001448873630939a0f9268c88db4ab59817edfb2fa94b62000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [12].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <h4 style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001448873057708b108ef0e7b7047fa9a57a0b05db39092000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">请教function中的this</a></h4>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001448873630939a0f9268c88db4ab59817edfb2fa94b62000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">西十四郎</a> created at 2015-11-30 16:44, Last updated at 2015-12-11 16:47</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">廖老师，为什么我在chorme里调试
+'use strict';
+function aa(){
+    alert(this);
+}
+还是能返回window对象，并没有指向undefined</p>
+
+            </div>
+        </div>
+    <ul style="margin:25px 0px 0px;padding-left:75px;list-style:none;"><li>
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001448873630939a0f9268c88db4ab59817edfb2fa94b62000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [13].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001448873630939a0f9268c88db4ab59817edfb2fa94b62000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">西十四郎</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-11-30 16:46, Last updated at 2015-11-30 16:46</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">'use strict';
+function aa(){
+    alert(this);
+}
+aa();</p>
+
+            </div>
+        </div>
+    </li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/0014497998811524a325a9723644554b9de18635da2854b000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [1].gif" type="image/gif" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/0014497998811524a325a9723644554b9de18635da2854b000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">单手虐学霸</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-12-11 16:47, Last updated at 2015-12-11 16:47</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">function aa(){
+'use strict';
+    alert(this);
+}
+aa();</p>
+
+            </div>
+        </div>
+    </li>
+        <li style="margin-top:25px;">
+            <div>
+                <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001448873057708b108ef0e7b7047fa9a57a0b05db39092000" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> View Full Discuss</a>
+                 
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001448873057708b108ef0e7b7047fa9a57a0b05db39092000#reply" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/00144170311137054109cbbb51b497ab336e852cc14fce3000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [14].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <h4 style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001441703424946d091a546c9de4cb1b1c21ef245e8f940000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">最后一个装饰器例子的疑问？</a></h4>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/00144170311137054109cbbb51b497ab336e852cc14fce3000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">duzengrass</a> created at 2015-9-8 17:10, Last updated at 2015-11-30 14:44</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">最后一个装饰器例子中，</p>
+<pre style="color:rgb(68, 68, 68);margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;font-family:Consolas, monospace, serif;margin-top:15px;tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;"><code>var oldParseInt = parseInt; //这个保存的是引用吧？
+//此处更改parseInt不会更改oldParseInt吗？也就是说parseInt变化了，oldParseInt也会变
+window.parseInt = function () {
+    count += 1;
+    return oldParseInt.apply(null, arguments); // 调用原函数
+};
+</code></pre>
+            </div>
+        </div>
+    <ul style="margin:25px 0px 0px;padding-left:75px;list-style:none;"><li>
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [15].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">廖雪峰</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-9-9 10:53, Last updated at 2015-9-9 10:53</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">自己测试：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code>var a = 'Name';
+var b = a;
+a = 'changed';
+console.log(b);
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">要理解变量是指向对象的引用</p>
+
+            </div>
+        </div>
+    </li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/00144237414407245f58f41d1bf40ab94c7a7a168530fc1000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [16].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/00144237414407245f58f41d1bf40ab94c7a7a168530fc1000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">附房子</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-9-16 11:24, Last updated at 2015-9-16 11:24</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">var count = 0;
+var oldParseInt = parseInt; // 保存原函数
+window.parseInt = function () {
+    count += 1;
+    return oldParseInt ; // 调用原函数，改成直接调用oldParseInt
+};
+parseInt('10');
+parseInt('20');
+parseInt('30');
+count; // 3</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">3</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">修饰器的例子在chrome测试如上代码
+结果正确</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">为何必须使用apply呢？</p>
+
+            </div>
+        </div>
+    </li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [17].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">廖雪峰</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-9-17 22:29, Last updated at 2015-9-17 22:29</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">用apply你不必关心原函数参数的个数</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">因为parseInt可以接收1-2个参数</p>
+
+            </div>
+        </div>
+    </li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/0013890823627103ae84a996ad94a7886d037ff49cf4830000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [18].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/0013890823627103ae84a996ad94a7886d037ff49cf4830000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">一际孤鸿_FBW</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-9-20 16:46, Last updated at 2015-9-20 16:46</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">话说那个二楼，你的结果是正确的么？ 光只看count有什么用，
+<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">parseInt('10');</code>   这个返回的是10么？ 你那样写，参数都没传进去</p>
+
+            </div>
+        </div>
+    </li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/00141111911080375106734dd6f402c9a6d3e96a81f2237000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [19].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/00141111911080375106734dd6f402c9a6d3e96a81f2237000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">裝逼是一種3394446380</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-9-30 11:54, Last updated at 2015-9-30 11:54</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">在控制台先执行</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code>var b = a;
+
+var a = function() {
+    console.log(&quot;这是旧函数&quot;);
+}
+
+b() // 这是旧函数
+a() // 这是旧函数
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">然后清空控制台,重新定义a</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code>a = function() {
+    console.log(&quot;这是新的&quot;);
+}
+
+b() // 这是旧函数
+a() // 这是新的
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">这就是老师说的变量是对象的引用么? <code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">b</code> 和 <code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">a</code> 都指向了<strong style="font-weight:bold;">旧的匿名函数</strong>, 新赋 a 的那个匿名函数和旧的没有任何关系,所以现在 <code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">a</code> 指向了一个新的匿名函数,而 <code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);white-space:nowrap;padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);">b</code> 还是指向<strong style="font-weight:bold;">旧函数</strong> ? 不知道理解有没有问题</p>
+
+            </div>
+        </div>
+    </li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001404010220587ae8e836400ec4b1685d0d3c909ad1115000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [20].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001404010220587ae8e836400ec4b1685d0d3c909ad1115000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">seven_dong</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-10-2 15:47, Last updated at 2015-10-2 15:47</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">我的理解是，function是引用类型指向的堆内存中真正的object的引用，假如parseInt指向的是原来的object1，那个付给oldparseInt后，old也指向了object1，重新定义的function实际是object2，那么定义完成后parseInt实际上就指向object2了，所以不会影响之前的object1.</p>
+
+            </div>
+        </div>
+    </li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/00144764590580902b3e8b9b4da4c0a8e58b2a4ddc755c8000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [2].gif" type="image/gif" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/00144764590580902b3e8b9b4da4c0a8e58b2a4ddc755c8000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">出生之心</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-11-16 11:43, Last updated at 2015-11-16 11:43</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">为什么里面的使用 </p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code>apply(null, arguments);
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">而不是</p>
+<pre style="color:rgb(68, 68, 68);margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;font-family:Consolas, monospace, serif;margin-top:15px;tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;"><code>apply(this, arguments);
+</code></pre>
+            </div>
+        </div>
+    </li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001448600213711c3f410f2428e4649a403842104da9663000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [21].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001448600213711c3f410f2428e4649a403842104da9663000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">hanashin</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-11-30 14:44, Last updated at 2015-11-30 14:44</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">因为parseInt函数不需要传入对象</p>
+
+            </div>
+        </div>
+    </li>
+        <li style="margin-top:25px;">
+            <div>
+                <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001441703424946d091a546c9de4cb1b1c21ef245e8f940000" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> View Full Discuss</a>
+                 
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001441703424946d091a546c9de4cb1b1c21ef245e8f940000#reply" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001448600213711c3f410f2428e4649a403842104da9663000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [22].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <h4 style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/00144886496109127818763aa5f41419525e18c147096da000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">this并不是坑</a></h4>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001448600213711c3f410f2428e4649a403842104da9663000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">hanashin</a> created at 2015-11-30 14:29, Last updated at 2015-11-30 14:29</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">我并不认为this的作用域是一个坑,只是会不会用罢了</p>
+
+            </div>
+        </div>
+    <ul style="margin:25px 0px 0px;padding-left:75px;list-style:none;">
+        <li>
+            <div>
+                <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/00144886496109127818763aa5f41419525e18c147096da000" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> View Full Discuss</a>
+                 
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/00144886496109127818763aa5f41419525e18c147096da000#reply" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/0014423992872633fbccf0eaae0481eaa2f6975b6c53aa4000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/0.jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <h4 style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001442477797021f13a04189ac04d70a9c01fc7b667202b000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">老师的每个例子都恰到好处</a></h4>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/0014423992872633fbccf0eaae0481eaa2f6975b6c53aa4000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">宇宙无敌大玥玥玥</a> created at 2015-9-17 16:16, Last updated at 2015-9-17 16:16</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">var count = 0;
+var oldParseInt = parseInt; // 保存原函数</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">window.parseInt = function () {
+    count += 1;
+    return oldParseInt.apply(null, arguments); // 调用原函数
+};</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;">// 测试:
+parseInt('10');
+parseInt('20');
+parseInt('30');
+count; // 3</p>
+<p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">这例子不错！</p>
+
+            </div>
+        </div>
+    <ul style="margin:25px 0px 0px;padding-left:75px;list-style:none;">
+        <li>
+            <div>
+                <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001442477797021f13a04189ac04d70a9c01fc7b667202b000" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> View Full Discuss</a>
+                 
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001442477797021f13a04189ac04d70a9c01fc7b667202b000#reply" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001441549630795f74983171269446d9b62922158a8db54000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [3].gif" type="image/gif" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <h4 style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/0014418489537542cf5427db26c48db8f3fd4cdb8a4a406000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">this 果然是天坑，每次都被this 搞得很晕</a></h4>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001441549630795f74983171269446d9b62922158a8db54000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">vampireH</a> created at 2015-9-10 9:35, Last updated at 2015-9-10 9:35</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">解释的很清楚</p>
+
+            </div>
+        </div>
+    <ul style="margin:25px 0px 0px;padding-left:75px;list-style:none;">
+        <li>
+            <div>
+                <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/0014418489537542cf5427db26c48db8f3fd4cdb8a4a406000" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> View Full Discuss</a>
+                 
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/0014418489537542cf5427db26c48db8f3fd4cdb8a4a406000#reply" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001418953534574a655f341160348289b33cad0b40c9ee1000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [23].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <h4 style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001441524268622e009d57ed63a423098874f4448245fd8000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">看了这节</a></h4>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001418953534574a655f341160348289b33cad0b40c9ee1000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">wikinee</a> created at 2015-9-6 15:24, Last updated at 2015-9-6 15:24</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;"><strong style="font-weight:bold;">果然是<em style="color:rgb(221, 0, 85);">this</em>(这)也不会，<em style="color:rgb(221, 0, 85);">that</em>(那)也不会。</strong></p>
+
+            </div>
+        </div>
+    <ul style="margin:25px 0px 0px;padding-left:75px;list-style:none;">
+        <li>
+            <div>
+                <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001441524268622e009d57ed63a423098874f4448245fd8000" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> View Full Discuss</a>
+                 
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/001441524268622e009d57ed63a423098874f4448245fd8000#reply" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001436923667855c1548e8c62ac4ac781048a7ea795f16f000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [24].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <h4 style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/00143694575340674c6783982ef4f4684ccb5c4ff8e1dcf000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">疑问</a></h4>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001436923667855c1548e8c62ac4ac781048a7ea795f16f000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">champkeh</a> created at 2015-7-15 15:35, Last updated at 2015-8-21 10:01</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">最后的那个例子中，我想知道可不可以不使用apply调用，直接写成</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code>return oldParseInt(arguments); // 调用原函数
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">不知道这样可不可以？</p>
+
+            </div>
+        </div>
+    <ul style="margin:25px 0px 0px;padding-left:75px;list-style:none;"><li>
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [25].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">廖雪峰</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-7-16 8:14, Last updated at 2015-7-16 8:14</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;">arguments类似Array，不是单个值：</p>
+<pre style="font-family:Consolas, monospace, serif;margin:0px 0px 15px;padding:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:18px;margin-top:15px;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);word-break:break-all;word-wrap:break-word;white-space:pre-wrap;"><code>return oldParseInt(arguments[0]);
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">但是parseInt确实能接收多个参数</p>
+
+            </div>
+        </div>
+    </li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/00141646805919720f744f9e6d64feda7a9e8c95e8eaad4000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [26].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/00141646805919720f744f9e6d64feda7a9e8c95e8eaad4000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">Nestle多</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-8-21 9:21, Last updated at 2015-8-21 9:21</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">我也觉得没必要用apply啊</p>
+
+            </div>
+        </div>
+    </li><li style="margin-top:25px;">
+        <div>
+            <div style="margin-bottom:0;padding:10px;border-style:solid none none;border-top-width:1px;border-top-color:rgb(221, 221, 221);border-radius:0px;background:transparent;"><span style="display:table;"></span>
+                <a href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="JS的大坑——this的指向_files/1 [27].jpg" type="image/jpeg" alt="" height="50" style="max-width:100%;height:auto;box-sizing:border-box;vertical-align:middle;border:1px solid rgb(221, 221, 221);margin-right:15px;float:left;border-radius:50%;" width="50"/></a>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">廖雪峰</a></div>
+                <div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">Created at 2015-8-21 10:01, Last updated at 2015-8-21 10:01</div>
+            <span style="display:table;clear:both;"></span></div>
+            <div style="padding-right:10px;padding-left:75px;">
+                <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;margin-bottom:0px;">请写一个不用apply调用的版本</p>
+
+            </div>
+        </div>
+    </li>
+        <li style="margin-top:25px;">
+            <div>
+                <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/00143694575340674c6783982ef4f4684ccb5c4ff8e1dcf000" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> View Full Discuss</a>
+                 
+                <a href="http://www.liaoxuefeng.com/discuss/001434785951277d88c0f2037a2409682c8f0de5384c232000/00143694575340674c6783982ef4f4684ccb5c4ff8e1dcf000#reply" style="text-transform:none;background:rgb(245, 245, 245);text-decoration:none;border-radius:4px;-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;color:rgb(68, 68, 68);display:inline-block;box-sizing:border-box;padding:0px 10px;vertical-align:middle;line-height:23px;min-height:25px;font-size:12px;text-align:center;border:1px solid rgba(0, 0, 0, 0.0588235);text-shadow:rgb(255, 255, 255) 0px 1px 0px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li></ul>
+
+    <h3 style="margin:0px 0px 15px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">发表评论</h3>
+
+    <div>
+        <p style="margin:0px 0px 15px;word-wrap:break-word;white-space:pre-wrap;"></p>
+    </div>
+
+    <div></div>
+
+
+                        </div></div></div></div></div></div></div></div></div><br/></span>
+</div></body></html> 

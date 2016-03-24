@@ -1,0 +1,385 @@
+<html>
+<head>
+  <title>stdin_百度百科</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/275193; Windows/6.3.9600;"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="14144"/>
+<h1>stdin_百度百科</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2015/12/5 23:15</i></td></tr>
+<tr><td><b>更新时间：</b></td><td><i>2015/12/5 23:15</i></td></tr>
+<tr><td><b>标签：</b></td><td><i>IT, 减藏</i></td></tr>
+<tr><td><b>来源：</b></td><td><a href="http://baike.baidu.com/link?url=6Ff3ZqmXhERMlJksClSfqDxht5gscOOUHKquiKXc2LoLKzUtQfElnXaFdk30x-0CXn-BvQn-0qPoogc1H6_-ua"><i>http://baike.baidu.com/link?url=6Ff3ZqmXhERMlJksClSfqDxht5gscOOUHKquiKXc2LoLKzUtQfElnXaFdk30x-0CXn-BvQn-0qPoogc1H6_-ua</i></a></td></tr>
+</table>
+</div>
+<br/>
+
+<div>
+<span><div>
+ <div>
+  <div>
+   <h1>stdin_百度百科</h1>
+   <div>
+    <div></div>
+   </div>
+  </div> 
+  <dl><dd> 
+    <h1>stdin</h1> 
+    <a href="#" shape="rect" target="_blank">编辑</a> 
+    <a href="http://baike.baidu.com/view/10812319.htm" shape="rect" target="_blank" title="锁定">锁定</a> 
+   </dd></dl>
+  <div>
+   本词条缺少
+   <strong>概述</strong>、
+   <strong>名片图</strong>，补充相关内容使词条更完整，还能快速升级，赶紧来
+   <a shape="rect" target="_blank">编辑</a>吧！
+  </div> 
+  <div> 
+   <dl><dt>
+     外文名
+    </dt><dd>
+      stdin 
+    </dd><dt>
+     类    别
+    </dt><dd>
+      最简单的小程序 
+    </dd></dl>
+   <dl><dt>
+     功    能
+    </dt><dd>
+      键盘输入
+     <a href="http://baike.baidu.com/view/263416.htm" shape="rect" target="_blank">字符</a>将其送到控制台 
+    </dd><dt>
+     采    用
+    </dt><dd>
+      perl语言实现 
+    </dd></dl> 
+  </div> 
+  <h2> <a href="#" shape="rect" target="_blank">编辑</a> </h2> 
+  <div>
+   stdin是标准输入 std即standard（标准），in即input（输入），合起来就是标准输入。 一般就是指键盘输入到
+   <a href="http://baike.baidu.com/view/266782.htm" shape="rect" target="_blank">缓冲区</a>里的东西
+  </div> 
+  <div>
+   示例：一个最简单的小程序，它的功能是从键盘输入
+   <a href="http://baike.baidu.com/view/263416.htm" shape="rect" target="_blank">字符</a>，然后将其送到控制台。采用perl语言实现，你可以这样写：
+  </div> 
+  <div>
+   <div>
+    <table><tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1">
+        <div>
+         <div>
+          <code>while</code>
+          <code>($line=&lt;STDIN&gt;)</code>
+         </div>
+         <div>
+          <code>{</code>
+         </div>
+         <div>
+          <code>print$line;</code>
+         </div>
+         <div>
+          <code>}</code>
+         </div>
+        </div></td></tr></table>
+   </div>
+  </div>
+  <div>
+   简单地说，&lt;STDIN&gt;是一个专用的
+   <a href="http://baike.baidu.com/view/1706628.htm" shape="rect" target="_blank">文件句柄</a>，在本例中它属于标准输入缓存（称为STDIN），通常是连接到键盘。每次我们将&lt;STDIN&gt;的值赋给变量$line时，即为将STDIN缓存中的首行取出，然后放入$line。当到达缓存最后一行时，就会取出while语句判断条件为假的（EOF）文件结束标识符。程序的其它部分很简单可以这样解释。现在我们已经将输入信息放入$line变量，接着我们就可以用print函数将其打印到屏幕。或者更准确地说，打印到通常连接显示器的标准输入缓存。标准输入和输出
+   <a href="http://baike.baidu.com/view/907.htm" shape="rect" target="_blank">缓存</a>都可以重定向，例如可重定向到保存程序结果的某个文件中，如果是在处理文本，那么通常可以认为这与键盘及显示器是等价的。
+  </div>
+  <h2> <a href="#" shape="rect" target="_blank">编辑</a> </h2> 
+  <div>
+   你可能会认为这一程序已经是最短的了，但是通过使用perl的特殊变量，它还可以更短。
+  </div> 
+  <div>
+   它还可以这样书写：
+  </div> 
+  <div>
+   <div>
+    <table><tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1">
+        <div>
+         <div>
+          <code>while</code>
+          <code>(&lt;STDIN&gt;)</code>
+         </div>
+         <div>
+          <code>{</code>
+         </div>
+         <div>
+          <code>print;</code>
+         </div>
+         <div>
+          <code>}</code>
+         </div>
+        </div></td></tr></table>
+   </div>
+  </div>
+  <div>
+   <b>stdin流阻塞的分析</b>
+  </div> 
+  <div>
+   以scanf函数为例，运行下述程序
+  </div> 
+  <div>
+   <div>
+    <table><tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1">
+        <div>
+         <div>
+          <code>#include&lt;stdio.h&gt;</code>
+         </div>
+         <div>
+          <code>intmain()</code>
+         </div>
+         <div>
+          <code>{</code>
+         </div>
+         <div>
+          <code>inta=0;</code>
+         </div>
+         <div>
+          <code>intb=0;</code>
+         </div>
+         <div>
+          <code>intc=0;</code>
+         </div>
+         <div>
+          <code>intret=0;</code>
+         </div>
+         <div>
+          <code>ret=</code>
+          <code>scanf</code>
+          <code>(</code>
+          <code>&quot;%d%d%d&quot;</code>
+          <code>,&amp;a,&amp;b,&amp;c);</code>
+         </div>
+         <div>
+          <code>printf</code>
+          <code>(</code>
+          <code>&quot;第一次读入数量：%d\n&quot;</code>
+          <code>,ret);</code>
+         </div>
+         <div>
+          <code>ret=</code>
+          <code>scanf</code>
+          <code>(</code>
+          <code>&quot;%d%d%d&quot;</code>
+          <code>,&amp;a,&amp;b,&amp;c);</code>
+         </div>
+         <div>
+          <code>printf</code>
+          <code>(</code>
+          <code>&quot;第二次读入数量：%d\n&quot;</code>
+          <code>,ret);</code>
+         </div>
+         <div>
+          <code>return0;</code>
+         </div>
+         <div>
+          <code>}</code>
+         </div>
+        </div></td></tr></table>
+   </div>
+  </div>
+  <div>
+   我们定义了a，b，c三个变量来接受输入的内容，定义了变量ret来接收scanf函数的返回值。
+  </div> 
+  <div>
+   正确输入的话：
+  </div> 
+  <div>
+   <div> 
+    <a href="http://baike.baidu.com/picture/1322472/1322472/0/b219ebc4b74543a9ef5e40de1c178a82b901145e.html?fr=lemma&amp;ct=single" shape="rect" target="_blank"> <img src="stdin_百度百科_files/Image.jpg" type="image/jpeg"/> </a> 
+   </div>
+  </div> 
+  <div>
+   但是当输入内容与格式换字符串不匹配时，结果会令人大跌眼镜（仔细分析会对stdin流有更深入理解的哦）：
+  </div> 
+  <div>
+   <div> 
+    <a href="http://baike.baidu.com/picture/1322472/1322472/0/d000baa1cd11728b72ae3630cafcc3cec3fd2c24.html?fr=lemma&amp;ct=single" shape="rect" target="_blank"> <img src="stdin_百度百科_files/Image [1].jpg" type="image/jpeg"/> </a> 
+   </div>执行到第一个scanf时，当输入字符’b’的时候与ret=scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);中的格式化字符串不匹配，stdin流被阻塞，scanf函数不在读取后面的部分，直接将1返回，表示只将stdin流中的1读入到了变量a中。
+  </div> 
+  <div>
+   执行到第二个scanf时，字符’b’还是与格式化字符串不匹配，stdin流仍然被阻塞，所以没有提示输入，scanf函数将0返回。
+  </div> 
+  <div>
+   将代码作如下修改，可以有力的证明上述结论。
+  </div> 
+  <div>
+   <div>
+    <table><tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1">
+        <div>
+         <div>
+          <code>#include&lt;stdio.h&gt;</code>
+         </div>
+         <div>
+          <code>intmain()</code>
+         </div>
+         <div>
+          <code>{</code>
+         </div>
+         <div>
+          <code>inta=0;</code>
+         </div>
+         <div>
+          <code>intb=0;</code>
+         </div>
+         <div>
+          <code>intc=0;</code>
+         </div>
+         <div>
+          <code>intret=0;</code>
+         </div>
+         <div>
+          <code>ret=</code>
+          <code>scanf</code>
+          <code>(</code>
+          <code>&quot;%d%d%d&quot;</code>
+          <code>,&amp;a,&amp;b,&amp;c);</code>
+         </div>
+         <div>
+          <code>printf</code>
+          <code>(</code>
+          <code>&quot;第一次读入数量：%d\n&quot;</code>
+          <code>,ret);</code>
+         </div>
+         <div>
+          <code>ret=</code>
+          <code>scanf</code>
+          <code>(</code>
+          <code>&quot;%c%d%d&quot;</code>
+          <code>,&amp;a,&amp;b,&amp;c);</code>
+         </div>
+         <div>
+          <code>printf</code>
+          <code>(</code>
+          <code>&quot;第二次读入数量：%d\n&quot;</code>
+          <code>,ret);</code>
+         </div>
+         <div>
+          <code>return0;</code>
+         </div>
+         <div>
+          <code>}</code>
+         </div>
+        </div></td></tr></table>
+   </div>
+  </div>
+  <div>
+   当把第二个scanf函数内的格式化字符串改为”%c%d%d”时，运行结果如下：
+  </div> 
+  <div>
+   <div> 
+    <a href="http://baike.baidu.com/picture/1322472/1322472/0/2f738bd4b31c8701208617f4257f9e2f0708fff4.html?fr=lemma&amp;ct=single" shape="rect" target="_blank"> <img src="stdin_百度百科_files/Image [2].jpg" type="image/jpeg"/> </a> 
+   </div>
+  </div> 
+  <div>
+   执行到第一个scanf函数时，由于输入’b’的原因scanf函数直接返回1，stdin流阻塞。
+  </div> 
+  <div>
+   执行到第二个scanf函数时，字符’b’与格式化字符串”%c%d%d”中的%c匹配，stdin流终于疏通，在输入6，则将变量a，b，c分别赋值为98(‘b’的ASCII码)、2、6，scanf函数返回3。
+  </div> 
+  <div>
+   在scanf函数使用fflush(stdin);，清空输入缓冲区：
+  </div> 
+  <div>
+   <div>
+    <table><tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1">
+        <div>
+         <div>
+          <code>#include&lt;stdio.h&gt;</code>
+         </div>
+         <div>
+          <code>intmain()</code>
+         </div>
+         <div>
+          <code>{</code>
+         </div>
+         <div>
+          <code>inta=0;</code>
+         </div>
+         <div>
+          <code>intb=0;</code>
+         </div>
+         <div>
+          <code>intc=0;</code>
+         </div>
+         <div>
+          <code>intret=0;</code>
+         </div>
+         <div>
+          <code>ret=</code>
+          <code>scanf</code>
+          <code>(</code>
+          <code>&quot;%d%d%d&quot;</code>
+          <code>,&amp;a,&amp;b,&amp;c);</code>
+         </div>
+         <div>
+          <code>fflush</code>
+          <code>(stdin);</code>
+         </div>
+         <div>
+          <code>printf</code>
+          <code>(</code>
+          <code>&quot;第一次读入数量：%d\n&quot;</code>
+          <code>,ret);</code>
+         </div>
+         <div>
+          <code>ret=</code>
+          <code>scanf</code>
+          <code>(</code>
+          <code>&quot;%d%d%d&quot;</code>
+          <code>,&amp;a,&amp;b,&amp;c);</code>
+         </div>
+         <div>
+          <code>fflush</code>
+          <code>(stdin);</code>
+         </div>
+         <div>
+          <code>printf</code>
+          <code>(</code>
+          <code>&quot;第二次读入数量：%d\n&quot;</code>
+          <code>,ret);</code>
+         </div>
+         <div>
+          <code>return0;</code>
+         </div>
+         <div>
+          <code>}</code>
+         </div>
+        </div></td></tr></table>
+   </div>
+  </div> 
+  <div>
+   <div> 
+    <a href="http://baike.baidu.com/picture/1322472/1322472/0/9213b07eca806538da9c010195dda144ad3482aa.html?fr=lemma&amp;ct=single" shape="rect" target="_blank"> <img src="stdin_百度百科_files/Image [3].jpg" type="image/jpeg"/> </a> 
+   </div>
+  </div> 
+  <div>
+   stdin流在实际中经常由于一些不正确的使用发生阻塞，注意使用fflush(stdin);，可以解决很多问题哦！
+  </div>
+  <h2> <a href="#" shape="rect" target="_blank">编辑</a> </h2> 
+  <div>
+   stdout（Standardoutput）标准输出
+  </div> 
+  <div>
+   stdin（Standardinput）标准输入
+  </div> 
+  <div>
+   stderr（Standarderror）标准错误
+  </div> 
+ </div>
+</div></span>
+</div></body></html> 

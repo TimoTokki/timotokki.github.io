@@ -1,0 +1,166 @@
+<html>
+<head>
+  <title>GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/275193; Windows/6.3.9600;"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="14871"/>
+<h1>GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2016/3/17 20:45</i></td></tr>
+<tr><td><b>更新时间：</b></td><td><i>2016/3/17 20:49</i></td></tr>
+<tr><td><b>标签：</b></td><td><i>减藏</i></td></tr>
+<tr><td><b>来源：</b></td><td><a href="http://blog.gtwang.org/linux/gparted-gnome-partition-editor-and-live-cd-usb/"><i>http://blog.gtwang.org/linux/gparted-gnome-partition-editor-and-live-cd-usb/</i></a></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span><br/><div><div><div><div><h1>GParted 磁碟分割工具使用教學</h1><div><div></div></div></div>
+					
+						
+						<div>
+
+
+
+
+
+							<p><a href="http://gparted.org/" target="_blank">GParted</a> 是一套開放原始碼的免費磁碟分割工具，可用來管理 Windows 與 Linux 等各種系統的磁碟分割區。</p>
+<p><a href="http://gparted.org/" target="_blank">GParted</a>（GNOME Partition Editor）從名稱上就可以看得出來它就是 <a href="http://blog.gtwang.org/linux/parted-command-to-create-resize-rescue-linux-disk-partitions/" target="_blank">Parted 磁碟分割區工具</a> 的一個視窗介面版本，同時也是 GNOME 官方所選定的磁碟分割區工具，其功能跟指令式的 Parted 差不多，不過操作上會比 Parted 更方便，以下是 GParted 的使用教學。</p>
+
+
+
+<h2>安裝 GParted</h2>
+<p>在 Debian 系列的 Linux（如 Ubuntu、Linux Mint）中可用 apt 安裝：</p>
+<pre>apt-get install gparted</pre>
+<p>Red Hat 系列的 Linux 可用 yum 安裝：</p>
+<pre>sudo yum install gparted</pre>
+<p>OpenSUSE 的話可用 zypper 安裝：</p>
+<pre>sudo zypper install gparted</pre>
+<p>如果需要處理 ext2、ext3 或 ext4 的檔案系統，還要同時安裝 <code>e2fsprogs</code> 這個檔案系統工具套件（不過這個應該通常也都會自動安裝）。</p>
+<h2>新增磁碟分割區</h2>
+<p>Step 1<br/>
+安裝好 GParted 之後，Linux 桌面的主選單中應該就會有 GParted 的啟動圖示，其全名為 GNOME Partition Editor。</p>
+<div><a href="http://blog.gtwang.org/wp-content/uploads/2016/02/gparted-in-linux-20.png" target="_blank"><div><img src="GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang_files/Image.gif" type="image/gif" alt="gparted-in-linux-20" height="1" title="Linux 桌面主選單" width="1"/></div></a><p>Linux 桌面主選單</p></div>
+<p>Step 2<br/>
+由於 GParted 這個工具是用來管理磁碟分割區的，啟動的時候會需要取得 root 管理者的權限。</p>
+<div><a href="http://blog.gtwang.org/wp-content/uploads/2016/02/gparted-in-linux-1.png" target="_blank"><div><img src="GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang_files/Image [1].gif" type="image/gif" alt="gparted-in-linux-1" height="1" title="取得 root 管理者的權限" width="1"/></div></a><p>取得 root 管理者的權限</p></div>
+<p>Step 3<br/>
+這是 GParted 的視窗介面，右上方的選單可以選擇硬碟，中間主要的部份是該顆硬碟目前的磁碟配置與空間使用狀況。</p>
+<div><a href="http://blog.gtwang.org/wp-content/uploads/2016/02/gparted-in-linux-2.png" target="_blank"><div><img src="GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang_files/Image [2].gif" type="image/gif" alt="gparted-in-linux-2" height="1" title="GParted 視窗介面" width="1"/></div></a><p>GParted 視窗介面</p></div>
+<p>這個視窗介面的設計很直覺，我們可以一眼就看出整個硬碟的狀況。</p>
+<p>Step 4<br/>
+接著我們示範新增磁碟分割區，首先從右上方的硬碟選單中，選擇要新增分割區的硬碟。</p>
+<div><a href="http://blog.gtwang.org/wp-content/uploads/2016/02/gparted-in-linux-3.png" target="_blank"><div><img src="GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang_files/Image [3].gif" type="image/gif" alt="gparted-in-linux-3" height="1" title="選擇要新增分割區的硬碟" width="1"/></div></a><p>選擇要新增分割區的硬碟</p></div>
+<p>這裡我們選擇 <code>/dev/sdb</code> 這一顆 10GB 的硬碟作為示範。</p>
+<p>Step 5<br/>
+在未配置的空間上點選滑鼠右鍵，從選單中選擇「New」新增磁碟分割區。</p>
+<div><a href="http://blog.gtwang.org/wp-content/uploads/2016/02/gparted-in-linux-4.png" target="_blank"><div><img src="GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang_files/Image [4].gif" type="image/gif" alt="gparted-in-linux-4" height="1" title="選擇「New」新增磁碟分割區" width="1"/></div></a><p>選擇「New」新增磁碟分割區</p></div>
+<p>Step 6<br/>
+設定新磁碟分割區的大小，我們可以在下方輸入分割區的大小，或是直接用滑鼠拖曳的的方式調整，另外記得調整分割區的檔案格式（File system）等設定。</p>
+<div><a href="http://blog.gtwang.org/wp-content/uploads/2016/02/gparted-in-linux-5.png" target="_blank"><div><img src="GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang_files/Image [5].gif" type="image/gif" alt="gparted-in-linux-5" height="1" title="設定新磁碟分割區的大小" width="1"/></div></a><p>設定新磁碟分割區的大小</p></div>
+<p>Step 7<br/>
+分割區的設定完成後，畫面會像這樣，請注意這時候 GParted 還沒有實際進行磁碟的分割，它只是將要進行的工作放進下方的佇列中，等待所有的工作都確定了之後才會一起執行，GParted 這樣的設計可以降低新手不小心設定錯誤而造成硬碟資料損毀的風險。</p>
+<div><a href="http://blog.gtwang.org/wp-content/uploads/2016/02/gparted-in-linux-6.png" target="_blank"><div><img src="GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang_files/Image [6].gif" type="image/gif" alt="gparted-in-linux-6" height="1" title="GParted 工作佇列" width="1"/></div></a><p>GParted 工作佇列</p></div>
+<p>Step 8<br/>
+建立好所有的分割區，確認無誤之後，接著按下工具列的「Apply All Operations」（也就是那個綠色勾勾），套用所有操作。</p>
+<div><a href="http://blog.gtwang.org/wp-content/uploads/2016/02/gparted-in-linux-7.png" target="_blank"><div><img src="GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang_files/Image [7].gif" type="image/gif" alt="gparted-in-linux-7" height="1" title="建立好所有的分割區" width="1"/></div></a><p>建立好所有的分割區</p></div>
+<p>Step 9<br/>
+實際進行變更之前會有警告訊息，若確認無誤即可按下「Apply」進行所有佇列中的操作。</p>
+<div><a href="http://blog.gtwang.org/wp-content/uploads/2016/02/gparted-in-linux-8-1.png" target="_blank"><div><img src="GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang_files/Image [8].gif" type="image/gif" alt="gparted-in-linux-8" height="1" title="警告訊息" width="1"/></div></a></div>
+<p>Step 10<br/>
+在進行磁碟分割區的變更時會顯示這個進度視窗，等待所有的操作完成後，按下「Close」關閉這個進度視窗。</p>
+<div><a href="http://blog.gtwang.org/wp-content/uploads/2016/02/gparted-in-linux-9.png" target="_blank"><div><img src="GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang_files/Image [9].gif" type="image/gif" alt="gparted-in-linux-9" height="1" title="進度視窗" width="1"/></div></a></div>
+<p>Step 11<br/>
+這樣新增磁碟分割區的動作就完成了。</p>
+<div><a href="http://blog.gtwang.org/wp-content/uploads/2016/02/gparted-in-linux-10.png" target="_blank"><div><img src="GParted 磁碟分割工具使用教學 -Page 2 of 3- G. T. Wang_files/Image [10].gif" type="image/gif" alt="gparted-in-linux-10" height="1" title="新增磁碟分割區完成" width="1"/></div></a><p>新增磁碟分割區完成</p></div>
+							
+							<p>繼續閱讀： </p>
+
+</div>
+					
+					
+					
+					
+					<div>
+						
+						
+						
+						<h4><a href="http://blog.gtwang.org/author/admin/" target="_blank">G. T. Wang</a></h4>
+						
+						<p>個人使用 Linux 經驗長達十餘年，樂於分享各種自由軟體技術與實作文章。</p>
+
+					</div> 
+
+
+
+
+
+
+
+						
+	 
+	
+										
+				</div></div><div><div></div><div><em>Page 2</em></div></div><div><div>
+
+
+
+
+
+							
+
+
+
+<h2>移動與變更磁碟分割區</h2>
+<p>GParted 也可以改變磁碟分割區的大小與位置，最常見的狀況就是一個磁碟分割區一開始配置的不夠大，當資料越來越多時，就需要把舊的分割區調大一些（當然前提是硬碟上還有其他可用的空間）。</p>
+<p>以下是移動或變更磁碟分割區的步驟。</p>
+<p>Step 1<br/>
+選擇要進行調整的磁碟分割區，從右鍵選單中選擇「Resize/Move」。</p>
+<div><p>調整磁碟分割區</p></div>
+<p>Step 2<br/>
+輸入分割區的大小與位置，也可以使用滑鼠來拖曳調整，這裡我們可以使用這個介面進行磁碟分割區的擴增、縮減或是移動。</p>
+<div><p>使用滑鼠拖曳磁碟分割區</p></div>
+<p>如果您想要增加分割區的大小，但是周圍已經沒有任何空間了，這時候就要先把鄰近的分割區刪除或是調整一下，騰出一些空間給這個分割區使用，才能進行擴增分割區的動作。</p>
+<p>如果要移動分割區，可以使用滑鼠直接拖曳，快速又方便。</p>
+<div><p>使用滑鼠拖曳磁碟分割區</p></div>
+<p>設定調整完成之後，點選「Resize/Move」。</p>
+<p>Step 3<br/>
+如果有進行分割區移動的動作，就會出現這樣的警告訊息，這個訊息主要是告訴使用者如果移動開機的分割區，可能會造成無法開機的狀況，要修復這樣的問題可以參考 GParted 的 FAQ。如果移動的磁碟分割區只是存放資料用的，沒有安裝任何系統，就不需要理會這個問題。ˊ</p>
+
+<p>Step 4<br/>
+磁碟分割區的變更動作同樣會放進下方的佇列中，待確認無誤後才會進行。</p>
+<div><p>準備變更磁碟分割區</p></div>
+<p>接著按下工具列的「Apply All Operations」。</p>
+<p>Step 5<br/>
+按下「Apply」進行所有佇列中的操作。</p>
+
+<p>Step 6<br/>
+等待所有的操作完成。</p>
+
+<p>Step 7<br/>
+這是完成磁碟分割區變更後的狀況。</p>
+<div><p>磁碟分割區變更完成</p></div>
+							
+							<p>繼續閱讀： </p>
+
+
+
+
+
+
+
+
+
+
+						  
+						</div></div></div><br/></span>
+</div></body></html> 

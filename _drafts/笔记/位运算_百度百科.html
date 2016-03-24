@@ -1,0 +1,2235 @@
+<html>
+<head>
+  <title>位运算_百度百科</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/275193; Windows/6.3.9600;"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="14100"/>
+<h1>位运算_百度百科</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2015/12/2 22:54</i></td></tr>
+<tr><td><b>标签：</b></td><td><i>IT, 减藏</i></td></tr>
+<tr><td><b>来源：</b></td><td><a href="http://baike.baidu.com/link?url=Ku52ejIUF7bpklS024Zdqp0p-uBG4AzD7UtZCqZGTFlVZtZnVuBbBvzNNQfEm5e1YiTEy9LUvb7-PzYjhn6ZJK"><i>http://baike.baidu.com/link?url=Ku52ejIUF7bpklS024Zdqp0p-uBG4AzD7UtZCqZGTFlVZtZnVuBbBvzNNQfEm5e1YiTEy9LUvb7-PzYjhn6ZJK</i></a></td></tr>
+</table>
+</div>
+<br/>
+
+<div>
+<span><div>
+ <div>
+  <div>
+   <h1>位运算_百度百科</h1>
+   <div>
+    <div></div>
+   </div>
+  </div> 
+  <dl><dd> 
+    <a href="#" shape="rect" target="_blank">编辑</a> 
+    <a href="http://baike.baidu.com/view/10812319.htm" shape="rect" target="_blank" title="锁定">锁定</a> 
+   </dd></dl>
+  <div> 
+   <div>
+    程序中的所有数在计算机内存中都是以二进制的形式
+    <a href="http://baike.baidu.com/view/843566.htm" shape="rect" target="_blank">储存</a>的。位运算说穿了，就是直接对整数在内存中的二进制位进行操作。比如，and运算本来是一个逻辑
+    <a href="http://baike.baidu.com/view/425996.htm" shape="rect" target="_blank">运算符</a>，但整数与整数之间也可以进行and运算。举个例子，6的二进制是110，11的二进制是1011，那么6 and 11的结果就是2，它是二进制对应位进行逻辑运算的结果（0表示False，1表示True，空位都当0处理）。
+   </div>
+   <div>
+    AND 1011
+   </div>
+   <div>
+    ---------------
+   </div>
+   <div>
+    0010 --&gt; 2
+   </div>
+   <div>
+    有人会说，计算6 and 11没有什么实际意义啊。这一系列的文章就将告诉你，位运算到底可以干什么，有些什么经典应用，以及如何用位运算优化你的程序。
+   </div> 
+  </div> 
+  <div> 
+   <dl><dt>
+     中文名
+    </dt></dl>
+   <dl><dt>
+     外文名
+    </dt><dd>
+      bitwise operation 
+    </dd><dt>
+     方    法
+    </dt><dd>
+      对整数进行操作 
+    </dd></dl> 
+  </div> 
+  <h2> <a href="#" shape="rect" target="_blank">编辑</a> </h2> 
+  <div>
+   下面的a和b都是整数类型，则：
+  </div> 
+  <table><tr><th colspan="1" rowspan="1">含义<br clear="none"/>　　</th><th colspan="1" rowspan="1"><a href="http://baike.baidu.com/view/765708.htm" shape="rect" target="_blank">Pascal语言</a></th><th colspan="1" rowspan="1">C语言</th><th colspan="1" rowspan="1">Java</th></tr><tr><th colspan="1" rowspan="1">按位与</th><td colspan="1" rowspan="1">a and b</td><td colspan="1" rowspan="1">a &amp; b</td><td colspan="1" rowspan="1">a &amp; b</td></tr><tr><th colspan="1" rowspan="1"><a href="http://baike.baidu.com/view/1438891.htm" shape="rect" target="_blank">按位或</a></th><td colspan="1" rowspan="1">a or b</td><td colspan="1" rowspan="1">a | b</td><td colspan="1" rowspan="1">a | b</td></tr><tr><th colspan="1" rowspan="1">按位<a href="http://baike.baidu.com/view/674171.htm" shape="rect" target="_blank">异或</a></th><td colspan="1" rowspan="1">a xor b</td><td colspan="1" rowspan="1">a ^ b</td><td colspan="1" rowspan="1">a ^ b</td></tr><tr><th colspan="1" rowspan="1">按位<a href="http://baike.baidu.com/view/11757812.htm" shape="rect" target="_blank">取反</a></th><td colspan="1" rowspan="1">not a</td><td colspan="1" rowspan="1">~a</td><td colspan="1" rowspan="1">~a</td></tr><tr><th colspan="1" rowspan="1">左移</th><td colspan="1" rowspan="1">a shl b</td><td colspan="1" rowspan="1">a &lt;&lt; b</td><td colspan="1" rowspan="1">a &lt;&lt; b</td></tr><tr><th colspan="1" rowspan="1">带符号<a href="http://baike.baidu.com/view/7237108.htm" shape="rect" target="_blank">右移</a></th><td colspan="1" rowspan="1">a shr b</td><td colspan="1" rowspan="1">a &gt;&gt; b</td><td colspan="1" rowspan="1">a &gt;&gt; b</td></tr><tr><th colspan="1" rowspan="1">无符号右移</th><td colspan="1" rowspan="1">　</td><td colspan="1" rowspan="1">　</td><td colspan="1" rowspan="1">a&gt;&gt;&gt; b</td></tr></table>
+  <div>
+   注意C中的逻辑运算和位
+   <a href="http://baike.baidu.com/view/425996.htm" shape="rect" target="_blank">运算符</a>号是不同的。520|1314=1834，但520||1314=1，因为逻辑运算时520和1314都相当于True。同样的，！a和~a也是有区别的。
+  </div>
+  <h2> <a href="#" shape="rect" target="_blank">编辑</a> </h2> 
+  <div>
+   === 1. and运算 ===
+  </div> 
+  <div>
+   and运算通常用于二进制取
+   <a href="http://baike.baidu.com/view/8430897.htm" shape="rect" target="_blank">位操作</a>，例如一个数 and 1的结果就是取
+   <a href="http://baike.baidu.com/view/18536.htm" shape="rect" target="_blank">二进制</a>的最末位。这可以用来判断一个整数的奇偶，二进制的最末位为0表示该数为
+   <a href="http://baike.baidu.com/view/20858.htm" shape="rect" target="_blank">偶数</a>，最末位为1表示该数为奇数。
+  </div> 
+  <div>
+   相同位的两个数字都为1，则为1；若有一个不为1，则为0。
+  </div> 
+  <div>
+   00101
+  </div> 
+  <div>
+   11100
+  </div> 
+  <div>
+   （&amp;；或者and）
+  </div> 
+  <div>
+   ----------------
+  </div> 
+  <div>
+   00100
+  </div> 
+  <div>
+   === 2. or运算 ===
+  </div> 
+  <div>
+   or运算通常用于二进制特定位上的无条件
+   <a href="http://baike.baidu.com/view/1201049.htm" shape="rect" target="_blank">赋值</a>，例如一个数or 1的结果就是把二进制最末位强行变成1。如果需要把二进制最末位变成0，对这个数or 1之后再减一就可以了，其实际意义就是把这个数强行变成最接近的偶数。
+  </div> 
+  <div>
+   相同位只要一个为1即为1。
+  </div> 
+  <div>
+   00101
+  </div> 
+  <div>
+   11100
+  </div> 
+  <div>
+   （|或者or）
+  </div> 
+  <div>
+   ----------------
+  </div> 
+  <div>
+   11101
+  </div> 
+  <div>
+   === 3. xor运算 ===
+  </div> 
+  <div>
+   异或的符号是^。按位异或运算, 对等长二进制模式按位或二进制数的每一位执行逻辑按位异或操作. 操作的结果是如果某位不同则该位为1, 否则该位为0.
+  </div> 
+  <div>
+   xor运算的逆运算是它本身，也就是说两次异或同一个数最后结果不变，即（a xor b) xor b = a。xor运算可以用于简单的加密，比如我想对我MM说1314520，但怕别人知道，于是双方约定拿我的生日19880516作为
+   <a href="http://baike.baidu.com/view/934.htm" shape="rect" target="_blank">密钥</a>。1314520 xor 19880516 = 20665500，我就把20665500告诉MM。MM再次计算20665500 xor 19880516的值，得到1314520，于是她就明白了我的企图。
+  </div> 
+  <div>
+   相同位不同则为1，相同则为0。
+  </div> 
+  <div>
+   00101
+  </div> 
+  <div>
+   11100
+  </div> 
+  <div>
+   （^或者xor）
+  </div> 
+  <div>
+   ----------------
+  </div> 
+  <div>
+   11001
+  </div> 
+  <div>
+   x &lt;- x # y
+  </div> 
+  <div>
+   y &lt;- x @ y
+  </div> 
+  <div>
+   x &lt;- x @ y
+  </div> 
+  <div>
+   执行了第一句后x变成了x # y。那么第二句实质就是y &lt;- x # y @ y，由于#和@互为逆运算，那么此时的y变成了原来的x。第三句中x实际上被赋值为（x # y) @ x，如果#运算具有交换律，那么赋值后x就变成最初的y了。这三句话的结果是，x和y的位置互换了。
+  </div> 
+  <div>
+   加法和减法互为逆运算，并且加法满足交换律。把#换成+，把@换成-，我们可以写出一个不需要临时变量的swap过程（Pascal）。
+  </div> 
+  <div>
+   procedure swap(var a,b:longint);
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   a:=a + b;
+  </div> 
+  <div>
+   b:=a - b;
+  </div> 
+  <div>
+   a:=a - b;
+  </div> 
+  <div>
+   好了，刚才不是说xor的逆运算是它本身吗？于是我们就有了一个看起来非常诡异的swap过程：
+  </div> 
+  <div>
+   procedure swap(var a,b:longint);
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   a:=a xor b;
+  </div> 
+  <div>
+   b:=a xor b;
+  </div> 
+  <div>
+   a:=a xor b;
+  </div> 
+  <div>
+   注意：位运算版本的交换两数不适用于一个数的自我交换。也就是说，如果上述程序的“b”改成“a”的话，其结果是变量a变成零。因此，在使用快速排序时，由于涉及到一个数的自我交换，因此如果要在其中使用位运算版的交换两数的话，应该先判断。具体的时间损耗在此略过。
+  </div> 
+  <div>
+   === 4. not运算 ===
+  </div> 
+  <div>
+   not运算的定义是把内存中的0和1全部取反。使用not运算时要格外小心，你需要注意整数类型有没有符号。如果not的对象是
+   <a href="http://baike.baidu.com/view/6052699.htm" shape="rect" target="_blank">无符号整数</a>（不能表示负数），那么得到的值就是它与该类型
+   <a href="http://baike.baidu.com/view/45901.htm" shape="rect" target="_blank">上界</a>的差，因为无符号类型的数是用00到$FFFF依次表示的。下面的两个程序（仅语言不同）均返回65435。
+  </div> 
+  <div>
+   a:word;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   a:=100;
+  </div> 
+  <div>
+   a:=not a;
+  </div> 
+  <div>
+   writeln(a);
+  </div> 
+  <div>
+   <div>
+    <table><tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1">
+        <div>
+         <div>
+          <code>#include&lt;stdio.h&gt;</code>
+         </div>
+         <div>
+          <code>int</code> 
+          <code>main()</code>
+         </div>
+         <div>
+          <code>{</code>
+         </div>
+         <div>
+          <code>unsigned </code>
+          <code>short</code> 
+          <code>a=100;</code>
+         </div>
+         <div>
+          <code>a=~a;</code>
+         </div>
+         <div>
+          <code>printf</code>
+          <code>(</code>
+          <code>&quot;%d\n&quot;</code>
+          <code>,a);</code>
+         </div>
+         <div>
+          <code>return</code> 
+          <code>0;</code>
+         </div>
+         <div>
+          <code>}</code>
+         </div>
+        </div></td></tr></table>
+   </div>
+  </div>
+  <div>
+   如果not的对象是有符号的整数，情况就不一样了，稍后我们会在“整数类型的储存”小节中提到。
+  </div> 
+  <div>
+   === 5. shl运算 ===
+  </div> 
+  <div>
+   a shl b就表示把a转为二进制后左移b位（在后面添b个0）。例如100的二进制为1100100，而110010000转成十进制是400，那么100 shl 2 = 400。可以看出，a shl b的值实际上就是a乘以2的b次方，因为在二进制数后添一个0就相当于该数乘以2。
+  </div> 
+  <div>
+   通常认为a shl 1比a * 2更快，因为前者是更底层一些的操作。因此程序中乘以2的操作请尽量用左移一位来代替。
+  </div> 
+  <div>
+   定义一些
+   <a href="http://baike.baidu.com/view/346799.htm" shape="rect" target="_blank">常量</a>可能会用到shl运算。你可以方便地用1 shl 16 - 1来表示65535。很多算法和数据结构要求数据规模必须是2的幂，此时可以用shl来定义Max_N等常量。
+  </div> 
+  <div>
+   === 6. shr运算 ===
+  </div> 
+  <div>
+   和shl相似，a shr b表示二进制右移b位（去掉末b位），相当于a除以2的b次方（取整）。我们也经常用shr 1来代替div 2，比如
+   <a href="http://baike.baidu.com/view/610605.htm" shape="rect" target="_blank">二分查找</a>、堆的插入操作等等。想办法用shr代替除法运算可以使程序效率大大提高。最大公约数的二进制算法用除以2操作来代替慢得出奇的mod运算，效率可以提高60%。
+  </div>
+  <h2> <a href="#" shape="rect" target="_blank">编辑</a> </h2> 
+  <div>
+   C语言中位运算符之间，按优先级顺序排列为
+  </div> 
+  <table><tr><td colspan="1" rowspan="1"> </td><td colspan="1" rowspan="1">
+      <div>
+       &lt;&lt;、&gt;&gt;
+      </div> </td></tr><tr><td colspan="1" rowspan="1"> </td><td colspan="1" rowspan="1">
+      <div>
+       &amp;=、^=、|=、&lt;&lt;=、&gt;&gt;=
+      </div> </td></tr></table>
+  <h2> <a href="#" shape="rect" target="_blank">编辑</a> </h2> 
+  <div>
+   有时我们的程序需要一个规模不大的Hash表来记录状态。比如，做数独时我们需要27个Hash表来统计每一行、每一列和每一个小九宫
+   <a href="http://baike.baidu.com/view/1281525.htm" shape="rect" target="_blank">格里</a>已经有哪些数了。此时，我们可以用27个小于2^9的整数进行记录。例如，一个只填了2和5的小九宫格就用数字18表示（二进制为000010010），而某一行的状态为511则表示这一行已经填满。需要改变状态时我们不需要把这个数转成二进制修改后再转回去，而是直接进行
+   <a href="http://baike.baidu.com/view/8430897.htm" shape="rect" target="_blank">位操作</a>。在搜索时，把状态表示成整数可以更好地进行判重等操作。这道题是在搜索中使用位运算加速的经典例子。以后我们会看到更多的例子。
+  </div> 
+  <div>
+   下面列举了一些常见的二进制位的变换操作。
+  </div> 
+  <div>
+   功能 | 示例 | 位运算
+  </div> 
+  <div>
+   ----------------------+---------------------------+--------------------
+  </div> 
+  <div>
+   去掉最后一位 | (101101-&gt;10110) | x shr 1
+  </div> 
+  <div>
+   在最后加一个0　| (101101-&gt;1011010) | x shl 1
+  </div> 
+  <div>
+   在最后加一个1　| (101101-&gt;1011011) | x shl 1+1
+  </div> 
+  <div>
+   把最后一位变成1　| (101100-&gt;101101) | x or 1
+  </div> 
+  <div>
+   把最后一位变成0　| (101101-&gt;101100) | x or 1-1
+  </div> 
+  <div>
+   最后一位取反 | (101101-&gt;101100) | x xor 1
+  </div> 
+  <div>
+   把右数第k位变成1 | (101001-&gt;101101,k=3) | x or (1 shl (k-1))
+  </div> 
+  <div>
+   把右数第k位变成0 | (101101-&gt;101001,k=3) | x and not (1 shl (k-1))
+  </div> 
+  <div>
+   右数第k位取反　| (101001-&gt;101101,k=3) | x xor (1 shl (k-1))
+  </div> 
+  <div>
+   取末三位 | (1101101-&gt;101) | x and 7
+  </div> 
+  <div>
+   取末k位　| (1101101-&gt;1101,k=5) | x and(1 shl k-1)
+  </div> 
+  <div>
+   取右数第k位　| (1101101-&gt;1,k=4) | x shr (k-1) and 1
+  </div> 
+  <div>
+   把末k位变成1　| (101001-&gt;101111,k=4) | x or (1 shl k-1)
+  </div> 
+  <div>
+   末k位取反 | (101001-&gt;100110,k=4) | x xor (1 shl k-1)
+  </div> 
+  <div>
+   把右边连续的1变成0 | (100101111-&gt;100100000) | x and (x+1)
+  </div> 
+  <div>
+   把右起第一个0变成1 | (100101111-&gt;100111111) | x or (x+1)
+  </div> 
+  <div>
+   把右边连续的0变成1 | (11011000-&gt;11011111) | x or (x-1)
+  </div> 
+  <div>
+   取右边连续的1 | (100101111-&gt;1111) | (x xor (x+1)) shr 1
+  </div> 
+  <div>
+   去掉右起第一个1的左边 | (100101000-&gt;1000) | x and (x xor (x-1))（或 x and (-x)）
+  </div> 
+  <div>
+   最后这一个在
+   <a href="http://baike.baidu.com/view/1420784.htm" shape="rect" target="_blank">树状数组</a>中会用到。
+  </div> 
+  <div>
+   Pascal和C中的16进制表示
+  </div> 
+  <div>
+   Pascal中需要在16进制数前加$符号表示，C中需要在前面加0x来表示。这个以后我们会经常用到。
+  </div>
+  <h3> 位运算交换 </h3> 
+  <div>
+   <div>
+    <table><tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1">
+        <div>
+         <div>
+          <code>#include&lt;cstdio&gt;</code>
+         </div>
+         <div>
+          <code>#include&lt;cstdlib&gt;</code>
+         </div>
+         <div>
+          <code>int</code> 
+          <code>main()</code>
+         </div>
+         <div>
+          <code>{</code>
+         </div>
+         <div>
+          <code>int</code> 
+          <code>a,b;</code>
+         </div>
+         <div>
+          <code>scanf</code>
+          <code>(</code>
+          <code>&quot;%d %d&quot;</code>
+          <code>,&amp;a,&amp;b);</code>
+         </div>
+         <div>
+          <code>a=a^b;</code>
+         </div>
+         <div>
+          <code>b=a^b;</code>
+         </div>
+         <div>
+          <code>a=a^b;</code>
+         </div>
+         <div>
+          <code>printf</code>
+          <code>(</code>
+          <code>&quot;%d %d\n&quot;</code>
+          <code>,a,b);</code>
+         </div>
+         <div>
+          <code>}</code>
+         </div>
+        </div></td></tr></table>
+   </div>
+  </div>
+  <h2> <a href="#" shape="rect" target="_blank">编辑</a> </h2> 
+  <div>
+   我们前面所说的位运算都没有涉及负数，都假设这些运算是在unsigned/word类型（只能表示正数的整型）上进行操作。但计算机如何处理有正负符号的整数类型呢？下面两个程序都是考察16位整数的储存方式（只是语言不同）。
+  </div> 
+  <div>
+   a,b:integer;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   a:=00;
+  </div> 
+  <div>
+   b:=01;
+  </div> 
+  <div>
+   write(a,' ',b,' ');
+  </div> 
+  <div>
+   a:=$FFFE;
+  </div> 
+  <div>
+   b:=$FFFF;
+  </div> 
+  <div>
+   write(a,' ',b,' ');
+  </div> 
+  <div>
+   a:=$7FFF;
+  </div> 
+  <div>
+   b:=$8000;
+  </div> 
+  <div>
+   writeln(a,' ',b);
+  </div> 
+  <div>
+   <div>
+    <table><tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1">
+        <div>
+         <div>
+          <code>#include&lt;stdio.h&gt;</code>
+         </div>
+         <div>
+          <code>intmain()</code>
+         </div>
+         <div>
+          <code>{</code>
+         </div>
+         <div>
+          <code>shortinta,b;</code>
+         </div>
+         <div>
+          <code>a=0x0000;</code>
+         </div>
+         <div>
+          <code>b=0x0001;</code>
+         </div>
+         <div>
+          <code>printf</code>
+          <code>(</code>
+          <code>&quot;%d%d&quot;</code>
+          <code>,a,b);</code>
+         </div>
+         <div>
+          <code>a=0xFFFE;</code>
+         </div>
+         <div>
+          <code>b=0xFFFF;</code>
+         </div>
+         <div>
+          <code>printf</code>
+          <code>(</code>
+          <code>&quot;%d%d&quot;</code>
+          <code>,a,b);</code>
+         </div>
+         <div>
+          <code>a=0x7FFF;</code>
+         </div>
+         <div>
+          <code>b=0x8000;</code>
+         </div>
+         <div>
+          <code>printf</code>
+          <code>(</code>
+          <code>&quot;%d%d\n&quot;</code>
+          <code>,a,b);</code>
+         </div>
+         <div>
+          <code>return0;</code>
+         </div>
+         <div>
+          <code>}</code>
+         </div>
+        </div></td></tr></table>
+   </div>
+  </div>
+  <div>
+   两个程序的输出均为0 1 -2 -1 32767 -32768。其中前两个数是内存值最小的数，中间两个数则是内存值最大的数，最后输出的两个数是正数与负数的分界处。由此你可以清楚地看到计算机是如何储存一个整数的：计算机用00到$7FFF依次表示0到32767的数，剩下的$8000到$FFFF依次表示-32768到-1的数。32位有符号整数的储存方式也是类似的。稍加注意你会发现，二进制的第一位是用来表示正负号的，0表示正，1表示负。这里有一个问题：0本来既不是正数，也不是负数，但它占用了00的位置，因此有符号的整数类型范围中正数个数比负数少一个。对一个有符号的数进行not运算后，最高位的变化将导致正负颠倒，并且数的绝对值会差1。也就是说，not a实际上等于-a-1（或-a=not a+1）。这种整数储存方式叫做“补码”（正数的补码和原码相同，负数的补码是该数的绝对值的二进制形式，按位取反后再加1）。
+  </div>
+  <h2> <a href="#" shape="rect" target="_blank">编辑</a> </h2> 
+  <div>
+   我们可以用下面的代码来计算一个32位整数的
+   <b>二进制中1的个数的奇偶性</b>，当输入数据的二进制表示里有偶数个数字1时程序输出0，有奇数个则输出1。例如，1314520的二进制101000000111011011000中有9个1，则x=1314520时程序输出1。
+  </div> 
+  <div>
+   i,x,c:longint;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   readln(x);
+  </div> 
+  <div>
+   c:=0;
+  </div> 
+  <div>
+   for i:=1 to 32 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   c:=c + x and 1;
+  </div> 
+  <div>
+   x:=x shr 1;
+  </div> 
+  <div>
+   writeln( c and 1 );
+  </div> 
+  <div>
+   但这样的效率并不高，位运算的神奇之处还没有体现出来。
+  </div> 
+  <div>
+   同样是判断二进制中1的个数的奇偶性，下面这段代码就强了。你能看出这个代码的原理吗？
+  </div> 
+  <div>
+   x:longint;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   readln(x);
+  </div> 
+  <div>
+   x:=x xor (x shr 1);
+  </div> 
+  <div>
+   x:=x xor (x shr 2);
+  </div> 
+  <div>
+   x:=x xor (x shr 4);
+  </div> 
+  <div>
+   x:=x xor (x shr 8);
+  </div> 
+  <div>
+   x:=x xor (x shr 16);
+  </div> 
+  <div>
+   writeln(x and 1);
+  </div> 
+  <div>
+   为了说明上面这段代码的原理，我们还是拿1314520出来说事。1314520的二进制为101000000111011011000，第一次异或操作的结果如下：
+  </div> 
+  <div>
+   00000000000101000000111011011000
+  </div> 
+  <div>
+   XOR 0000000000010100000011101101100
+  </div> 
+  <div>
+   ---------------------------------------
+  </div> 
+  <div>
+   00000000000111100000100110110100
+  </div> 
+  <div>
+   得到的结果是一个新的二进制数，其中右起第i位上的数表示原数中第i和i+1位上有奇数个1还是偶数个1。比如，最右边那个0表示原数末两位有偶数个1，右起第3位上的1就表示原数的这个位置和前一个位置中有奇数个1。对这个数进行第二次异或的结果如下：
+  </div> 
+  <div>
+   00000000000111100000100110110100
+  </div> 
+  <div>
+   XOR 000000000001111000001001101101
+  </div> 
+  <div>
+   ---------------------------------------
+  </div> 
+  <div>
+   00000000000110011000101111011001
+  </div> 
+  <div>
+   结果里的每个1表示原数的该位置及其前面三个位置中共有奇数个1，每个0就表示原数对应的四个位置上共偶数个1。一直做到第五次异或结束后，得到的二进制数的最末位就表示整个32位数里有多少个1，这就是我们最终想要的答案。
+  </div> 
+  <div>
+   同样假设x是一个32位整数。经过下面五次赋值后，x的值就是原数的二进制表示中数字1的个数。比如，初始时x为1314520（网友抓狂：能不能换一个数啊），那么最后x就变成了9，它表示1314520的二进制中有9个1。
+  </div> 
+  <div>
+   x := (x and $555555) + ((x shr 1) and $555555);
+  </div> 
+  <div>
+   x := (x and $333333) + ((x shr 2) and $333333);
+  </div> 
+  <div>
+   x := (x and $F0F0F0F) + ((x shr 4) and $F0F0F0F);
+  </div> 
+  <div>
+   x := (x and $FF00FF) + ((x shr 8) and $FF00FF);
+  </div> 
+  <div>
+   x := (x and $00FFFF) + ((x shr 16) and $00FFFF);
+  </div> 
+  <div>
+   为了便于解说，我们下面仅说明这个程序是如何对一个8位整数进行处理的。我们拿数字211（我们班某MM的生日）来开刀。211的二进制为11010011。
+  </div> 
+  <div>
+   +---+---+---+---+---+---+---+---+
+  </div> 
+  <div>
+   | 1 | 1 | 0 | 1 | 0 | 0 | 1 | 1 | &lt;---原数
+  </div> 
+  <div>
+   +---+---+---+---+---+---+---+---+
+  </div> 
+  <div>
+   | 1 0 | 0 1 | 0 0 | 1 0 | &lt;---第一次运算后
+  </div> 
+  <div>
+   +-------+-------+-------+-------+
+  </div> 
+  <div>
+   | 0 0 1 1 | 0 0 1 0 | &lt;---第二次运算后
+  </div> 
+  <div>
+   +---------------+---------------+
+  </div> 
+  <div>
+   | 0 0 0 0 0 1 0 1 | &lt;---第三次运算后，得数为5
+  </div> 
+  <div>
+   +-------------------------------+
+  </div> 
+  <div>
+   整个程序是一个分治的思想。第一次我们把每相邻的两位加起来，得到每两位里1的个数，比如前两位10就表示原数的前两位有2个1。第二次我们继续两两相加，10+01=11，00+10=10，得到的结果是00110010，它表示原数前4位有3个1，末4位有2个1。最后一次我们把0011和0010加起来，得到的就是整个二进制中1的个数。程序中巧妙地使用取位和右移，比如第二行中$333333的二进制为00110011001100....，用它和x做and运算就相当于以2为单位间隔取数。shr的作用就是让加法运算的相同数位对齐。
+  </div> 
+  <div>
+   这里用的C语言，我直接Copy的
+   <a href="http://baike.baidu.com/view/4618680.htm" shape="rect" target="_blank">Hacker's Delight</a>上的代码。这段代码写成C要好看些，写成Pascal的话会出现很多begin和end，搞得代码很难看。程序思想是二分查找，应该很简单，我就不细说了。
+  </div> 
+  <div>
+   <div>
+    <table><tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1">
+        <div>
+         <div>
+          <code>intnlz(unsignedx)</code>
+         </div>
+         <div>
+          <code>{</code>
+         </div>
+         <div>
+          <code>intn;</code>
+         </div>
+         <div>
+          <code>if</code>
+          <code>(x==0)</code>
+          <code>return</code>
+          <code>(32);</code>
+         </div>
+         <div>
+          <code>n=1;</code>
+         </div>
+         <div>
+          <code>if</code>
+          <code>((x&gt;&gt;16)==0){n=n+16;x=x&lt;&lt;16;}</code>
+         </div>
+         <div>
+          <code>if</code>
+          <code>((x&gt;&gt;24)==0){n=n+8;x=x&lt;&lt;8;}</code>
+         </div>
+         <div>
+          <code>if</code>
+          <code>((x&gt;&gt;28)==0){n=n+4;x=x&lt;&lt;4;}</code>
+         </div>
+         <div>
+          <code>if</code>
+          <code>((x&gt;&gt;30)==0){n=n+2;x=x&lt;&lt;2;}</code>
+         </div>
+         <div>
+          <code>n=n-(x&gt;&gt;31);</code>
+         </div>
+         <div>
+          <code>returnn;</code>
+         </div>
+         <div>
+          <code>}</code>
+         </div>
+        </div></td></tr></table>
+   </div>
+  </div>
+  <div>
+   只用位运算来取绝对值
+  </div> 
+  <div>
+   这是一个非常有趣的问题。大家先自己想想吧，Ctrl+A显示答案。
+  </div> 
+  <div>
+   答案：假设x为32位整数，则x xor (not (x shr 31) + 1) + x shr 31的结果是x的绝对值
+  </div> 
+  <div>
+   x shr 31是二进制的最高位，它用来表示x的符号。如果它为0（x为正），则not (x shr 31) + 1等于000000，异或任何数结果都不变；如果最高位为1（x为负），则not (x shr 31) + 1等于$FFFFFFFF，x异或它相当于所有数位取反，异或完后再加一。
+  </div> 
+  <div>
+   高低位交换
+  </div> 
+  <div>
+   这个题实际上是我出的，做为学校内部NOIp模拟赛的第一题。题目是这样：
+  </div> 
+  <div>
+   给出一个小于2^32的正整数。这个数可以用一个32位的二进制数表示（不足32位用0补足）。我们称这个二进制数的前16位为“高位”，后16位为“低位”。将它的高低位交换，我们可以得到一个新的数。试问这个新的数是多少（用十进制表示）。
+  </div> 
+  <div>
+   例如，数1314520用二进制表示为0000 0000 0001 0100 0000 1110 1101 1000（添加了11个前导0补足为32位），其中前16位为高位，即0000 0000 0001 0100；后16位为低位，即0000 1110 1101 1000。将它的高低位进行交换，我们得到了一个新的二进制数0000 1110 1101 1000 0000 0000 0001 0100。它即是十进制的249036820。
+  </div> 
+  <div>
+   当时几乎没有人想到用一句
+   <a href="http://baike.baidu.com/view/8430897.htm" shape="rect" target="_blank">位操作</a>来代替冗长的程序。使用位运算的话两句话就完了。
+  </div> 
+  <div>
+   n:dword;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   readln( n );
+  </div> 
+  <div>
+   writeln( (n shr 16) or (n shl 16) );
+  </div> 
+  <div>
+   而事实上，Pascal有一个
+   <a href="http://baike.baidu.com/view/710031.htm" shape="rect" target="_blank">系统函数</a>swap直接就可以用。
+  </div> 
+  <div>
+   下面的程序读入一个32位整数并输出它的二进制倒序后所表示的数。
+  </div> 
+  <div>
+   输入：1314520 （二进制为00000000000101000000111011011000）
+  </div> 
+  <div>
+   输出：460335104 （二进制为00011011011100000010100000000000）
+  </div> 
+  <div>
+   x:dword;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   readln(x);
+  </div> 
+  <div>
+   x := (x and $55555555) shl 1 or (x and $AAAAAAAA) shr 1;
+  </div> 
+  <div>
+   x := (x and $33333333) shl 2 or (x and $CCCCCCCC) shr 2;
+  </div> 
+  <div>
+   x := (x and $0F0F0F0F) shl 4 or (x and $F0F0F0F0) shr 4;
+  </div> 
+  <div>
+   x := (x and $00FF00FF) shl 8 or (x and $FF00FF00) shr 8;
+  </div> 
+  <div>
+   x := (x and $0000FFFF) shl 16 or (x and $FFFF0000) shr 16;
+  </div> 
+  <div>
+   writeln(x);
+  </div> 
+  <div>
+   它的原理和刚才求二进制中1的个数那个例题是大致相同的。程序首先交换每相邻两位上的数，以后把互相交换过的数看成一个整体，继续进行以2位为单位、以4位为单位的左右对换操作。我们再次用8位整数211来演示程序执行过程：
+  </div> 
+  <div>
+   +---+---+---+---+---+---+---+---+
+  </div> 
+  <div>
+   | 1 | 1 | 0 | 1 | 0 | 0 | 1 | 1 | &lt;---原数
+  </div> 
+  <div>
+   +---+---+---+---+---+---+---+---+
+  </div> 
+  <div>
+   | 1 1 | 1 0 | 0 0 | 1 1 | &lt;---第一次运算后
+  </div> 
+  <div>
+   +-------+-------+-------+-------+
+  </div> 
+  <div>
+   | 1 0 1 1 | 1 1 0 0 | &lt;---第二次运算后
+  </div> 
+  <div>
+   +---------------+---------------+
+  </div> 
+  <div>
+   | 1 1 0 0 1 0 1 1 | &lt;---第三次运算后
+  </div> 
+  <div>
+   +-------------------------------+
+  </div> 
+  <div>
+   n皇后问题位运算版
+  </div> 
+  <div>
+   n皇后问题是啥我就不说了吧，学编程的肯定都见过。下面的十多行代码是n皇后问题的一个高效位运算程序，看到过的人都夸它牛。初始时，upperlim:=(1 shl n)-1。主程序调用test(0,0,0）后sum的值就是n皇后总的解数。拿这个去交USACO，0.3s，暴爽。
+  </div> 
+  <div>
+   procedure test(row,ld,rd:longint);
+  </div> 
+  <div>
+   pos,p:longint;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   if row&lt;&gt;upperlim then
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   pos:=upperlim and not (row or ld or rd);
+  </div> 
+  <div>
+   while pos&lt;&gt;0 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   p:=pos and -pos;
+  </div> 
+  <div>
+   pos:=pos-p;
+  </div> 
+  <div>
+   test(row+p,(ld+p)shl 1,(rd+p)shr 1);
+  </div> 
+  <div>
+   else inc(sum);
+  </div> 
+  <div>
+   乍一看似乎完全摸不着头脑，实际上整个程序是非常容易理解的。这里还是建议大家自己
+   <a href="http://baike.baidu.com/view/5653247.htm" shape="rect" target="_blank">单步运行</a>一探究竟，实在没研究出来再看下面的解说。
+  </div> 
+  <div>
+   和普通算法一样，这是一个递归过程，程序一行一行地寻找可以放皇后的地方。过程带三个参数，row、ld和rd，分别表示在纵列和两个对角线方向的限制条件下这一行的哪些地方不能放。我们以6x6的棋盘为例，看看程序是怎么工作的。假设现在已经递归到第四层，前三层放的子已经标在左图上了。红色、蓝色和绿色的线分别表示三个方向上有冲突的位置，位于该行上的冲突位置就用row、ld和rd中的1来表示。把它们三个并起来，得到该行所有的禁位，取反后就得到所有可以放的位置（用pos来表示）。前面说过-a相当于not a + 1，这里的代码第6行就相当于pos and (not pos + 1），其结果是取出最右边的那个1。这样，p就表示该行的某个可以放子的位置，把它从pos中移除并
+   <a href="http://baike.baidu.com/view/1265506.htm" shape="rect" target="_blank">递归调用</a>test过程。注意递归调用时三个参数的变化，每个参数都加上了一个禁位，但两个对角线方向的禁位对下一行的影响需要平移一位。最后，如果递归到某个时候发现row=111111了，说明六个皇后全放进去了，此时程序从第1行跳到第11行，找到的解的个数加一。
+  </div> 
+  <div>
+   ~~~~====~~~~===== 华丽的分割线 =====~~~~====~~~~
+  </div> 
+  <div>
+   Gray码
+  </div> 
+  <div>
+   假如我有4个潜在的GF，我需要决定最终到底和谁在一起。一个简单的办法就是，依次和每个MM交往一段时间，最后选择给我带来的“满意度”最大的MM。但看了dd牛的理论后，事情开始变得复杂了：我可以选择和多个MM在一起。这样，需要考核的状态变成了2^4=16种（当然包括0000这一状态，因为我有可能是玻璃）。现在的问题就是，我应该用什么顺序来遍历这16种状态呢？
+  </div> 
+  <div>
+   传统的做法是，用二进制数的顺序来遍历所有可能的组合。也就是说，我需要以0000-&gt;0001-&gt;0010-&gt;0011-&gt;0100-&gt;...-&gt;1111这样的顺序对每种状态进行测试。这个顺序很不科学，很多时候状态的转移都很耗时。比如从0111到1000时我需要暂时甩掉当前所有的3个MM，然后去把第4个MM。同时改变所有MM与我的关系是一件何等巨大的工程啊。因此，我希望知道，是否有一种方法可以使得，从没有MM这一状态出发，每次只改变我和一个MM的关系（追或者甩），15次操作后恰好遍历完所有可能的组合（最终状态不一定是1111）。大家自己先试一试看行不行。
+  </div> 
+  <div>
+   解决这个问题的方法很巧妙。我们来说明，假如我们已经知道了n=2时的合法遍历顺序，我们如何得到n=3的遍历顺序。显然，n=2的遍历顺序如下：
+  </div> 
+  <div>
+   你可能已经想到了如何把上面的遍历顺序扩展到n=3的情况。n=3时一共有8种状态，其中前面4个把n=2的遍历顺序照搬下来，然后把它们对称翻折下去并在最前面加上1作为后面4个状态：
+  </div> 
+  <div>
+   --------
+  </div> 
+  <div>
+   用这种方法得到的遍历顺序显然符合要求。首先，上面8个状态恰好是n=3时的所有8种组合，因为它们是在n=2的全部四种组合的基础上考虑选不选第3个元素所得到的。然后我们看到，后面一半的状态应该和前面一半一样满足“相邻状态间仅一位不同”的限制，而“镜面”处则是最前面那一位数不同。再次翻折三阶遍历顺序，我们就得到了刚才的问题的答案：
+  </div> 
+  <div>
+   这种遍历顺序作为一种编码方式存在，叫做Gray码（写个中文让蜘蛛来抓：
+   <a href="http://baike.baidu.com/view/358724.htm" shape="rect" target="_blank">格雷码</a>）。它的应用范围很广。比如，n阶的Gray码相当于在n维立方体上的Hamilton回路，因为沿着立方体上的边走一步，n维坐标中只会有一个值改变。再比如，Gray码和Hanoi塔问题等价。Gray码改变的是第几个数，Hanoi塔就该移动哪个盘子。比如，3阶的Gray码每次改变的元素所在位置依次为1-2-1-3-1-2-1，这正好是3阶Hanoi塔每次移动盘子编号。如果我们可以快速求出Gray码的第n个数是多少，我们就可以输出任意步数后Hanoi塔的移动步骤。现在我告诉你，Gray码的第n个数（从0算起）是n xor (n shr 1），你能想出来这是为什么吗？先自己想想吧。
+  </div> 
+  <div>
+   下面我们把二进制数和Gray码都写在下面，可以看到左边的数异或自身右移的结果就等于右边的数。
+  </div> 
+  <div>
+   二进制数 Gray码
+  </div> 
+  <div>
+   000 000
+  </div> 
+  <div>
+   001 001
+  </div> 
+  <div>
+   010 011
+  </div> 
+  <div>
+   011 010
+  </div> 
+  <div>
+   100 110
+  </div> 
+  <div>
+   101 111
+  </div> 
+  <div>
+   110 101
+  </div> 
+  <div>
+   111 100
+  </div> 
+  <div>
+   从二进制数的角度看，“
+   <a href="http://baike.baidu.com/view/3555.htm" shape="rect" target="_blank">镜像</a>”位置上的数即是对原数进行not运算后的结果。比如，第3个数010和倒数第3个数101的每一位都正好相反。假设这两个数分别为x和y，那么x xor (x shr 1）和y xor (y shr 1）的结果只有一点不同：后者的首位是1，前者的首位是0。而这正好是Gray码的生成方法。这就说明了，Gray码的第n个数确实是n xor (n shr 1）。
+  </div> 
+  <div>
+   今年四月份mashuo给我看了这道题，是二维意义上的Gray码。题目大意是说，把0到2^(n+m)-1的数写成2^n * 2^m的
+   <a href="http://baike.baidu.com/view/10337.htm" shape="rect" target="_blank">矩阵</a>，使得位置相邻两数的二进制表示只有一位之差。答案其实很简单，所有数都是由m位的Gray码和n位Gray码拼接而成，需要用左移操作和or运算完成。完整的代码如下：
+  </div> 
+  <div>
+   x,y,m,n,u:longint;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   readln(m,n);
+  </div> 
+  <div>
+   for x:=0 to 1 shl m-1 do begin
+  </div> 
+  <div>
+   u:=(x xor (x shr 1)) shl n; //输出数的左边是一个m位的Gray码
+  </div> 
+  <div>
+   for y:=0 to 1 shl n-1 do
+  </div> 
+  <div>
+   write(u or (y xor (y shr 1)),' '); //并上一个n位Gray码
+  </div> 
+  <div>
+   writeln;
+  </div> 
+  <div>
+   Problem：筷子
+  </div> 
+  <div>
+   有n双筷子摆在你的面前。已知长度相等的两根筷子可以配对，输出无法配对的那一根筷子的长度。
+  </div> 
+  <div>
+   输入样例：
+  </div> 
+  <div>
+   1 1 2 2 2
+  </div> 
+  <div>
+   输出样例：
+  </div> 
+  <div>
+   数据范围：
+  </div> 
+  <div>
+   100%的数据：n&lt;2×10^7，n为奇数，每根筷子的长度小于2^31。数据保证有且只有一根筷子无法配对。
+  </div> 
+  <div>
+   代码(Pascal)：
+  </div> 
+  <div>
+   var n,ans,x,i:longint;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   read(n);
+  </div> 
+  <div>
+   ans:=0;
+  </div> 
+  <div>
+   for i:=1 to n do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   read(x);
+  </div> 
+  <div>
+   ans:=ans xor x;
+  </div> 
+  <div>
+   writeln(ans);
+  </div> 
+  <div>
+   Problem : 费解的开关06年NOIp模拟赛一 by Matrix67 第四题　问题描述
+  </div> 
+  <div>
+   你玩过“拉灯”游戏吗？25盏灯排成一个5x5的方形。每一个灯都有一个开关，游戏者可以改变它的状态。每一步，游戏者可以改变某一个灯的状态。游戏者改变一个灯的状态会产生连锁反应：和这个灯上下左右相邻的灯也要相应地改变其状态。
+  </div> 
+  <div>
+   我们用数字“1”表示一盏开着的灯，用数字“0”表示关着的灯。下面这种状态
+  </div> 
+  <div>
+   10111
+  </div> 
+  <div>
+   01101
+  </div> 
+  <div>
+   10111
+  </div> 
+  <div>
+   10000
+  </div> 
+  <div>
+   11011
+  </div> 
+  <div>
+   在改变了最左上角的灯的状态后将变成：
+  </div> 
+  <div>
+   01111
+  </div> 
+  <div>
+   11101
+  </div> 
+  <div>
+   10111
+  </div> 
+  <div>
+   10000
+  </div> 
+  <div>
+   11011
+  </div> 
+  <div>
+   再改变它正中间的灯后状态将变成：
+  </div> 
+  <div>
+   01111
+  </div> 
+  <div>
+   11001
+  </div> 
+  <div>
+   11001
+  </div> 
+  <div>
+   10100
+  </div> 
+  <div>
+   11011
+  </div> 
+  <div>
+   给定一些游戏的初始状态，编写程序判断游戏者是否可能在6步以内使所有的灯都变亮。
+  </div> 
+  <div>
+   第一行有一个正整数n，代表数据中共有n个待解决的游戏初始状态。
+  </div> 
+  <div>
+   以下若干行数据分为n组，每组数据有5行，每行5个字符。每组数据描述了一个游戏的初始状态。各组数据间用一个空行分隔。
+  </div> 
+  <div>
+   对于30%的数据，n&lt;=5；
+  </div> 
+  <div>
+   对于100%的数据，n&lt;=500。
+  </div> 
+  <div>
+   输出数据一共有n行，每行有一个小于等于6的整数，它表示对于输入数据中对应的游戏状态最少需要几步才能使所有灯变亮。
+  </div> 
+  <div>
+   对于某一个游戏初始状态，若6步以内无法使所有灯变亮，请输出“-1”。
+  </div> 
+  <div>
+   00111
+  </div> 
+  <div>
+   01011
+  </div> 
+  <div>
+   10001
+  </div> 
+  <div>
+   11010
+  </div> 
+  <div>
+   11100
+  </div> 
+  <div>
+   11101
+  </div> 
+  <div>
+   11101
+  </div> 
+  <div>
+   11110
+  </div> 
+  <div>
+   11111
+  </div> 
+  <div>
+   11111
+  </div> 
+  <div>
+   01111
+  </div> 
+  <div>
+   11111
+  </div> 
+  <div>
+   11111
+  </div> 
+  <div>
+   11111
+  </div> 
+  <div>
+   11111
+  </div> 
+  <div>
+   &lt;/BLOCKQUOTE&gt;
+  </div> 
+  <div>
+   &lt;CODE&gt;const
+  </div> 
+  <div>
+   BigPrime=3214567;
+  </div> 
+  <div>
+   MaxStep=6;
+  </div> 
+  <div>
+   pointer=^rec;
+  </div> 
+  <div>
+   rec=record
+  </div> 
+  <div>
+   v:longint;
+  </div> 
+  <div>
+   step:integer;
+  </div> 
+  <div>
+   next:pointer;
+  </div> 
+  <div>
+   total:longint;
+  </div> 
+  <div>
+   hash:array[0..BigPrime-1]of pointer;
+  </div> 
+  <div>
+   q:array[1..400000]of rec;
+  </div> 
+  <div>
+   function update(a:longint;p:integer):longint;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   a:=a xor (1 shl p);
+  </div> 
+  <div>
+   if p mod 5&lt;&gt;0 then a:=a xor (1 shl (p-1));
+  </div> 
+  <div>
+   if (p+1) mod 5&lt;&gt;0 then a:=a xor (1 shl (p+1));
+  </div> 
+  <div>
+   if p&lt;20 then a:=a xor (1 shl (p+5));
+  </div> 
+  <div>
+   if p&gt;4 then a:=a xor (1 shl (p-5));
+  </div> 
+  <div>
+   exit(a);
+  </div> 
+  <div>
+   function find(a:longint;step:integer):boolean;
+  </div> 
+  <div>
+   now:pointer;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   now:=hash[a mod BigPrime];
+  </div> 
+  <div>
+   while now&lt;&gt;nil do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   if now^.v=a then exit(true);
+  </div> 
+  <div>
+   now:=now^.next;
+  </div> 
+  <div>
+   new(now);
+  </div> 
+  <div>
+   now^.v:=a;
+  </div> 
+  <div>
+   now^.step:=step;
+  </div> 
+  <div>
+   now^.next:=hash[a mod BigPrime];
+  </div> 
+  <div>
+   hash[a mod BigPrime]:=now;
+  </div> 
+  <div>
+   total:=total+1;
+  </div> 
+  <div>
+   exit(false);
+  </div> 
+  <div>
+   procedure solve;
+  </div> 
+  <div>
+   p:integer;
+  </div> 
+  <div>
+   close:longint=0;
+  </div> 
+  <div>
+   open:longint=1;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   find(1 shl 25-1,0);
+  </div> 
+  <div>
+   q[1].v:=1 shl 25-1;
+  </div> 
+  <div>
+   q[1].step:=0;
+  </div> 
+  <div>
+   repeat
+  </div> 
+  <div>
+   inc(close);
+  </div> 
+  <div>
+   for p:=0 to 24 do
+  </div> 
+  <div>
+   if not find(update(q[close].v,p),q[close].step+1) and (q[close].step+1&lt;MaxStep) then
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   open:=open+1;
+  </div> 
+  <div>
+   q[open].v:=update(q[close].v,p);
+  </div> 
+  <div>
+   q[open].step:=q[close].step+1;
+  </div> 
+  <div>
+   until close&gt;=open;
+  </div> 
+  <div>
+   procedure print(a:longint);
+  </div> 
+  <div>
+   now:pointer;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   now:=hash[a mod BigPrime];
+  </div> 
+  <div>
+   while now&lt;&gt;nil do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   if now^.v=a then
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   writeln(now^.step);
+  </div> 
+  <div>
+   exit;
+  </div> 
+  <div>
+   now:=now^.next;
+  </div> 
+  <div>
+   writeln(-1);
+  </div> 
+  <div>
+   procedure main;
+  </div> 
+  <div>
+   ch:char;
+  </div> 
+  <div>
+   i,j,n:integer;
+  </div> 
+  <div>
+   t:longint;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   readln(n);
+  </div> 
+  <div>
+   for i:=1 to n do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   t:=0;
+  </div> 
+  <div>
+   for j:=1 to 25 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   read(ch);
+  </div> 
+  <div>
+   t:=t*2+ord(ch)-48;
+  </div> 
+  <div>
+   if j mod 5=0 then readln;
+  </div> 
+  <div>
+   print(t);
+  </div> 
+  <div>
+   if i&lt;n then readln;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   solve;
+  </div> 
+  <div>
+   main;
+  </div> 
+  <div>
+   end.&lt;/CODE&gt;
+  </div> 
+  <div>
+   Problem : garden / 和MM逛花园
+  </div> 
+  <div>
+   花园设计强调，简单就是美。Matrix67常去的花园有着非常简单的布局：花园的所有景点的位置都是“对齐”了的，这些景点可以看作是
+   <a href="http://baike.baidu.com/view/3810848.htm" shape="rect" target="_blank">平面坐标</a>上的格点。相邻的景点之间有小路相连，这些小路全部平行于坐标轴。景点和小路组成了一个“不完整的网格”。
+  </div> 
+  <div>
+   一个典型的花园布局如左图所示。花园布局在6行4列的网格上，花园的16个景点的位置用红色标注在了图中。黑色线条表示景点间的小路，其余灰色部分实际并不存在。
+  </div> 
+  <div>
+   Matrix67 的生日那天，他要带着他的MM在花园里游玩。Matrix67不会带MM两次经过同一个景点，因此每个景点最多被游览一次。他和他的MM边走边聊，他们是如此的投入以致于他们从不会“主动地拐弯”。也就是说，除非前方已没有景点或是前方的景点已经访问过，否则他们会一直往前走下去。当前方景点不存在或已游览过时，Matrix67会带MM另选一个方向继续前进。由于景点个数有限，访问过的景点将越来越多，迟早会出现不能再走的情况（即四个方向上的相邻景点都访问过了），此时他们将结束花园的游览。Matrix67希望知道以这种方式游览花园是否有可能遍历所有的景点。Matrix67可以选择从任意一个景点开始游览，以任意一个景点结束。
+  </div> 
+  <div>
+   在上图所示的花园布局中，一种可能的游览方式如右图所示。这种浏览方式从（1,2）出发，以（2,4）结束，经过每个景点恰好一次。
+  </div> 
+  <div>
+   第一行输入两个用空格隔开的正整数m和n，表示花园被布局在m行n列的网格上。
+  </div> 
+  <div>
+   以下m行每行n个
+   <a href="http://baike.baidu.com/view/263416.htm" shape="rect" target="_blank">字符</a>，字符“0”表示该位置没有景点，字符“1”表示对应位置有景点。这些数字之间没有空格。
+  </div> 
+  <div>
+   你的程序需要寻找满足“不主动拐弯”性质且遍历所有景点的游览路线。
+  </div> 
+  <div>
+   如果没有这样的游览路线，请输出一行“Impossible”（不带引号，注意大小写）。
+  </div> 
+  <div>
+   如果存在游览路线，请依次输出你的方案中访问的景点的坐标，每行输出一个。坐标的表示格式为“（x,y）”，代表第x行第y列。
+  </div> 
+  <div>
+   如果有多种方案，你只需要输出其中一种即可。评测系统可以判断你的方案的正确性。
+  </div> 
+  <div>
+   （1,2)
+  </div> 
+  <div>
+   （1,1)
+  </div> 
+  <div>
+   （2,1)
+  </div> 
+  <div>
+   （3,1)
+  </div> 
+  <div>
+   （4,1)
+  </div> 
+  <div>
+   （5,1)
+  </div> 
+  <div>
+   （6,1)
+  </div> 
+  <div>
+   （6,2)
+  </div> 
+  <div>
+   （6,3)
+  </div> 
+  <div>
+   （5,3)
+  </div> 
+  <div>
+   （5,2)
+  </div> 
+  <div>
+   （4,2)
+  </div> 
+  <div>
+   （3,2)
+  </div> 
+  <div>
+   （3,3)
+  </div> 
+  <div>
+   （3,4)
+  </div> 
+  <div>
+   （2,4)
+  </div> 
+  <div>
+   对于30%的数据，n,m&lt;=5；
+  </div> 
+  <div>
+   对于100%的数据，n,m&lt;=10。
+  </div> 
+  <div>
+   &lt;CODE&gt;program garden;
+  </div> 
+  <div>
+   const
+  </div> 
+  <div>
+   dir:array[1..4,1..2]of integer=
+  </div> 
+  <div>
+   （（1,0),(0,1),(-1,0),(0,-1));
+  </div> 
+  <div>
+   arr=array[1..10]of integer;
+  </div> 
+  <div>
+   rec=record x,y:integer;end;
+  </div> 
+  <div>
+   map:array[0..11,0..11]of boolean;
+  </div> 
+  <div>
+   ans:array[1..100]of rec;
+  </div> 
+  <div>
+   n,m,max:integer;
+  </div> 
+  <div>
+   step:integer=1;
+  </div> 
+  <div>
+   state:arr;
+  </div> 
+  <div>
+   procedure readp;
+  </div> 
+  <div>
+   i,j:integer;
+  </div> 
+  <div>
+   ch:char;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   readln(m,n);
+  </div> 
+  <div>
+   for i:=1 to n do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   for j:=1 to m do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   read(ch);
+  </div> 
+  <div>
+   map[i,j]:=(ch='1');
+  </div> 
+  <div>
+   inc(max,ord( map[i,j] ))
+  </div> 
+  <div>
+   readln;
+  </div> 
+  <div>
+   procedure writep;
+  </div> 
+  <div>
+   i:integer;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   for i:=1 to step do
+  </div> 
+  <div>
+   writeln( '(',ans
+   <i>.x,',',ans<i>.y,')' );</i></i>
+  </div> 
+  <div>
+   procedure solve(x,y:integer);
+  </div> 
+  <div>
+   tx,ty,d:integer;
+  </div> 
+  <div>
+   step_cache:integer;
+  </div> 
+  <div>
+   state_cache:arr;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   step_cache:=step;
+  </div> 
+  <div>
+   state_cache:=state;
+  </div> 
+  <div>
+   if step=max then
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   writep;
+  </div> 
+  <div>
+   exit;
+  </div> 
+  <div>
+   for d:=1 to 4 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   tx:=x+dir[d,1];
+  </div> 
+  <div>
+   ty:=y+dir[d,2];
+  </div> 
+  <div>
+   while map[tx,ty] and ( not state[tx] and(1 shl (ty-1) )&gt;0) do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   inc(step);
+  </div> 
+  <div>
+   ans[step].x:=tx;
+  </div> 
+  <div>
+   ans[step].y:=ty;
+  </div> 
+  <div>
+   state[tx]:=state[tx] or ( 1 shl (ty-1) );
+  </div> 
+  <div>
+   tx:=tx+dir[d,1];
+  </div> 
+  <div>
+   ty:=ty+dir[d,2];
+  </div> 
+  <div>
+   tx:=tx-dir[d,1];
+  </div> 
+  <div>
+   ty:=ty-dir[d,2];
+  </div> 
+  <div>
+   if (tx&lt;&gt;x) or (ty&lt;&gt;y) then solve(tx,ty);
+  </div> 
+  <div>
+   state:=state_cache;
+  </div> 
+  <div>
+   step:=step_cache;
+  </div> 
+  <div>
+   {====main====}
+  </div> 
+  <div>
+   i,j:integer;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   assign(input,'garden.txt');
+  </div> 
+  <div>
+   reset(input);
+  </div> 
+  <div>
+   assign(output,'garden.out');
+  </div> 
+  <div>
+   rewrite(output);
+  </div> 
+  <div>
+   readp;
+  </div> 
+  <div>
+   for i:=1 to n do
+  </div> 
+  <div>
+   for j:=1 to m do
+  </div> 
+  <div>
+   if map[i,j] then
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   ans[1].x:=i;
+  </div> 
+  <div>
+   ans[1].y:=j;
+  </div> 
+  <div>
+   state
+   <i>:=1 shl (j-1);</i>
+  </div> 
+  <div>
+   solve(i,j);
+  </div> 
+  <div>
+   state
+   <i>:=0;</i>
+  </div> 
+  <div>
+   close(input);
+  </div> 
+  <div>
+   close(output);
+  </div> 
+  <div>
+   end.&lt;/CODE&gt;
+  </div> 
+  <div>
+   对C语言中位运算的一点补充：（位数不同的运算数之间的运算规则）-
+  </div> 
+  <div>
+   C语言中，位运算的对象可以是
+   <a href="http://baike.baidu.com/view/1311503.htm" shape="rect" target="_blank">整型</a>（int）和字符型（char）数据。（整形数据可以直接转化成二进制数，
+   <a href="http://baike.baidu.com/view/4733975.htm" shape="rect" target="_blank">字符型数据</a>在内存中以它的ASCII码值存放，也可以站化成二进制数）当两个运算数类型不同时，位数亦会不同。遇到这种情况，系统将自动进行如下处理：
+  </div> 
+  <div>
+   1将两个运算数右端对齐。
+  </div> 
+  <div>
+   2 再将位数短的一个运算数往高位扩充，即：无符号数和正整数左侧用0补全；负数左侧用1补全；然后对位数相等的两个运算数，按位进行运算。
+  </div> 
+  <div>
+   The Clocks时钟 usaco1.4.2
+  </div> 
+  <div>
+   考虑将如此安排在一个 3 x3 行列中的九个时钟：
+  </div> 
+  <div>
+   |-------| |-------| |-------|
+  </div> 
+  <div>
+   | | | | | | |
+  </div> 
+  <div>
+   |---O | |---O | | O |
+  </div> 
+  <div>
+   | | | | | |
+  </div> 
+  <div>
+   |-------| |-------| |-------|
+  </div> 
+  <div>
+   |-------| |-------| |-------|
+  </div> 
+  <div>
+   | | | | | |
+  </div> 
+  <div>
+   | O | | O | | O |
+  </div> 
+  <div>
+   | | | | | | | | |
+  </div> 
+  <div>
+   |-------| |-------| |-------|
+  </div> 
+  <div>
+   |-------| |-------| |-------|
+  </div> 
+  <div>
+   | | | | | |
+  </div> 
+  <div>
+   | O | | O---| | O |
+  </div> 
+  <div>
+   | | | | | | | |
+  </div> 
+  <div>
+   |-------| |-------| |-------|
+  </div> 
+  <div>
+   目标要找一个最小的移动顺序次将所有的
+   <a href="http://baike.baidu.com/view/159417.htm" shape="rect" target="_blank">指针</a>指向12点。
+  </div> 
+  <div>
+   下面原表格列出了9种不同的旋转指针的方法，每一种方法都叫一次移动。
+  </div> 
+  <div>
+   选择1到9号移动方法，将会使在表格中对应的时钟的指针
+   <a href="http://baike.baidu.com/view/3329844.htm" shape="rect" target="_blank">顺时针旋转</a>90度。
+  </div> 
+  <table><tr><td colspan="1" rowspan="1"> </td><td colspan="1" rowspan="1">
+      <div>
+       受影响的时钟
+      </div> </td></tr><tr><td colspan="1" rowspan="1"> </td><td colspan="1" rowspan="1">
+      <div>
+       BDEFH
+      </div> </td></tr></table>
+  <div>
+   Example
+  </div> 
+  <div>
+   9 9 12 9 12 12 9 12 12 12 12 12 12 12 12 6 6 6 5 -&gt; 9 9 9 8-&gt; 9 9 9 4 -&gt; 12 9 9 9-&gt; 12 12 12 6 3 6 6 6 6 9 9 9 12 9 9 12 12 12
+  </div> 
+  <div>
+   [但这可能不是正确的方法，请看下面]
+  </div> 
+  <div>
+   PROGRAM NAME: clocks
+  </div> 
+  <div>
+   INPUT FORMAT
+  </div> 
+  <table><tr><td colspan="1" rowspan="1">
+      <div>
+       第1-3行：
+      </div> </td><td colspan="1" rowspan="1">
+      <div>
+       三个空格分开的数字，每个数字表示一个时钟的初始时间，3,6,9,12。数字的含意和上面第一个例子一样。
+      </div> </td></tr></table>
+  <div>
+   SAMPLE INPUT (file clocks.txt)
+  </div> 
+  <div>
+   9 9 126 6 66 3 6
+  </div> 
+  <div>
+   OUTPUT FORMAT
+  </div> 
+  <div>
+   单独的一行包括一个用空格分开的将所有
+   <a href="http://baike.baidu.com/view/159417.htm" shape="rect" target="_blank">指针</a>指向12:00的最短移动顺序的列表。
+  </div> 
+  <div>
+   如果有多种方案，输出那种使的连接起来数字最小的方案。（举例来说5 2 4 6 &lt; 9 3 1 1）。
+  </div> 
+  <div>
+   SAMPLE OUTPUT (file clocks.out)
+  </div> 
+  <div>
+   1s，16mb
+  </div> 
+  <div>
+   参考方法利用了9重循环，这就需要在循环内部加快运算速度，位运算是不错的办法。对于下面的move和k赋值不理解的同学，可以将它用计算器转化为二进制，然后由最后一位开始三个一个看看。
+  </div> 
+  <div>
+   program clocks;
+  </div> 
+  <div>
+   const
+  </div> 
+  <div>
+   move:array[1..9] of longint=(18911232,19136512,2363904,16810048,2134536,262657,36936,73,4617);
+  </div> 
+  <div>
+   a,b,c,d,e,f,g,h,i,x,y,r,s,t:integer;
+  </div> 
+  <div>
+   k,l:longint;
+  </div> 
+  <div>
+   ak,bk:array[1..27] of integer;
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   assign(input,'clocks.txt');reset(input);
+  </div> 
+  <div>
+   assign(output,'clocks.out');rewrite(output);
+  </div> 
+  <div>
+   l:=0;
+  </div> 
+  <div>
+   for x:= 1 to 3 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   for y:= 1 to 3 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   read(r);
+  </div> 
+  <div>
+   if r=12 then r:=0 else r:=r div 3;
+  </div> 
+  <div>
+   l:=l*8+r;
+  </div> 
+  <div>
+   readln;
+  </div> 
+  <div>
+   fillchar(ak,27,0);
+  </div> 
+  <div>
+   t:=27;
+  </div> 
+  <div>
+   d:=1;
+  </div> 
+  <div>
+   e:=1;
+  </div> 
+  <div>
+   h:=1;
+  </div> 
+  <div>
+   i:=1;
+  </div> 
+  <div>
+   {for a:= 0 to 3 do
+  </div> 
+  <div>
+   for b:= 0 to 3 do
+  </div> 
+  <div>
+   for c:= 0 to 3 do
+  </div> 
+  <div>
+   for d:= 0 to 3 do
+  </div> 
+  <div>
+   for e:= 0 to 3 do
+  </div> 
+  <div>
+   for f:= 0 to 3 do
+  </div> 
+  <div>
+   for g:= 0 to 3 do
+  </div> 
+  <div>
+   for h:= 0 to 3 do
+  </div> 
+  <div>
+   for i:= 0 to 3 do
+  </div> 
+  <div>
+   begin }
+  </div> 
+  <div>
+   k:=l;
+  </div> 
+  <div>
+   s:=0;
+  </div> 
+  <div>
+   r:=a;
+  </div> 
+  <div>
+   while r&gt;0 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   dec(r);
+  </div> 
+  <div>
+   k:=(k+move[1]) and 57521883;
+  </div> 
+  <div>
+   inc(s);
+  </div> 
+  <div>
+   bk[s]:=1;
+  </div> 
+  <div>
+   r:=b;
+  </div> 
+  <div>
+   while r&gt;0 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   dec(r);
+  </div> 
+  <div>
+   k:=(k+move[2]) and 57521883;
+  </div> 
+  <div>
+   inc(s);
+  </div> 
+  <div>
+   bk[s]:=2;
+  </div> 
+  <div>
+   r:=c;
+  </div> 
+  <div>
+   while r&gt;0 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   dec(r);
+  </div> 
+  <div>
+   k:=(k+move[3]) and 57521883;
+  </div> 
+  <div>
+   inc(s);
+  </div> 
+  <div>
+   bk[s]:=3;
+  </div> 
+  <div>
+   r:=d;
+  </div> 
+  <div>
+   while r&gt;0 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   dec(r);
+  </div> 
+  <div>
+   k:=(k+move[4]) and 57521883;
+  </div> 
+  <div>
+   inc(s);
+  </div> 
+  <div>
+   bk[s]:=4;
+  </div> 
+  <div>
+   r:=e;
+  </div> 
+  <div>
+   while r&gt;0 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   dec(r);
+  </div> 
+  <div>
+   k:=(k+move[5]) and 57521883;
+  </div> 
+  <div>
+   inc(s);
+  </div> 
+  <div>
+   bk[s]:=5;
+  </div> 
+  <div>
+   r:=f;
+  </div> 
+  <div>
+   while r&gt;0 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   dec(r);
+  </div> 
+  <div>
+   k:=(k+move[6]) and 57521883;
+  </div> 
+  <div>
+   inc(s);
+  </div> 
+  <div>
+   bk[s]:=6;
+  </div> 
+  <div>
+   r:=g;
+  </div> 
+  <div>
+   while r&gt;0 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   dec(r);
+  </div> 
+  <div>
+   k:=(k+move[7]) and 57521883;
+  </div> 
+  <div>
+   inc(s);
+  </div> 
+  <div>
+   bk[s]:=7;
+  </div> 
+  <div>
+   r:=h;
+  </div> 
+  <div>
+   while r&gt;0 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   dec(r);
+  </div> 
+  <div>
+   k:=(k+move[8]) and 57521883;
+  </div> 
+  <div>
+   inc(s);
+  </div> 
+  <div>
+   bk[s]:=8;
+  </div> 
+  <div>
+   r:=i;
+  </div> 
+  <div>
+   while r&gt;0 do
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   dec(r);
+  </div> 
+  <div>
+   k:=(k+move[9]) and 57521883;
+  </div> 
+  <div>
+   inc(s);
+  </div> 
+  <div>
+   bk[s]:=9;
+  </div> 
+  <div>
+   if k=0 then
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   if s&lt;t then
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   t:=s;
+  </div> 
+  <div>
+   for x:= 1 to t do
+  </div> 
+  <div>
+   ak[x]:=bk[x];
+  </div> 
+  <div>
+   if s=t then
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   x:=0;
+  </div> 
+  <div>
+   while ak[x]=bk[x] do
+  </div> 
+  <div>
+   inc(x);
+  </div> 
+  <div>
+   if ak[x]&gt;bk[x] then
+  </div> 
+  <div>
+   begin
+  </div> 
+  <div>
+   for y:= 1 to t do
+  </div> 
+  <div>
+   ak[y]:=bk[y];
+  </div> 
+  <div>
+   for i:= 1 to t do
+  </div> 
+  <div>
+   write(ak[i],' ');
+  </div> 
+  <div>
+   close(input);close(output);
+  </div> 
+  <div> 
+   <dl><dd>
+     计算机术语 ， ， 
+   </dd></dl></div> 
+ </div>
+</div></span>
+</div></body></html> 

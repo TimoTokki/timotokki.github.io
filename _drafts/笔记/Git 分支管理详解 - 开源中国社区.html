@@ -1,0 +1,217 @@
+<html>
+<head>
+  <title>Git 分支管理详解 - 开源中国社区</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/275193; Windows/6.3.9600;"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="14795"/>
+<h1>Git 分支管理详解 - 开源中国社区</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2016/3/4 20:15</i></td></tr>
+<tr><td><b>标签：</b></td><td><i>减藏</i></td></tr>
+<tr><td><b>来源：</b></td><td><a href="http://www.oschina.net/question/31384_157479"><i>http://www.oschina.net/question/31384_157479</i></a></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span><br/><div style="font-size: 16px"><div><div style="text-align:center;font-size:10pt;background:rgb(255, 255, 255);font-family:'Microsoft YaHei', Verdana, sans-serif, SimSun;"><div style="text-align:left;background:rgb(255, 255, 255);"><div><div><div style="overflow:hidden;"><div><div style="overflow:hidden;"><div style="line-height:22px;font-size:10.5pt;"><h3 style="padding:0px;margin:20px 0px 10px;"> 大纲： </h3> 
+<p style="padding:0px;margin:0px 0px 10px;"> 1.前言 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 2.创建分支 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 3.切换分支 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 4.合并分支（快速合并） </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 5.删除分支 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 6.分支合并冲突 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 7.合并分支（普通合并） </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 8.分支管理策略 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 9.团队多人开发协作 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 10.总结 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 注，测试机 CentOS 5.5 x86_64，Git 服务器版本：git version 1.8.2.1，客户端版本：git version 1.9.2.msysgit.0。所有软件请到这里下载：http://msysgit.github.io/。 </p> 
+<h3 style="padding:0px;margin:20px 0px 10px;"> 1.前言 </h3> 
+<p style="padding:0px;margin:0px 0px 10px;"> 在上一篇博客中我们主要讲解了Git 远程仓库，相信大家对远程的Git仓库有一定的了解，嘿嘿。在这一篇博客中我们来在大家讲解一下Git 分支管理，这可以说是Git的又一大特点。下面我们就来学习一下Git分支管理吧。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 我们先来说一个简单的案例吧，你们团队中有多个人再开发一下项目，一同事再开发一个新的功能，需要一周时间完成，他写了其中的30%还没有写完，如果他提 交了这个版本，那么团队中的其它人就不能继续开发了。但是等到他全部写完再全部提交，大家又看不到他的开发进度，也不能继续干活，这如何是好呢？ </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 对于上面的这个问题，我们就可以用分支管理的办法来解决，一同事开发新功能他可以创建一个属于他自己的分支，其它同事暂时看不到，继续在开发分支（一般都 有多个分支）上干活，他在自己的分支上干活，等他全部开发完成，再一次性的合并到开发分支上，这样我们既可知道他的开发进度，又不影响大家干活，是不是很 方便呢？ </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 大家可能会说了，你Git的分支功能人家SVN也有啊，也没什么特殊的嘛。但我想说你那个创建和切换速度怎么样呢？嘿嘿，我想说谁用谁知道啊！但Git呢，无论你创建还是切换或者删除都很快哦！ </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 分支本质上其实就是一个指向某次提交的可变指针。Git 的默认分支名字为 master 。而我们是怎么知道当前处于哪个分支当中呢？答案就是在于 HEAD 这个十分特殊的指针，它专门用于指向于本地分支中的当前分支。我们可以简单理解为：commit &lt;- branch &lt;- HEAD （注，本来我们详细说一下HEAD的，这个东西真不好说，goole了一下也没几个大神说这个，嘿嘿。下面我就通过讲解帮助大家理解，简单的说HEAD就 是指向于本地分支中的当前分支，如下图：） 下面我们来创建分支。 </p> 
+<h3 style="padding:0px;margin:20px 0px 10px;"> 2.创建分支 </h3> 
+<p style="padding:0px;margin:0px 0px 10px;"> 当我们需要调试某个Bug或者尝试添加或修改程序中的某个模块，而又不能影响主分支的开发时。就可以通过创建分支来满足需求。创建分支相当于是创建一个新的分支指针指向当前所在的提交。我们在Commit3上创建dev分支： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112014_aJ5H.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112014_aJ5H.png" type="image/png" alt="" height="151" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 如下图所示，dev分支指向Commit3。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112014_fKzq.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112014_fKzq.png" type="image/png" alt="" height="367" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 从上图可知，虽然我们创建了一个新分支，但是 HEAD 仍然指向 master 。如果希望在创建分支的同时切换到新分支上，我们可以通过以下命令实现： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112014_FPiM.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112014_FPiM.png" type="image/png" alt="" height="151" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> git checkout命令加上-b参数表示创建并切换分支上。 </p> 
+<h3 style="padding:0px;margin:20px 0px 10px;"> 3.切换分支 </h3> 
+<p style="padding:0px;margin:0px 0px 10px;"> 切换当前分支我们可以用以下命令实现： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112014_XSIB.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112014_XSIB.png" type="image/png" alt="" height="177" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> git branch -a 命令可以查看所有分支，现在我们HEAD指针便指向dev分支，大家可以在上图中看到dev分支上有个*号。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112014_Ag6B.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112014_Ag6B.png" type="image/png" alt="" height="367" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 下面我们修改一下readme.txt中的内容，并在dev分支上提交一下。如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112014_P9pW.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112014_P9pW.png" type="image/png" alt="" height="320" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 用流程图演示上述过程如下： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_0iKm.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_0iKm.png" type="image/png" alt="" height="367" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 现在我们在dev分支上完成工作，现在到master分支上。如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_07Ta.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_07Ta.png" type="image/png" alt="" height="203" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 流程图表示如下： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_NPtV.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_NPtV.png" type="image/png" alt="" height="367" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 切换回master分支后，再查看一个readme.txt文件，如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_iId3.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_iId3.png" type="image/png" alt="" height="164" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 大家可以看到我们刚才增加的一行内容不见了，嘿嘿。因为那个提交是在dev分支上，而master分支没有变化。好了，下面我们来演示一下合并分支。 </p> 
+<h3 style="padding:0px;margin:20px 0px 10px;"> 4.合并分支（快速合并） </h3> 
+<p style="padding:0px;margin:0px 0px 10px;"> 现在，我们把dev分支的工作成果合并到master分支上，如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_bayG.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_bayG.png" type="image/png" alt="" height="190" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> git merge 命令用于合并指定分支到当前分支。合并后，再查看readme.txt的内容，就可以看到，和dev分支的最新提交是完全一样的。如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_7ycx.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_7ycx.png" type="image/png" alt="" height="281" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 大家注意到上面的Fast-forward信息，Git告诉我们，这次合并是“快进模式”，也就是直接把master指向dev的当前提交，所以合并速度 非常快。当然，也不是每次合并都能Fast-forward，我们后面会将其他方式的合并。合并完成后，就可以放心地删除dev分支了。 </p> 
+<h3 style="padding:0px;margin:20px 0px 10px;"> 5.删除分支 </h3> 
+<p style="padding:0px;margin:0px 0px 10px;"> 下面我们来演示一下删除分支，如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_H02t.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_H02t.png" type="image/png" alt="" height="177" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 大家在实际操作中可以发现在我们创建、合并、删除分支的速度非常快吧，这和直接在master分支上工作效果是一样的，但过程更安全，更可靠。下面我们来简单的总结一下： </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <br style="padding:0px;margin:0px;"/> </p> 
+<ul style="padding:0px;margin:10px 0px 20px 20px;list-style-type:disc;list-style-position:inside;line-height:20px;"> 
+ <li style="padding:0px;margin:0px;"> 查看分支 git branch -a </li> 
+ <li style="padding:0px;margin:0px;"> 创建分支 git branch name </li> 
+ <li style="padding:0px;margin:0px;"> 切换分支 git checkout name </li> 
+ <li style="padding:0px;margin:0px;"> 创建并切换 git checkout -b name </li> 
+ <li style="padding:0px;margin:0px;"> 合并某分支到当前分支 git merge name </li> 
+ <li style="padding:0px;margin:0px;"> 删除分支 git branch -d name </li> 
+</ul> 
+<h3 style="padding:0px;margin:20px 0px 10px;"> 6.分支合并冲突 </h3> 
+<p style="padding:0px;margin:0px 0px 10px;"> 下面我们来演示一下不同分支修改同一个文件产生冲突问题，下面我们来创建一个新的分支，继续开发新功能： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_ml67.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_ml67.png" type="image/png" alt="" height="333" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 现在我们将分支切换到master分支上修改readme.txt内容并提交，如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_BYPK.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_BYPK.png" type="image/png" alt="" height="346" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 这种情况下，Git无法执行“快速合并”，只能试图把各自的修改合并起来，但这种合并就可能会有冲突，如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_6mxZ.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_6mxZ.png" type="image/png" alt="" height="138" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 果然冲突了，Git告诉我们readme.txt文件存在冲突，必须手动解决冲突后再提交。下面我们用git status查看一下状态： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_vZnB.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_vZnB.png" type="image/png" alt="" height="320" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 下面我们来查看一下readme.txt中的内容，如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_fgMQ.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_fgMQ.png" type="image/png" alt="" height="190" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> Git用&lt;&lt;&lt;&lt;&lt;&lt;&lt;，=======，&gt;&gt;&gt;&gt;&gt;&gt;&gt;标记出不同分支的内容，让我们选择要保留的内容，下面我们修改一下readme.txt，再次提交。如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112015_wKhE.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112015_wKhE.png" type="image/png" alt="" height="372" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 好了，到这我们的分支合并冲突就讲解完成了，下面我们来删除分支。如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112016_5XNE.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112016_5XNE.png" type="image/png" alt="" height="372" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 最后，我们可以用 git log --graph --pretty=oneline --abbrev-commit 命令，查看一下分支合并。 </p> 
+<h3 style="padding:0px;margin:20px 0px 10px;"> 7.合并分支（普通合并） </h3> 
+<p style="padding:0px;margin:0px 0px 10px;"> 分支合并分为快速合并与普通合并两种模式，普通合并，合并后的历史有分支记录，能看出来曾经做过合并，而快速合并就看不出来曾经做过合并。下面我们来演示一下普通合并， </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112016_X1yn.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112016_X1yn.png" type="image/png" alt="" height="489" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 大家可以看到我们这次合并用的普通模式合并，--no-ff参数表示禁用快速合并。下面我们用git log命令查看一下合并历史： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112016_rmJT.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112016_rmJT.png" type="image/png" alt="" height="294" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 注，合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支记录，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <strong style="padding:0px;margin:0px;">1).快速合并</strong> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112016_pWF5.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112016_pWF5.png" type="image/png" alt="" height="554" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="423"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <strong style="padding:0px;margin:0px;">2).普通合并</strong> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112016_t19t.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112016_t19t.png" type="image/png" alt="" height="714" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="234"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> <br style="padding:0px;margin:0px;"/> </p> 
+<h3 style="padding:0px;margin:20px 0px 10px;"> 8.分支管理策略 </h3> 
+<p style="padding:0px;margin:0px 0px 10px;"> 下面我们来说一下一般企业中开发一个项目的分支策略： </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <br style="padding:0px;margin:0px;"/> </p> 
+<ul style="padding:0px;margin:10px 0px 20px 20px;list-style-type:disc;list-style-position:inside;line-height:20px;"> 
+ <li style="padding:0px;margin:0px;"> 主分支 master </li> 
+ <li style="padding:0px;margin:0px;"> 开发分支 develop </li> 
+ <li style="padding:0px;margin:0px;"> 功能分支 feature </li> 
+ <li style="padding:0px;margin:0px;"> 预发布分支  release </li> 
+ <li style="padding:0px;margin:0px;"> bug 分支 fixbug </li> 
+ <li style="padding:0px;margin:0px;"> 其它分支 other </li> 
+</ul> 
+<p style="padding:0px;margin:0px 0px 10px;"> <strong style="padding:0px;margin:0px;">1).主分支 master</strong> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 代码库应该有一个、且仅有一个主分支。所有提供给用户使用的正式版本，都在这个主分支上发布。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112016_Jfp8.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112016_Jfp8.png" type="image/png" alt="" height="573" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="278"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> Git主分支的名字，默认叫做Master。它是自动建立的，版本库初始化以后，默认就是在主分支在进行开发。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <strong style="padding:0px;margin:0px;">2).开发分支 develop</strong> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 主分支只用来分布重大版本，日常开发应该在另一条分支上完成。我们把开发用的分支，叫做Develop。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112016_HYVm.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112016_HYVm.png" type="image/png" alt="" height="536" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="466"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 这个分支可以用来生成代码的最新代码版本。如果想正式对外发布，就在Master分支上，对Develop分支进行&quot;合并&quot;（merge）。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <strong style="padding:0px;margin:0px;">3).功能分支 feature</strong> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 功能分支，它是为了开发某种特定功能，从Develop分支上面分出来的。开发完成后，要再并入Develop。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112016_v2ve.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112016_v2ve.png" type="image/png" alt="" height="693" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="375"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 功能分支的名字，可以采用feature-*的形式命名。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <strong style="padding:0px;margin:0px;">4).预发布分支  release</strong> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 预发布分支，它是指发布正式版本之前（即合并到Master分支之前），我们可能需要有一个预发布的版本进行测试。预发布分支是从Develop分支上面 分出来的，预发布结束以后，必须合并进Develop和Master分支。它的命名，可以采用release-*的形式。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <strong style="padding:0px;margin:0px;">5).bug 分支 fixbug</strong> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> bug分支。软件正式发布以后，难免会出现bug。这时就需要创建一个分支，进行bug修补。修补bug分支是从Master分支上面分出来的。修补结束以后，再合并进Master和Develop分支。它的命名，可以采用fixbug-*的形式。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112016_PIf1.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112016_PIf1.png" type="image/png" alt="" height="419" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="492"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <strong style="padding:0px;margin:0px;">6).其它分支 other</strong> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 还有就是其它分支了，大家可以根据需要创建即可…… </p> 
+<h3 style="padding:0px;margin:20px 0px 10px;"> 9.团队多人开发协作 </h3> 
+<p style="padding:0px;margin:0px 0px 10px;"> 在上面的章节中我们讲解了Git的分支管理策略，一般开发团队中有这样几个分支，master、develop、feature、release、 bug、other分支，或者你还有其它分支，那有博友会问了，你讲了那么多分支，都在本地放着我们怎么查看和推送分支到远程服务器上呢？嘿嘿，我们说大 家别急我们在这一章节中就来重点讲解，在团队多人协作中的分支推送与抓取。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <strong style="padding:0px;margin:0px;">1).查看远程仓库分支</strong> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 查看远程仓库的信息，如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112016_LFdi.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112016_LFdi.png" type="image/png" alt="" height="203" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 大家可以看到git remote命令可以查看远程仓库，加-v选项可以查看详细信息。上面显示了你抓取和推送的origin（源）信息。 当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且远程仓库的默认名称是origin。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <strong style="padding:0px;margin:0px;">2).分支推送</strong> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 下面我们来演示一下将本地分支推送到远程的仓库中，如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112016_nDV2.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112016_nDV2.png" type="image/png" alt="" height="281" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 大家可以看到，我们的本地master分支与远程的master分支已同步。下面我们来演示一下同步dev分支，如下图： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112017_Uxp9.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112017_Uxp9.png" type="image/png" alt="" height="125" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 有博友会问了，我本地有很多分支，有哪些分支需要推送到远程仓库中呢？一般是这样的， </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <br style="padding:0px;margin:0px;"/> </p> 
+<ul style="padding:0px;margin:10px 0px 20px 20px;list-style-type:disc;list-style-position:inside;line-height:20px;"> 
+ <li style="padding:0px;margin:0px;"> master 分支是主分支，要时刻与远程同步，一般我们发布最新版本就用master分支 </li> 
+ <li style="padding:0px;margin:0px;"> develop 分支是开发分支，团队中所有人都在这个分支上开发，所以也需要与远程同步 </li> 
+ <li style="padding:0px;margin:0px;"> bug 分支一般只在本地使用来修复bug，一般不需推送远程仓库中 </li> 
+ <li style="padding:0px;margin:0px;"> feature 分支是否需要推送到远程，要看是不是有几个人合作开发新功能，如果你是一个开发，那就留在本地吧 </li> 
+ <li style="padding:0px;margin:0px;"> release 分支一般是系统管理，推送或抓取的分支一般与开发人员无关 </li> 
+ <li style="padding:0px;margin:0px;"> other 分支大家按需求分配 </li> 
+</ul> 
+<p style="padding:0px;margin:0px 0px 10px;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <strong style="padding:0px;margin:0px;">3).分支抓取</strong> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 现在你一同事在电脑上克隆一份仓库，我们来演示一下。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 生成公钥： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112017_Kvdi.jpg" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112017_Kvdi.jpg" type="image/jpeg" alt="" height="365" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 将生成的公司增加到git服务器上： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112017_htql.jpg" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112017_htql.jpg" type="image/jpeg" alt="" height="36" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 克隆远程版本库： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112017_IVCM.jpg" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112017_IVCM.jpg" type="image/jpeg" alt="" height="223" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 我们现在查看一下分支： </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112017_O9Bt.jpg" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112017_O9Bt.jpg" type="image/jpeg" alt="" height="47" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="347"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 你同事要在dev分支上开发，就得创建与远程origin一样的dev分支到本地的仓库上，下面我们来创建一下： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112017_t88R.jpg" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112017_t88R.jpg" type="image/jpeg" alt="" height="85" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="492"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 现在你同事就可以在dev分支上开发了，下面我们新建一些文件并提交到远程dev分支： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112018_xENh.jpg" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112018_xENh.jpg" type="image/jpeg" alt="" height="277" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> 你的同事向origin/dev分支提交了一个index.html页面，现在你也在修改这个文件，并提交： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112018_7X4d.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112018_7X4d.png" type="image/png" alt="" height="463" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 推送失败，因为你同事的最新提交和你推送的提交有冲突，Git提示我们，先用git pull把最新的提交从origin/dev抓下来，然后在本地合并解决冲突，再推送： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112018_AKbq.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112018_AKbq.png" type="image/png" alt="" height="307" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> git pull 失败了，原因是没有将dev分支与远程origin/dev分支进行链接，Git提示我们设置dev和origin/dev的链接： 
+<p style="padding:0px;margin:0px 0px 10px;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112018_CR6y.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112018_CR6y.png" type="image/png" alt="" height="164" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 下面我们再来git pull一下试试： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112018_HhTI.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112018_HhTI.png" type="image/png" alt="" height="151" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> git pull 成功，但是合并有冲突需要手动解决，解决的方法和分支管理中的解决冲突完全一样。解决后提再push： </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112018_81V0.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112018_81V0.png" type="image/png" alt="" height="73" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112018_Auj9.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112018_Auj9.png" type="image/png" alt="" height="155" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:center;"> <a href="http://static.oschina.net/uploads/img/201406/05112018_bXAc.png" style="padding:0px;margin:0px;color:rgb(62, 98, 166);outline:0px;text-decoration:none;" target="_blank"><img src="Git 分支管理详解 - 开源中国社区_files/05112018_bXAc.png" type="image/png" alt="" height="437" style="padding:0px;margin:0px;border:0px;max-width:550px;cursor:pointer;" width="550"/></a> </p> 
+<p style="padding:0px;margin:0px 0px 10px;text-align:left;"> <br style="padding:0px;margin:0px;"/> </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 好了，这样的我们的远程推送与抓取就讲解完成了，下面我们来总结一下。 </p> 
+<h3 style="padding:0px;margin:20px 0px 10px;"> 10.总结 </h3> 
+<p style="padding:0px;margin:0px 0px 10px;"> 一般在团队中多人开发模式是这样的：首先，可以试图用git push origin branch-name推送自己的修改如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并如果合并有冲突，则解决冲突，并在本地提交没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。 </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 好了，到这里我们的Git分支管理就讲解到这里了。最后，希望大家有所收获^_^…… </p> 
+<p style="padding:0px;margin:0px 0px 10px;"> 本文出自 “Share your knowledge …” 博客，http://freeloda.blog.51cto.com/2033581/1417525 </p>                    <div style="padding:0px;margin:0px;clear:both;font-size:1px;line-height:0;"></div><div style="padding:0px;margin:0px;">
+	<span style="padding:0px;margin:0px;">
+		</span>
+</div></div></div></div></div></div></div></div></div></div></div><br/></span>
+</div></body></html> 
