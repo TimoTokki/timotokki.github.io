@@ -20,6 +20,9 @@ title: JSDOM`s Notes
 
 + javascript:伪协议（href = 'javascript:functionname(agruements)'）以及内嵌的事件处理函数（href = '#' onclick = 'functionname(agruements); ...'）；
 
++ 浏览器探测技术
+
++ document.write方法，违反了结构、行为分离的原则
 + ...
 
 ## 重点
@@ -33,6 +36,18 @@ title: JSDOM`s Notes
 	+ 属性节点： 2
 
 	+ 文本节点： 3
+
++ 平稳退化
+
++ 渐进增强
+
++ 质疑一切，不要假定，也就是说充分地进行对象探测，也不要假定任何函数都能够成功返回true。
+
++ nodeName属性总是返回一个大写字母的值，即使元素在HTML文档中是小写字母。
+
++ 三位一体的网页：结构层、表现层、行为层
+
++ innerHTML属性可直接给元素节点直接添加内容。
 
 ## 疑点
 
