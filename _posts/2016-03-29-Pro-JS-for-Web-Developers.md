@@ -14,10 +14,11 @@ layout: post
 | ES4.0	| 2000		| 太过激进而流产	|
 | ES5.0 | 2009		| 现今流行标准		|
 
-
 ### History of DOM
 
-## JavaScript简介
+## ECMAScript简介
+
+其数据类型总共有六种：null, undefined, number, string, boolean, object。变量分基本变量和引用变量两种。基本变量有null, undefined, number, string, boolean，引用变量是object。
 
 JS由ECMAScrpit、DOM、BOM三部分组成。
 
