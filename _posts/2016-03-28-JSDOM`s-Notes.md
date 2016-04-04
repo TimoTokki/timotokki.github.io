@@ -1,7 +1,7 @@
 ---
 layout: post
 
-title: JSDOM`s Notes
+title: JSDOM阅读笔记
 ---
 
 ## 性能优化
@@ -48,6 +48,22 @@ title: JSDOM`s Notes
 + 三位一体的网页：结构层、表现层、行为层
 
 + innerHTML属性可直接给元素节点直接添加内容。
+
++ 每个元素节点都有一个属性style，style是一个对象，元素的样式都存放在style对象的属性里element.style.property
+
++ 因为无法直接引用带有减号-的CSS属性（-是保留字符）时，DOM允许采用驼峰命名法引用那些属性（比如fontFamily）
+
++ DOM的style属性只能获取html的内部CSS属性，无法访问外部属性表，或者包含在head中的内部属性表，用途有限
+
++ 尽量用CSS设置网页的样式，只有当CSS的方法难以实现而JS轻松完成时，再选用JS
+
++ CSS依然是设置属性，但通过JS给文档设置类名引用属性
+
++ setTimeout函数能够让某个函数经过预定时间后再执行，第一个参数是字符串，为要执行函数的名字，第二个参数是一个数值，为延迟执行的时间。
+
++ clearTimeout函数可以清除等待时间
+
+![何时该用JS而非CSS](/static/images/jsdom.png)
 
 ## 疑点
 
