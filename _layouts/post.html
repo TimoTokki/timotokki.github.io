@@ -10,6 +10,8 @@ layout: default
 	</article>
 
 	<hr />
+
+	<a href="/index.html">Go back</a>
 	<p> 字数统计：{{ page.content | number_of_words }} </p>
 	{% if page.previous %}
 	<p> 上一篇：<a href="{{ page.previous.url | prepend: site.baseurl }}"> {{ page.previous.title }} </a></p>
