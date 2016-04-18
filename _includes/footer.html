@@ -1,10 +1,28 @@
-<footer class="hh">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <span>&copy; 2016 TimoTokki</span>
-      </div>
-    </div>
-  </div>
-</footer>
+<footer class="site-footer">
+    <h2 class="footer-heading small-site-title">{{ site.title }}</h2>
 
+    <div class="footer-col-wrapper">
+      
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list footer-content">
+          <li>Powered By TimoTokki</li>
+          <li>Made on <a href="jekyll.com">{ { Jekyll } }</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2 footer-content">
+        <ul class="social-media-list">
+          {% if site.github_username %}
+          <li>
+            {% include icon-github.html username = site.github_username %}
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3 site-description">
+        <p>{{ site.description }}</p>
+      </div>
+
+   	</div>
+</footer>

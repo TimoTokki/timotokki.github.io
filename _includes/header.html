@@ -1,21 +1,31 @@
-  <header>
-    <!-- navbar -->
-    <nav>
-    	<div class="navbar-header">
-      	<a href="{{ site.baseurl }}/index.html">TimoTokki的博客</a>
-      </div>
-      
-	    <ul class="nav navbar-nav navbar-right">
-		    {% for p in site.pages %}
-		      {% if p.title %}
-		        {% if p.url == page.url %}
-		          <li class="active">
-		          {% else %}
-		          <li>
-		        {% endif %}
-		        <a href="{{ p.url | prepend: site.baseurl }}"><span class="glyphicon {{ p.icon }}"></span> {{ p.title }}</a></li>
-		      {% endif %}
-		    {% endfor %}
-	    </ul>
-    </nav>
-  </header>
+<header>
+  <!-- navbar -->
+  <nav>
+  	
+  	<div class="navbar-header">
+    	<a href="{{ site.baseurl }}/index.html">{{site.title}}</a>
+    	<div class="site-description">
+				{{site.description}}
+			</div>
+    </div>
+    
+    <ul class="navbar-nav navbar-right">
+	    {% for p in site.pages %}
+	      {% if p.title %}
+	      	{% if p.url == '/' %}
+	      		{% continue %}
+	      	{% endif %}
+	        {% if p.url == page.url %}
+	          <li class="active">
+	          {% else %}
+	          <li>
+	        {% endif %}
+	        <a href="{{ p.url | prepend: site.baseurl }}"><span class="page-link">{{ p.title }}</span></a>
+	    			</li>
+	      {% endif %}
+	    {% endfor %}
+    </ul>
+  
+  </nav>
+
+</header>

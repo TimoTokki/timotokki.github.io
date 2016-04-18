@@ -14,39 +14,54 @@
   <body>
 
 <!-- default模板：header块是由include header.html命令添加的 -->
-      <header>
-    <!-- navbar -->
-    <nav>
-    	<div class="navbar-header">
-      	<a href="/index.html">TimoTokki的博客</a>
-      </div>
-      
-	    <ul class="nav navbar-nav navbar-right">
-		    
-		      
-		        
-		          <li>
-		        
-		        <a href="/resources/"><span class="glyphicon "></span> Resources</a></li>
-		      
-		    
-		      
-		        
-		          <li>
-		        
-		        <a href="/about/"><span class="glyphicon "></span> 关于</a></li>
-		      
-		    
-		      
-		        
-		          <li class="active">
-		          
-		        <a href="/index.html"><span class="glyphicon "></span> My Blogs</a></li>
-		      
-		    
-	    </ul>
-    </nav>
-  </header>
+    <header>
+  <!-- navbar -->
+  <nav>
+  	
+  	<div class="navbar-header">
+    	<a href="/index.html">TimoTokki</a>
+    	<div class="site-description">
+				This is a demo
+			</div>
+    </div>
+    
+    <ul class="navbar-nav navbar-right">
+	    
+	      
+	      	
+	        
+	          <li>
+	        
+	        <a href="/resources/"><span class="page-link">Resources</span></a>
+	    			</li>
+	      
+	    
+	      
+	      	
+	        
+	          <li>
+	        
+	        <a href="/contact/"><span class="page-link">Contact</span></a>
+	    			</li>
+	      
+	    
+	      
+	      	
+	        
+	          <li>
+	        
+	        <a href="/about/"><span class="page-link">About</span></a>
+	    			</li>
+	      
+	    
+	      
+	      	
+	      		
+    </ul>
+  
+  </nav>
+
+</header>
 <!-- default模板：header块结束 -->
 
 <!-- default模板：content块是由content命令添加的 -->
@@ -95,88 +110,185 @@
 		</div>
 		<div class="post-list-body"> 
       
+        <a class="post-list-item" href="/2016/04/16/note-for-jquery.html">
+          <h2>
+          	Note For Jquery
+          </h2>
+          <div  class="postDate">
+          	<time datetime="2016-04-16T00:00:00+08:00" itemprop="datePublished">Apr 16, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					
+
+    	  	</div>
+        </a>
+      
+        <a class="post-list-item" href="/2016/04/15/note-for-ubuntu.html">
+          <h2>
+          	Note For Ubuntu
+          </h2>
+          <div  class="postDate">
+          	<time datetime="2016-04-15T00:00:00+08:00" itemprop="datePublished">Apr 15, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					[Ubuntu命令查阅][http://wiki.ubuntu.com.cn/Unix%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8] [Ubuntu参考手册][http://wiki.ubuntu.com.cn/UbuntuManual] LINUX 的发行版本XX.YY.ZZ XX...
+    	  	</div>
+        </a>
+      
+        <a class="post-list-item" href="/2016/04/11/note-for-jekyll.html">
+          <h2>
+          	Note For Jekyll
+          </h2>
+          <div  class="postDate">
+          	<time datetime="2016-04-11T00:00:00+08:00" itemprop="datePublished">Apr 11, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					_config.yml For technical reasons, this...
+    	  	</div>
+        </a>
+      
         <a class="post-list-item" href="/2016/04/04/note-for-computer-system.html">
           <h2>
-          计算机系统笔记
+          	计算机系统笔记
           </h2>
-          <span class="">Apr 4, 2016</span>
+          <div  class="postDate">
+          	<time datetime="2016-04-04T00:00:00+08:00" itemprop="datePublished">Apr 4, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					计算机系统可分为：CPU、内存、输入设备、输出设备 CPU内部由运算单元和操作单元组成。 CPU依据设计风格可分为两种：精简RISC和复杂CISC指令集。RISC指令集的指令较为精简，指令功能单一，运行时间短，常见RISC指令集的CPU有ARM等等;SISC指令集不同于RISC，是把一些简单的操作合成一条，指令执行较为复杂且运行时间长，但功能丰富，常见SICS指令集CPU主要有AMD、Intel等x86架构。 网络速度单位：Mbps，例如8M/1M ADSL传输速度指的就是理论最大传输值为:每秒8Mbit(1Mbyte)/每秒1Mbyte(125Kbyte)的上传/下载容量。...
+    	  	</div>
         </a>
       
         <a class="post-list-item" href="/2016/03/31/My-Answer-to-Some-Open-Questions-in-interview.html">
           <h2>
-          关于阿里技术岗网申的三个开放问题的回答
+          	关于阿里技术岗网申的三个开放问题的回答
           </h2>
-          <span class="">Mar 31, 2016</span>
+          <div  class="postDate">
+          	<time datetime="2016-03-31T00:00:00+08:00" itemprop="datePublished">Mar 31, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					请介绍一项你最热爱、最擅长的专业领域，并且介绍你在这个领域的学习经历和未来的学习规划。 web前端，创建、修改代码后可以即时呈现，容易感受到成就感。 开始，我先学习了下网上的一些前端领域和关于前端学习规划的文章，大致对前端这个技术岗位和其设计的技术基础有了粗略的了解，虽然对于前端领域还没清晰的整体规划，但对于如何入门，打好基础，还是做到了心中有数。我的方法是理论加实践。 理论主要是看一些经典技术书籍，但前端领域技术发展快，书中提到的技术难免有所过时，所以还要兼顾一些网上的技术教程。大致书单、技术网站罗列如下： w3cschool：刷一遍HTML,CSS,JavaScript的教程，敲敲实例代码，但不需要纠结于语法细节。刷完一遍后，我再看一些技术书籍，就感觉不怎么吃力了。...
+    	  	</div>
         </a>
       
-        <a class="post-list-item" href="/2016/03/30/Regular-Expression%60s-Notes.html">
+        <a class="post-list-item" href="/2016/03/30/Regular-Expression-s-Notes.html">
           <h2>
-          Regular Expression`s Notes
+          	Regular Expression`s Notes
           </h2>
-          <span class="">Mar 30, 2016</span>
+          <div  class="postDate">
+          	<time datetime="2016-03-30T00:00:00+08:00" itemprop="datePublished">Mar 30, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					正则表达式（英语：Regular Expression） 参考： 正则表达式 –...
+    	  	</div>
         </a>
       
         <a class="post-list-item" href="/2016/03/29/note-for-Pro-JS-for-Web-Developers.html">
           <h2>
-          《JavaScript高级程序设计》学习笔记
+          	《JavaScript高级程序设计》学习笔记
           </h2>
-          <span class="">Mar 29, 2016</span>
+          <div  class="postDate">
+          	<time datetime="2016-03-29T00:00:00+08:00" itemprop="datePublished">Mar 29, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					说明：教材为中文第三版。笔记会以表格的形式记录，第一栏为章节，第二栏为笔记类型（疑问，难点，要点，注意，技巧……），第三栏为描述，第四栏为页码，第五栏为备注。 章节 笔记类型 描述 页码...
+    	  	</div>
         </a>
       
         <a class="post-list-item" href="/2016/03/29/Pro-JS-for-Web-Developers.html">
           <h2>
-          Pro Js For Web Developers
+          	Pro Js For Web Developers
           </h2>
-          <span class="">Mar 29, 2016</span>
+          <div  class="postDate">
+          	<time datetime="2016-03-29T00:00:00+08:00" itemprop="datePublished">Mar 29, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					History History of ECMASCript 版本...
+    	  	</div>
         </a>
       
-        <a class="post-list-item" href="/2016/03/28/JSDOM%60s-Notes.html">
+        <a class="post-list-item" href="/2016/03/28/JSDOM-s-Notes.html">
           <h2>
-          JSDOM阅读笔记
+          	JSDOM阅读笔记
           </h2>
-          <span class="">Mar 28, 2016</span>
+          <div  class="postDate">
+          	<time datetime="2016-03-28T00:00:00+08:00" itemprop="datePublished">Mar 28, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					性能优化 尽量少访问DOM 尽量减少文档（比如HTML文档）中不必要的元素，以避免增加生成DOM即文档树（document tree）的负担。 合并脚本，即把多个JS文件合并在一个JS文档中，以减少加载页面时发送的请求数量。...
+    	  	</div>
         </a>
       
         <a class="post-list-item" href="/2016/03/24/some-advice-to-new-coder.html">
           <h2>
-          Some Advice To New Coder
+          	Some Advice To New Coder
           </h2>
-          <span class="">Mar 24, 2016</span>
+          <div  class="postDate">
+          	<time datetime="2016-03-24T00:00:00+08:00" itemprop="datePublished">Mar 24, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					给新程序员的10条建议 **创建时间：** _2015/9/15 19:09_ **标签：**...
+    	  	</div>
         </a>
       
         <a class="post-list-item" href="/2016/03/24/note-for-JS-by-Liaoxuefeng.html">
           <h2>
-          Note For Js By Liaoxuefeng
+          	Note For Js By Liaoxuefeng
           </h2>
-          <span class="">Mar 24, 2016</span>
+          <div  class="postDate">
+          	<time datetime="2016-03-24T00:00:00+08:00" itemprop="datePublished">Mar 24, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					JavaScript廖雪峰笔记 **创建时间：** _2016/3/7 13:00_ **更新时间：**...
+    	  	</div>
         </a>
       
-        <a class="post-list-item" href="/2016/03/20/second-post%20.html">
+        <a class="post-list-item" href="/2016/03/20/second-post.html">
           <h2>
-          Second Post 
+          	Second Post 
           </h2>
-          <span class="">Mar 20, 2016</span>
+          <div  class="postDate">
+          	<time datetime="2016-03-20T00:00:00+08:00" itemprop="datePublished">Mar 20, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					How to write in Chinese?...
+    	  	</div>
         </a>
       
         <a class="post-list-item" href="/2016/03/20/Intro.html">
           <h2>
-          Introduction
+          	Introduction
           </h2>
-          <span class="">Mar 20, 2016</span>
+          <div  class="postDate">
+          	<time datetime="2016-03-20T00:00:00+08:00" itemprop="datePublished">Mar 20, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					How to write in Chinese?...
+    	  	</div>
         </a>
       
         <a class="post-list-item" href="/2016/03/03/A-New-World.html">
           <h2>
-          A New World
+          	A New World
           </h2>
-          <span class="">Mar 3, 2016</span>
+          <div  class="postDate">
+          	<time datetime="2016-03-03T00:00:00+08:00" itemprop="datePublished">Mar 3, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					##### def show @widget =...
+    	  	</div>
         </a>
       
-        <a class="post-list-item" href="/2016/03/01/C%20-Language-Ch1-Answer.html">
+        <a class="post-list-item" href="/2016/03/01/C-Language-Ch1-Answer.html">
           <h2>
-          C  Language Ch1 Answer
+          	C  Language Ch1 Answer
           </h2>
-          <span class="">Mar 1, 2016</span>
+          <div  class="postDate">
+          	<time datetime="2016-03-01T00:00:00+08:00" itemprop="datePublished">Mar 1, 2016</time>
+          </div>
+       	  <div class="postExt">
+   					1-20 //My solution：先将输入字符串保存至数组，将其detab后存入另一数组，然后打印该数组 #include &amp;lt;stdio.h&amp;gt;...
+    	  	</div>
         </a>
       
 	  </div>
@@ -189,16 +301,36 @@
 <!-- default模板：content块结束 -->
 
 <!-- default模板：footer块是由include footer.html命令添加的 -->
-    <footer class="hh">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <span>&copy; 2016 TimoTokki</span>
-      </div>
-    </div>
-  </div>
-</footer>
+    <footer class="site-footer">
+    <h2 class="footer-heading small-site-title">TimoTokki</h2>
 
+    <div class="footer-col-wrapper">
+      
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list footer-content">
+          <li>Powered By TimoTokki</li>
+          <li>Made on <a href="jekyll.com">{ { Jekyll } }</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2 footer-content">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TimoTokki"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">TimoTokki</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3 site-description">
+        <p>This is a demo</p>
+      </div>
+
+   	</div>
+</footer>
 
 <!-- default模板：footer块结束 -->
 
