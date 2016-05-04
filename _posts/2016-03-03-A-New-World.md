@@ -1,4 +1,7 @@
-{{site.static_files}}
+---
+tag:
+    - others
+---
 
 {% highlight ruby %}
 def show

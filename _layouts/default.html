@@ -1,27 +1,25 @@
-<!-- default模板：开始 -->
+<!--　post　模板使用了　default 布局　-->
+<!--　将页面设置为　HTML 5 页面类型　-->
 <!DOCTYPE html>
-<html>
-<!-- default模板：head块是由include head.html命令添加的 -->
-  {% include head.html %}
-<!-- default模板：head块结束 -->
-<!-- default模板：<body data-spy="scroll" data-target="#myAffix"> -->
+<!--　设置语言为　English　-->
+<html lang="en">
+<!--　用　include 引入头文件信息　-->
+{% include head.html %}
 
-  <body>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+<!--　依次引入导航栏，正文和脚注　-->
+    {% include nav.html %}
 
-<!-- default模板：header块是由include header.html命令添加的 -->
-    {% include header.html %}
-<!-- default模板：header块结束 -->
+    {{ content }}
 
-<!-- default模板：content块是由content命令添加的 -->
-    <div class="main">
-      {{ content }}
-    </div>
-<!-- default模板：content块结束 -->
-
-<!-- default模板：footer块是由include footer.html命令添加的 -->
     {% include footer.html %}
-<!-- default模板：footer块结束 -->
 
-  </body>
-<!-- default模板：结束 -->
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
 </html>

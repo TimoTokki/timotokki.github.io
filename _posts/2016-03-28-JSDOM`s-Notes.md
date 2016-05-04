@@ -1,7 +1,9 @@
 ---
 layout: post
-
 title: JSDOM阅读笔记
+tag:
+    - JS
+    - study notes
 ---
 
 ## 性能优化

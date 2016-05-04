@@ -1,5 +1,8 @@
 ---
 layout: post
+tag:
+    - jekyll
+    - study notes
 ---
 
 _config.yml

@@ -1,5 +1,7 @@
 ---
 layout: post
+tag:
+    - others
 ---
 
 <a name="13502">

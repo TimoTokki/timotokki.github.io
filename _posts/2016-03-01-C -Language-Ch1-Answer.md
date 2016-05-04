@@ -1,5 +1,7 @@
 ---
 layout: post
+tag:
+    - C
 ---
 
 ## 1-20

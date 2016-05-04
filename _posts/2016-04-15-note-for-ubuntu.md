@@ -1,6 +1,11 @@
-[Ubuntu命令查阅][http://wiki.ubuntu.com.cn/Unix%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8]
+---
+tag:
+    - Ubuntu
+    - study notes
+---
+[Ubuntu命令查阅](http://wiki.ubuntu.com.cn/Unix%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8)
 
-[Ubuntu参考手册][http://wiki.ubuntu.com.cn/UbuntuManual]
+[Ubuntu参考手册](http://wiki.ubuntu.com.cn/UbuntuManual)
 
 LINUX 的发行版本XX.YY.ZZ
 XX 表示主版本号

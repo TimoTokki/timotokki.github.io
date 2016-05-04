@@ -1,5 +1,8 @@
 ---
 layout: post
+tag:
+    - JS
+    - study notes
 ---
 
 ## History 

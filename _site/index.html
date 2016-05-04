@@ -1,338 +1,805 @@
-<!-- default模板：开始 -->
+<!--　post　模板使用了　default 布局　-->
+<!--　将页面设置为　HTML 5 页面类型　-->
 <!DOCTYPE html>
-<html>
-<!-- default模板：head块是由include head.html命令添加的 -->
-  <head>
-    <meta http-equiv="content-type" content="text/html;
-    charset=utf-8" />
-    <title>My Blogs</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/basic.css">
+<!--　设置语言为　English　-->
+<html lang="en">
+<!--　用　include 引入头文件信息　-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="关于前端与设计 | 阿伟，Web & Mobile Lover，Front-End Engineer，student | 这里是 @阿伟 的个人博客，与你一起发现更大的世界。">
+    <meta name="keyword"  content="阿伟, Timo阿伟, TimoTokki, Timo, @TimoTokki, @Timo, 阿伟的博客, TimoTokki Blog, 博客, 个人网站, 互联网, 前端">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>州长阿伟的博客 | TimoTokki</title>
+
+    <link rel="canonical" href="http://timotokki.github.io//">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
 </head>
-<!-- default模板：head块结束 -->
-<!-- default模板：<body data-spy="scroll" data-target="#myAffix"> -->
 
-  <body>
 
-<!-- default模板：header块是由include header.html命令添加的 -->
-    <header>
-  <!-- navbar -->
-  <nav>
-  	
-  	<div class="navbar-header">
-    	<a href="/index.html">TimoTokki</a>
-    	<div class="site-description">
-				This is a demo
-			</div>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+<!--　依次引入导航栏，正文和脚注　-->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">TimoTokki</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
     </div>
-    
-    <ul class="navbar-nav navbar-right">
-	    
-	      
-	      	
-	        
-	          <li>
-	        
-	        <a href="/resources/"><span class="page-link">Resources</span></a>
-	    			</li>
-	      
-	    
-	      
-	      	
-	        
-	          <li>
-	        
-	        <a href="/contact/"><span class="page-link">Contact</span></a>
-	    			</li>
-	      
-	    
-	      
-	      	
-	        
-	          <li>
-	        
-	        <a href="/about/"><span class="page-link">About</span></a>
-	    			</li>
-	      
-	    
-	      
-	      	
-	      		
-    </ul>
-  
-  </nav>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
 
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Page Header -->
+<header class="intro-header" style="background-image: url('/img/home-bg-art.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>TimoTokki</h1>
+                    <!--<hr class="small">-->
+                    <span class="subheading">- - - be a child</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>
-<!-- default模板：header块结束 -->
 
-<!-- default模板：content块是由content命令添加的 -->
-    <div class="main">
-      <div class="row">
-	<div class="col-sm-9">
-    <div class="post">
-			<h1>My Blogs</h1>
-			<p></p>
-			<article>
-				<h2 id="section">欢迎来到我的博客</h2>
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+        
 
-<p>这里记录的是我在使用github和jekyll搭建博客的过程中，所遭遇过的种种问题，以及我最后的解决方案，希望可以帮助到大家。</p>
+<!-- USE SIDEBAR -->
+    <!-- PostList Container -->
+    		<div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                postlist-container
+            ">
+    			
+<div class="post-preview">
+    <a href="/2016/04/16/note-for-jquery/">
+        <h2 class="post-title">
+            Note For Jquery
+        </h2>
+        
+        <div class="post-content-preview">
+            选择器
 
-<h2 id="section-1">学习前提：</h2>
+链式操作方式
 
-<ul>
-  <li>
-    <p>前端基础三大件HTML、CSS、Javasript基本概念的掌握</p>
-  </li>
-  <li>
-    <p>git和github的基本使用</p>
-  </li>
-  <li>
-    <p>熟悉编程语言的基本范式</p>
-  </li>
-  <li>
-    <p>熟悉linux环境下的基本操作（如终端、sumlime、chrome的使用）</p>
-  </li>
-  <li>
-    <p>基本的检索能力和基本的英文阅读能力。</p>
-  </li>
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by TimoTokki on April 16, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2016/04/15/note-for-ubuntu/">
+        <h2 class="post-title">
+            Note For Ubuntu
+        </h2>
+        
+        <div class="post-content-preview">
+            Ubuntu命令查阅
+
+Ubuntu参考手册
+
+LINUX 的发行版本XX.YY.ZZ
+XX 表示主版本号
+YY 表示次版本号
+ZZ 表示末版本号
+次版本号是奇数时表示开发版本
+次版本号是偶数时表示稳定版本
+
+GPL LGPL OSD各自定义
+
+常见命令
+
+查看帮助：
+
+help, man, info
+
+当前文件夹：
+
+mkdir, ls, la, find
+
+指定文件文件夹：
+
+touch...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by TimoTokki on April 15, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2016/04/11/note-for-jekyll/">
+        <h2 class="post-title">
+            Note For Jekyll
+        </h2>
+        
+        <div class="post-content-preview">
+            _config.yml
+
+For technical reasons, this file is NOT reloaded automatically when you use ‘jekyll serve’. If you change this file, please restart the server process.
+
+
+
+
+
+
+是H5新标签，但未得到广泛应用
+
+
+  
+    
+...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by TimoTokki on April 11, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2016/04/04/note-for-computer-system/">
+        <h2 class="post-title">
+            计算机系统笔记
+        </h2>
+        
+        <div class="post-content-preview">
+            计算机系统可分为：CPU、内存、输入设备、输出设备
+
+CPU内部由运算单元和操作单元组成。
+
+CPU依据设计风格可分为两种：精简RISC和复杂CISC指令集。RISC指令集的指令较为精简，指令功能单一，运行时间短，常见RISC指令集的CPU有ARM等等;SISC指令集不同于RISC，是把一些简单的操作合成一条，指令执行较为复杂且运行时间长，但功能丰富，常见SICS指令集CPU主要有AMD、I...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by TimoTokki on April 4, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2016/03/31/My-Answer-to-Some-Open-Questions-in-interview/">
+        <h2 class="post-title">
+            关于阿里技术岗网申的三个开放问题的回答
+        </h2>
+        
+        <div class="post-content-preview">
+            请介绍一项你最热爱、最擅长的专业领域，并且介绍你在这个领域的学习经历和未来的学习规划。
+
+web前端，创建、修改代码后可以即时呈现，容易感受到成就感。
+
+开始，我先学习了下网上的一些前端领域和关于前端学习规划的文章，大致对前端这个技术岗位和其设计的技术基础有了粗略的了解，虽然对于前端领域还没清晰的整体规划，但对于如何入门，打好基础，还是做到了心中有数。我的方法是理论加实践。
+
+理论主要是看一...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by TimoTokki on March 31, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2016/03/30/Regular-Expression-s-Notes/">
+        <h2 class="post-title">
+            Regular Expression`s Notes
+        </h2>
+        
+        <div class="post-content-preview">
+            正则表达式（英语：Regular Expression）
+
+参考：
+
+正则表达式 – 语法 | 菜鸟教程
+
+55分钟学会正则表达式
+
+正则表达式_百度百科
+
+使用正则表达式，可以：
+
+1. 测试字符串内的模式
+2. 替换文本
+3. 基于模式匹配从字符串中提取子字符串
+
+
+
+普通字符
+
+  
+    非打印字符
+
+    
+      
+        
+          字符
+      ...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by TimoTokki on March 30, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2016/03/29/note-for-Pro-JS-for-Web-Developers/">
+        <h2 class="post-title">
+            《JavaScript高级程序设计》学习笔记
+        </h2>
+        
+        <div class="post-content-preview">
+            说明：教材为中文第三版。笔记会以表格的形式记录，第一栏为章节，第二栏为笔记类型（疑问，难点，要点，注意，技巧……），第三栏为描述，第四栏为页码，第五栏为备注。
+
+
+  
+    
+      章节
+      笔记类型
+      描述
+      页码
+      备注
+    
+  
+  
+    
+      6.1 理解对象
+      要点
+      调用Object.defin...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by TimoTokki on March 29, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2016/03/29/Pro-JS-for-Web-Developers/">
+        <h2 class="post-title">
+            Pro Js For Web Developers
+        </h2>
+        
+        <div class="post-content-preview">
+            History
+
+History of ECMASCript
+
+
+  
+    
+      版本
+      时间
+      描述
+    
+  
+  
+    
+      ES1.0
+      1997.12
+      以JS1.1为蓝本
+    
+    
+      ES2.0
+      1998.06
+      少量编辑加工
+    
+    
+      ES3.0
+...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by TimoTokki on March 29, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2016/03/28/JSDOM-s-Notes/">
+        <h2 class="post-title">
+            JSDOM阅读笔记
+        </h2>
+        
+        <div class="post-content-preview">
+            性能优化
+
+
+  
+    尽量少访问DOM
+  
+  
+    尽量减少文档（比如HTML文档）中不必要的元素，以避免增加生成DOM即文档树（document tree）的负担。
+  
+  
+    合并脚本，即把多个JS文件合并在一个JS文档中，以减少加载页面时发送的请求数量。
+  
+  
+    将JS脚本放置在文档末尾。
+  
+  
+    利用压缩脚本工具，去掉不必要的空格、换行符...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by TimoTokki on March 28, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2016/03/24/some-advice-to-new-coder/">
+        <h2 class="post-title">
+            Some Advice To New Coder
+        </h2>
+        
+        <div class="post-content-preview">
+            
+
+给新程序员的10条建议
+
+
+
+
+
+
+
+
+
+**创建时间：**
+
+_2015/9/15 19:09_
+
+
+
+
+
+**标签：**
+
+_程序人生, 微信_
+
+
+
+
+
+**来源：**
+
+[_http://mp.weixin.qq.com/s?__biz=MzA5MzY4NTQwMA==&amp;mid=210614194&amp;idx=1&amp;sn=20b4308c5d7e578d8bc6...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by TimoTokki on March 24, 2016
+    </p>
+</div>
+<hr>
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    
+    <li class="next">
+        <a href="/page2">Older Posts &rarr;</a>
+    </li>
+    
 </ul>
 
-<p>最后，欢迎大家关注我的github帐号：<a href="https://github.com/TimoTokki/">TimoTokki的github</a></p>
 
-			</article>
-		</div>
+    		</div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                            
+                        
+                            
+                                <a href="/tags/#others" title="others" rel="5">
+                                    others
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#JS" title="JS" rel="5">
+                                    JS
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#study notes" title="study notes" rel="9">
+                                    study notes
+                                </a>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
+                    <div class="short-about">
+                        
+                            <img src="/img/me.jpg" />
+                        
+                        
+                            <p>学无止境。</p>
+                        
+                        <!-- SNS Link -->
+                        <ul class="list-inline">
+                            
+                            
+                            
+                            <li>
+                                <a target="_blank" href="https://www.zhihu.com/people/lu-wei-tong-55">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa  fa-stack-1x fa-inverse">知</i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            
+                            
+                            
+                            <li>
+                                <a target="_blank" href="https://github.com/TimoTokki">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </section>
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://qianduan.guru/">前端外刊评论</a></li>
+                    
+                        <li><a href="http://lingyu.wang/">天镶的博客</a></li>
+                    
+                        <li><a href="http://hmqk1995.github.io">Luke的自留地</a></li>
+                    
+                        <li><a href="http://ebnbin.com/">Ebn's Blog</a></li>
+                    
+                        <li><a href="http://blog.smdcn.net">SmdCn's Blog</a></li>
+                    
+                        <li><a href="http://xieminis.me/">解旻的博客</a></li>
+                    
+                        <li><a href="http://dhong.co">DHong Say</a></li>
+                    
+                        <li><a href="http://ingf.github.io/">尹峰以为</a></li>
+                    
+                        <li><a href="http://wepiaofei.github.io/blog/">前端神盾局</a></li>
+                    
+                </ul>
+                
+    		</div>
+        
 	</div>
 </div>
 
-<div id="index" class="row">
-	<div class="col-sm-9">
-		<div class="post-list-header">
-	  	<h2>文章列表</h2>
-		</div>
-		<div class="post-list-body"> 
-      
-        <a class="post-list-item" href="/2016/04/16/note-for-jquery.html">
-          <h2>
-          	Note For Jquery
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-04-16T00:00:00+08:00" itemprop="datePublished">Apr 16, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					选择器 链式操作方式 deb cdrom:[Ubuntu 15.10...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/04/15/note-for-ubuntu.html">
-          <h2>
-          	Note For Ubuntu
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-04-15T00:00:00+08:00" itemprop="datePublished">Apr 15, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					[Ubuntu命令查阅][http://wiki.ubuntu.com.cn/Unix%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8] [Ubuntu参考手册][http://wiki.ubuntu.com.cn/UbuntuManual] LINUX 的发行版本XX.YY.ZZ XX...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/04/11/note-for-jekyll.html">
-          <h2>
-          	Note For Jekyll
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-04-11T00:00:00+08:00" itemprop="datePublished">Apr 11, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					_config.yml For technical reasons, this...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/04/04/note-for-computer-system.html">
-          <h2>
-          	计算机系统笔记
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-04-04T00:00:00+08:00" itemprop="datePublished">Apr 4, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					计算机系统可分为：CPU、内存、输入设备、输出设备 CPU内部由运算单元和操作单元组成。 CPU依据设计风格可分为两种：精简RISC和复杂CISC指令集。RISC指令集的指令较为精简，指令功能单一，运行时间短，常见RISC指令集的CPU有ARM等等;SISC指令集不同于RISC，是把一些简单的操作合成一条，指令执行较为复杂且运行时间长，但功能丰富，常见SICS指令集CPU主要有AMD、Intel等x86架构。 网络速度单位：Mbps，例如8M/1M ADSL传输速度指的就是理论最大传输值为:每秒8Mbit(1Mbyte)/每秒1Mbyte(125Kbyte)的上传/下载容量。...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/03/31/My-Answer-to-Some-Open-Questions-in-interview.html">
-          <h2>
-          	关于阿里技术岗网申的三个开放问题的回答
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-03-31T00:00:00+08:00" itemprop="datePublished">Mar 31, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					请介绍一项你最热爱、最擅长的专业领域，并且介绍你在这个领域的学习经历和未来的学习规划。 web前端，创建、修改代码后可以即时呈现，容易感受到成就感。 开始，我先学习了下网上的一些前端领域和关于前端学习规划的文章，大致对前端这个技术岗位和其设计的技术基础有了粗略的了解，虽然对于前端领域还没清晰的整体规划，但对于如何入门，打好基础，还是做到了心中有数。我的方法是理论加实践。 理论主要是看一些经典技术书籍，但前端领域技术发展快，书中提到的技术难免有所过时，所以还要兼顾一些网上的技术教程。大致书单、技术网站罗列如下： w3cschool：刷一遍HTML,CSS,JavaScript的教程，敲敲实例代码，但不需要纠结于语法细节。刷完一遍后，我再看一些技术书籍，就感觉不怎么吃力了。...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/03/30/Regular-Expression-s-Notes.html">
-          <h2>
-          	Regular Expression`s Notes
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-03-30T00:00:00+08:00" itemprop="datePublished">Mar 30, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					正则表达式（英语：Regular Expression） 参考： 正则表达式 –...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/03/29/note-for-Pro-JS-for-Web-Developers.html">
-          <h2>
-          	《JavaScript高级程序设计》学习笔记
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-03-29T00:00:00+08:00" itemprop="datePublished">Mar 29, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					说明：教材为中文第三版。笔记会以表格的形式记录，第一栏为章节，第二栏为笔记类型（疑问，难点，要点，注意，技巧……），第三栏为描述，第四栏为页码，第五栏为备注。 章节 笔记类型 描述 页码...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/03/29/Pro-JS-for-Web-Developers.html">
-          <h2>
-          	Pro Js For Web Developers
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-03-29T00:00:00+08:00" itemprop="datePublished">Mar 29, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					History History of ECMASCript 版本...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/03/28/JSDOM-s-Notes.html">
-          <h2>
-          	JSDOM阅读笔记
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-03-28T00:00:00+08:00" itemprop="datePublished">Mar 28, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					性能优化 尽量少访问DOM 尽量减少文档（比如HTML文档）中不必要的元素，以避免增加生成DOM即文档树（document tree）的负担。 合并脚本，即把多个JS文件合并在一个JS文档中，以减少加载页面时发送的请求数量。...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/03/24/some-advice-to-new-coder.html">
-          <h2>
-          	Some Advice To New Coder
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-03-24T00:00:00+08:00" itemprop="datePublished">Mar 24, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					给新程序员的10条建议 **创建时间：** _2015/9/15 19:09_ **标签：**...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/03/24/note-for-JS-by-Liaoxuefeng.html">
-          <h2>
-          	Note For Js By Liaoxuefeng
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-03-24T00:00:00+08:00" itemprop="datePublished">Mar 24, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					JavaScript廖雪峰笔记 **创建时间：** _2016/3/7 13:00_ **更新时间：**...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/03/20/second-post.html">
-          <h2>
-          	Second Post 
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-03-20T00:00:00+08:00" itemprop="datePublished">Mar 20, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					How to write in Chinese?...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/03/20/Intro.html">
-          <h2>
-          	Introduction
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-03-20T00:00:00+08:00" itemprop="datePublished">Mar 20, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					How to write in Chinese?...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/03/03/A-New-World.html">
-          <h2>
-          	A New World
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-03-03T00:00:00+08:00" itemprop="datePublished">Mar 3, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					##### def show @widget =...
-    	  	</div>
-        </a>
-      
-        <a class="post-list-item" href="/2016/03/01/C-Language-Ch1-Answer.html">
-          <h2>
-          	C  Language Ch1 Answer
-          </h2>
-          <div  class="postDate">
-          	<time datetime="2016-03-01T00:00:00+08:00" itemprop="datePublished">Mar 1, 2016</time>
-          </div>
-       	  <div class="postExt">
-   					1-20 //My solution：先将输入字符串保存至数组，将其detab后存入另一数组，然后打印该数组 #include &amp;lt;stdio.h&amp;gt;...
-    	  	</div>
-        </a>
-      
-	  </div>
-	</div>
 
-</div>
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/lu-wei-tong-55">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
 
 
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/TimoTokki">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; TimoTokki 2016
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
     </div>
-<!-- default模板：content块结束 -->
-
-<!-- default模板：footer块是由include footer.html命令添加的 -->
-    <footer class="site-footer">
-    <h2 class="footer-heading small-site-title">TimoTokki</h2>
-
-    <div class="footer-col-wrapper">
-      
-      <div class="footer-col footer-col-1">
-        <ul class="contact-list footer-content">
-          <li>Powered By TimoTokki</li>
-          <li>Made on <a href="jekyll.com">{ { Jekyll } }</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col footer-col-2 footer-content">
-        <ul class="social-media-list">
-          
-          <li>
-            <a href="https://github.com/TimoTokki"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
-</span><span class="username">TimoTokki</span></a>
-
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="footer-col footer-col-3 site-description">
-        <p>This is a demo</p>
-      </div>
-
-   	</div>
 </footer>
 
-<!-- default模板：footer块结束 -->
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
 
-  </body>
-<!-- default模板：结束 -->
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/ 
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers   
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-49627206-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '4cc1f2d8f3067386cc5cdb626a202900';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
 </html>

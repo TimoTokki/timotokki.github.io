@@ -1,5 +1,8 @@
 ---
 layout: post
+tag:
+    - Regular Expression
+    - study notes
 ---
 
 正则表达式（英语：Regular Expression）

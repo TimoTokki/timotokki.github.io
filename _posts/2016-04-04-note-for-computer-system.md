@@ -1,6 +1,9 @@
 ---
 layout: post
 title: 计算机系统笔记
+tag:
+    - computer basic
+    - study notes
 ---
 
 计算机系统可分为：CPU、内存、输入设备、输出设备

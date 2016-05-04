@@ -1,6 +1,8 @@
 ---
 layout:	 post
 date:	 2016-03-20
+tag:
+    - others
 ---
 ## How to write in Chinese?
 
