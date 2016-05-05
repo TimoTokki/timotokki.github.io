@@ -15,13 +15,14 @@
 
     <title>州长阿伟的博客 | TimoTokki</title>
 
-    <link rel="canonical" href="http://timotokki.github.io//">
+    <link rel="canonical" href="http://timotokki.github.io/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/hux-blog.min.css">
+    <link rel="stylesheet" href="/css/timo-blog.css">
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
@@ -276,11 +277,13 @@ For technical reasons, this file is NOT reloaded automatically when you use ‘j
         </h2>
         
         <div class="post-content-preview">
-            计算机系统可分为：CPU、内存、输入设备、输出设备
+            基础硬件
+
+计算机系统可分为：CPU、内存、输入设备、输出设备
 
 CPU内部由运算单元和操作单元组成。
 
-CPU依据设计风格可分为两种：精简RISC和复杂CISC指令集。RISC指令集的指令较为精简，指令功能单一，运行时间短，常见RISC指令集的CPU有ARM等等;SISC指令集不同于RISC，是把一些简单的操作合成一条，指令执行较为复杂且运行时间长，但功能丰富，常见SICS指令集CPU主要有AMD、I...
+CPU依据设计风格可分为两种：精简RISC和复杂CISC指令集。RISC指令集的指令较为精简，指令功能单一，运行时间短，常见RISC指令集的CPU有ARM等等;SISC指令集不同于RISC，是把一些简单的操作合成一条，指令执行较为复杂且运行时间长，但功能丰富，常见SICS指令集CPU主要...
         </div>
     </a>
     <p class="post-meta">
@@ -637,6 +640,13 @@ _程序人生, 微信_
 </div>
 
 
+	<div id="top" data-toggle="tooltip" data-placement="left" title="回到顶部">
+      <a href="javascript:;">
+        <div class="arrow"></div>
+        <div class="stick"></div>
+      </a>
+    </div>
+
     <!-- Footer -->
 <footer>
     <div class="container">
@@ -696,6 +706,35 @@ _程序人生, 微信_
 <!-- Custom Theme JavaScript -->
 <script src="/js/hux-blog.min.js "></script>
 
+<!-- 回到顶部-->
+<script type="text/javascript">
+    function backToTop() {
+        //滚页面才显示返回顶部
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 100) {
+                $("#top").fadeIn(500);
+            } else {
+                $("#top").fadeOut(500);
+            }
+        });
+        //点击回到顶部
+        $("#top").click(function() {
+            $("body").animate({
+                scrollTop: "0"
+            }, 500);
+        });
+
+        //初始化tip
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    }
+
+    $(document).ready(function(){
+    
+        backToTop();
+    });
+</script>
 
 <!-- async load function -->
 <script>
@@ -791,7 +830,6 @@ _程序人生, 微信_
 
 
 <!-- Side Catalog -->
-
 
 
 

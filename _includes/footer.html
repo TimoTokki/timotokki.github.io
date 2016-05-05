@@ -93,6 +93,35 @@
 <!-- Custom Theme JavaScript -->
 <script src="{{ "/js/hux-blog.min.js " | prepend: site.baseurl }}"></script>
 
+<!-- 回到顶部-->
+<script type="text/javascript">
+    function backToTop() {
+        //滚页面才显示返回顶部
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 100) {
+                $("#top").fadeIn(500);
+            } else {
+                $("#top").fadeOut(500);
+            }
+        });
+        //点击回到顶部
+        $("#top").click(function() {
+            $("body").animate({
+                scrollTop: "0"
+            }, 500);
+        });
+
+        //初始化tip
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    }
+
+    $(document).ready(function(){
+    
+        backToTop();
+    });
+</script>
 
 <!-- async load function -->
 <script>

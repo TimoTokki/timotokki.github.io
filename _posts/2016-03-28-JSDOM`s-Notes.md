@@ -65,8 +65,6 @@ tag:
 
 + clearTimeout函数可以清除等待时间
 
-![何时该用JS而非CSS](/static/images/jsdom.png)
-
 ## 疑点
 
 + 一个元素节点的.childNodes包括属性节点吗？这些子节点如何排序？

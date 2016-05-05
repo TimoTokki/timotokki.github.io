@@ -3,7 +3,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ site.description }}">
+    <meta name="description" content="{% if site.description　%}{{ site.description }}{% else %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% endif %}">
     <meta name="keyword"  content="{{ site.keyword }}">
     <link rel="shortcut icon" href="{{ site.baseurl }}/img/favicon.ico">
 
@@ -16,6 +16,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ "/css/hux-blog.min.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/css/timo-blog.css" | prepend: site.baseurl }}">
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="{{ "/css/syntax.css" | prepend: site.baseurl }}">
