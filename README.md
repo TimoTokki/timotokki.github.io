@@ -1,1 +1,1 @@
-## Welcome to my blog ----> [TimoTokki`s Blog](timotokki.github.io)
+## Welcome to my blog ----> [TimoTokki`s Blog](http://timotokki.github.io/)
