@@ -224,11 +224,12 @@
         h = post.find('h1,h2,h3,h4,h5,h6');
         /*
         **  how to auto hide catalog if no headline in article?   
-        */
+        *
         if (!h) {
             {{page.catalog}} = false;
             return false;
         }
+        */
         h.each(function () {
             tagName = $(this).prop('tagName').toLowerCase();
             id = "#"+$(this).prop('id');
